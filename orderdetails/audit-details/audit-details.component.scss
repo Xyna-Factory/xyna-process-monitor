@@ -1,0 +1,120 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+$auditdetails-color: unset !default;
+$auditdetails-label-color: unset !default;
+$auditdetails-font-size: unset !default;
+$auditdetails-label-font-size: unset !default;
+$auditdetails-background-color: unset !default;
+$auditdetails-border-color: unset !default;
+$auditdetails-status-color: unset !default;
+$auditdetails-status-background-color: unset !default;
+
+
+@import 'const';
+
+
+:host {
+    color: $auditdetails-color;
+    font-size: $auditdetails-font-size;
+    background-color: $auditdetails-background-color;
+    border-top: 1px solid $auditdetails-border-color;
+
+    > .info {
+        flex: 1 1 auto;
+        overflow: auto;
+        padding-top: 2px;
+        padding-bottom: 6px;
+    }
+
+    > .action, .spacer {
+        flex: 0 0 auto;
+    }
+
+    > .spacer {
+        width: 10px;
+    }
+
+    > .info,
+    > .action {
+        display: flex;
+        flex-direction: column;
+
+        > .row {
+            display: flex;
+
+            > .item {
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                border-left: 1px solid $auditdetails-border-color;
+                min-width: 270px;
+                height: 20px;
+
+                &:first-child {
+                    border-left: 0;
+                }
+
+                &:last-child {
+                    margin-left: auto;
+                }
+
+                > .label,
+                > .value {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: pre;
+                }
+
+                > .label {
+                    width: 100px;
+                    color: $auditdetails-label-color;
+                    font-size: $auditdetails-label-font-size;
+                    align-self: center;
+
+                    &:not(:empty)::after {
+                        content: ':';
+                    }
+                }
+
+                > .value {
+
+                    .status {
+                        color: $auditdetails-status-color;
+                        background-color: $auditdetails-status-background-color;
+                        border-radius: 4px;
+                        padding: 0 4px;
+
+                        &.error {
+                            background-color: $color-warn;
+                            color: $color-white;
+                        }
+
+                        &:empty {
+                            display: none;
+                        }
+                    }
+                }
+
+                > .order-id {
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

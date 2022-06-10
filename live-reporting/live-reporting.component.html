@@ -1,0 +1,27 @@
+<xc-panel xc-i18n-context="pmon.live-reporting">
+    <header>
+        <h1 xc-i18n>header-live-reports</h1>
+        <div class="items-right">
+            <xc-icon-button (click)="refresh()" xc-i18n xc-tooltip="tooltip-refresh" class="refresh" xc-icon-name="reload"></xc-icon-button>
+        </div>
+    </header>
+    <section class="stretch scroll">
+        <!--
+            Do not use double-click-mode here. That table may use the double-click to open an entry, but a single-click doesn't do anything expensive
+            (see documentation for double-click-property of xc-table).
+        -->
+        <xc-table #table [xc-table-datasource]="dataSource"
+            xc-table-allowsort
+            xc-table-allowfilter
+            xc-table-allowselect
+            xc-table-lazyupdate
+            class="orders-table"
+        >
+        </xc-table>
+    </section>
+    <footer class="items-right">
+        <xc-button [disabled]="table.dataSource.selectionModel.isEmpty()" (click)="showDetails()">
+            <xc-icon xc-icon-name="info" xc-i18n>button-show-details</xc-icon>
+        </xc-button>
+    </footer>
+</xc-panel>

@@ -1,0 +1,64 @@
+<xc-panel xc-i18n-context="pmon.orderoverview">
+    <header>
+        <h1 xc-i18n>header-orders</h1>
+        <div class="items-right">
+            <xc-button (click)="clearFilters()" xc-i18n>button-clear-filters</xc-button>
+            <xc-button (click)="importAudit()" xc-i18n>button-import-audit</xc-button>
+            <div class="spacing"></div>
+            <xc-checkbox
+                label="label-only-root-orders"
+                xc-i18n
+                (checkedChange)="onlyRootOrdersChanged($event)"
+                xc-tooltip="tooltip-filters-on-root-orders"
+            ></xc-checkbox>
+            <xc-checkbox
+                xc-i18n
+                label="label-only-my-own-orders"
+                xc-tooltip="tooltip-filters-on-orders"
+                (checkedChange)="onlyMyOwnOrdersChanged($event)"
+            ></xc-checkbox>
+            <div class="spacing"></div>
+            <xc-checkbox
+                label="label-include-internal-orders"
+                xc-i18n
+                (checkedChange)="includeInternalOrdersChanged($event)"
+            ></xc-checkbox>
+            <xc-checkbox
+                label="label-include-orders"
+                xc-i18n
+                disabled
+            ></xc-checkbox>
+            <div class="spacing"></div>
+            <!-- <xc-checkbox
+                label="label-show-utc-time"
+                xc-i18n
+                (checkedChange)="utcTimeChanged($event)"
+            ></xc-checkbox> -->
+            <xc-icon-button (click)="refresh()" xc-icon-tooltip="Refresh" class="refresh" xc-icon-name="reload"></xc-icon-button>
+        </div>
+    </header>
+    <section class="stretch scroll">
+        <!--
+            Do not use double-click-mode here. That table may use the double-click to open an entry, but a single-click doesn't do anything expensive
+            (see documentation for double-click-property of xc-table).
+        -->
+        <xc-table [xc-table-datasource]="dataSource"
+            xc-table-allowsort
+            xc-table-allowfilter
+            xc-table-allowselect
+            xc-table-allowactivate
+            xc-table-lazyupdate
+            class="orders-table zeta-scrollbar"
+        >
+        </xc-table>
+    </section>
+    <footer class="items-right">
+        <xfm-mon-kill-order-button
+            xc-i18n-context="kill-order-button"
+            [disabled]="killButtonDisabled"
+            [orderIds]="[orderId]"
+            (refresh)="refresh()"
+        ></xfm-mon-kill-order-button>
+        <xc-button [disabled]="detailsButtonDisabled" (click)="details()" xc-i18n>show-details</xc-button>
+    </footer>
+</xc-panel>

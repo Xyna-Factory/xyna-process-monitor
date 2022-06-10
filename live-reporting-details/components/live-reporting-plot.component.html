@@ -1,0 +1,51 @@
+
+<ng-template #plotControl>
+    <table>
+        <caption>PLOT CONTROL</caption>
+        <tbody>
+            <tr><td>Data Point Info</td><td> | - </td><td>Hover over Data Point</td></tr>
+            <tr><td>Compare Data Points</td><td> | - </td><td>Select 1st Pointer, hover over 2nd</td></tr>
+            <tr><td>Pan</td><td> | - </td><td>Mouse Right Pressed and Move <i>or</i> Arrow Keys</td></tr>
+            <tr><td>Zoom In / Out</td><td> | - </td><td>Press CTRL + Mouse Wheel <i>or</i> I / O Key</td></tr>
+            <tr><td>X Axis Shrink / Stretch</td><td> | - </td><td>Press CTRL + Mouse Right Pressed and Move Left/Right <i>or</i> A / D Key</td></tr>
+            <tr><td>Y Axis Shrink / Stretch</td><td> | - </td><td>Press CTRL + Mouse Right Pressed and Move Up / Down <i>or</i> W / S Key</td></tr>
+            <tr><td>Change Data Point Connection Type</td><td> | - </td><td>T Key</td></tr>
+        </tbody>
+    </table>
+
+</ng-template>
+
+<xc-panel xc-i18n-context="live-reporting-plot">
+    <header>
+        <div class="items-left">
+            <xc-form-autocomplete
+                class="header-update-interval-autocomplete"
+                placeholder="placeholder-select"
+                [(xc-form-autocomplete-option)]="dataSourceUpdateIntervalDataWrapper.value"
+                [xc-form-autocomplete-options]="dataSourceUpdateIntervalDataWrapper.values"
+                xc-form-field-suffix="clear"
+                xc-form-autocomplete-asdropdown
+                xc-form-field-compact
+                xc-i18n
+            ></xc-form-autocomplete>
+        </div>
+    <div class="items-center">{{name}}</div>
+        <div class="items-right">
+            <xc-icon [xc-tooltip]="plotControl" xc-icon-name="help"></xc-icon>
+            <xc-icon-button xc-tooltip="tooltip-refresh" xc-i18n class="refresh" xc-icon-name="reload" (click)="refresh()"></xc-icon-button>
+        </div>
+    </header>
+
+    <!-- <pmod-canvas-component
+        [keyboardInputFunction]="boundKeyboardInputFunction"
+        [stepFunction]="boundStepFunction"
+        [drawFunction]="boundRenderFunction"
+        (mouseInput)="mouseInput($event)"
+        (domResize)="domResize($event)"
+    ></pmod-canvas-component> -->
+
+    <xc-plot
+        [dataSource]="plotDataSource"
+    ></xc-plot>
+
+</xc-panel>

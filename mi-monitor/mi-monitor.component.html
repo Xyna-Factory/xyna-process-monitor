@@ -1,0 +1,47 @@
+<xc-panel xc-i18n-context="pmon.mi-monitor">
+    <header>
+        <h1 xc-i18n>header-mi-monitor</h1>
+        <div class="items-right">
+            <xc-icon-button xc-i18n (click)="refresh()" xc-tooltip="tooltip-refresh" class="refresh" xc-icon-name="reload"></xc-icon-button>
+        </div>
+    </header>
+    <section class="stretch scroll">
+        <!--
+            Do not use double-click-mode here. That table may use the double-click to open an entry, but a single-click doesn't do anything expensive
+            (see documentation for double-click-property of xc-table).
+        -->
+        <xc-table #table [xc-table-datasource]="dataSource"
+            xc-table-allowsort
+            xc-table-allowfilter
+            xc-table-allowselect
+            xc-table-multiselect
+            xc-table-lazyupdate
+            class="mi-monitor-table"
+        >
+        </xc-table>
+    </section>
+    <footer>
+        <div class="items-left">
+            <xc-button [disabled]="table.dataSource.selectionModel.selection.length === table.dataSource.rows.length" (click)="selectAll()" xc-i18n>button-select-all</xc-button>
+            <xc-button [disabled]="table.dataSource.selectionModel.isEmpty()" (click)="deselectAll()" xc-i18n>button-deselect-all</xc-button>
+        </div>
+        <div class="items-right">
+            <xc-button
+                [disabled]="table.dataSource.selectionModel.isEmpty() || !continueAllowed()"
+                (click)="continue(table.dataSource.selectionModel.selection)">
+                <xc-icon [xc-icon-name]="XDSIconName.ARROWRIGHT" xc-i18n>button-continue</xc-icon>
+            </xc-button>
+            <xc-button
+                [disabled]="table.dataSource.selectionModel.isEmpty() || !retryAllowed()"
+                (click)="retry(table.dataSource.selectionModel.selection)">
+                <xc-icon [xc-icon-name]="XDSIconName.RELOAD" xc-i18n>button-retry</xc-icon>
+            </xc-button>
+            <xc-button
+                [disabled]="table.dataSource.selectionModel.isEmpty() || !cancelAllowed()"
+                (click)="cancel(table.dataSource.selectionModel.selection)">
+                <xc-icon [xc-icon-name]="XDSIconName.CLOSE" xc-i18n>button-cancel</xc-icon>
+            </xc-button>
+        </div>
+
+    </footer>
+</xc-panel>

@@ -1,0 +1,139 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+@import 'const';
+
+
+:host {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    background-color: $color-white;
+
+    > .main {
+        display: flex;
+        flex: 1 1 75%;
+        max-width: 75%;
+        flex-direction: column;
+        position: relative;
+        background-color: $color-gray-5;
+
+        &.details-expanded {
+            flex-basis: 50%;
+            max-width: 50%;
+        }
+
+        .workflow-container  {
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+
+            .toggle-exception-handling {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+            }
+        }
+
+        .no-audit-available {
+            margin: auto;
+        }
+
+        .details-footer {
+            display: flex;
+            flex: 0 0 auto;
+        }
+    }
+
+    > .details-right {
+        flex: 1 1 auto;
+        margin-left: 2px;
+        min-width: 300px;
+        overflow: auto;
+        background-color: $color-gray-3;
+
+        &:not(.expanded) {
+            flex-basis: 25%;
+        }
+
+        > section {
+            padding: 0;
+        }
+    }
+
+    .pending {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.25);
+        z-index: 1;
+    }
+}
+
+// Status Box, which is needed throughout the Audit
+::ng-deep {
+    .row > .status-box,
+    .row.status-box {
+        border-bottom: 0;
+        > .status {
+            border-right: 1px solid $color-gray-3;
+            &:last-child {
+                border-right: 0;
+            }
+        }
+    }
+
+    .status-box {
+        align-items: flex-start;
+        border: 1px solid $color-gray-3;
+        display: flex;
+        flex: 0 0 auto;
+        overflow: auto;
+
+        &.min-height {
+            max-height: 152px;
+        }
+
+        > .status {
+            background-color: white;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            flex: 0 0 auto;
+            font-size: $font-size-medium;
+            height: 25px;
+            outline: none;
+            padding: 0 5px;
+            padding-bottom: 1px;
+
+            &:focus, &:hover {
+                background-color: $color-gray-5;
+                box-shadow:
+                    inset  2px  2px 0 $color-primary,
+                    inset -2px -2px 0 $color-primary;
+            }
+
+            &.selected {
+                background-color: $color-gray-4;
+            }
+        }
+    }
+}

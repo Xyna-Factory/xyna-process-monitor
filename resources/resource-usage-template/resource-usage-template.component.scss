@@ -1,0 +1,54 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+@import 'const';
+
+:host {
+    display: flex;
+    align-items: center;
+
+    .progress-box {
+        display: flex;
+        border: 1px solid $color-normal;
+        border-radius: 4px;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+
+        .progress-bar {
+            position: absolute;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: $color-accent;
+        }
+    
+        .value {
+            position: inherit;
+            background-color: transparentize($color: $color-gray-0, $amount: 0.25);
+            width: fit-content;
+            border-radius: 5px;
+            padding: 0px 10px;
+            margin: 2px auto;
+        }
+    }
+
+    .waiting {
+        margin-left: 8px;
+    }
+}

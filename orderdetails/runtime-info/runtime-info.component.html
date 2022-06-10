@@ -1,0 +1,21 @@
+<ng-container *ngIf="runtimeInfo">
+
+    <!-- iterations, like for-each or retries -->
+    <xfm-mon-iteration-runtime-info *ngIf="XoIterationContainer.of(runtimeInfo)"
+        [runtimeInfo]="runtimeInfo"
+        [lazyLoadingLimit]="lazyLoadingLimit"
+        [iterationDepth]="iterationDepth + 1"
+    ></xfm-mon-iteration-runtime-info>
+
+    <!-- ordinary steps -->
+    <xfm-mon-step-runtime-info *ngIf="XoStepRuntimeInfo.of(runtimeInfo)"
+        xc-i18n-context="step-runtime"
+        [runtimeInfo]="runtimeInfo"
+        [lazyLoadingLimit]="lazyLoadingLimit"
+    ></xfm-mon-step-runtime-info>
+
+</ng-container>
+
+<label *ngIf="!runtimeInfo" class="no-runtime-info" xc-i18n>
+    label-no-runtime
+</label>

@@ -1,0 +1,19 @@
+<!-- regular button -->
+<xc-button
+    *ngIf="visible && !icon"
+    [disabled]="disabled"
+    (click)="kill()"
+>
+    <xc-icon xc-icon-name="close" xc-i18n>button-kill</xc-icon>
+</xc-button>
+
+<!-- icon button -->
+<xc-icon-button
+    *ngIf="visible && icon"
+    [disabled]="disabled"
+    (click)="kill()"
+    xc-i18n
+    xc-tooltip="button-kill"
+    xc-icon-name="close"
+    color="color-black"
+></xc-icon-button>

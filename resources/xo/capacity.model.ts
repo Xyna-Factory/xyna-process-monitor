@@ -1,0 +1,47 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2022 GIP SmartMercial GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+import { XoArray, XoArrayClass, XoObjectClass, XoProperty } from '@zeta/api';
+import { XoResource } from './resource.model';
+
+
+@XoObjectClass(XoResource, 'xmcp.processmonitor.resources', 'Capacity')
+export class XoCapacity extends XoResource {
+
+    @XoProperty()
+    usage: number;
+
+    @XoProperty()
+    total: number;
+
+    @XoProperty()
+    isActive: boolean;
+
+
+    afterDecode() {
+        super.afterDecode();
+
+        this.usageTemplate.data.used = this.usage;
+        this.usageTemplate.data.total = this.total;
+
+        this.enabled = this.isActive;
+    }
+}
+
+
+@XoArrayClass(XoCapacity)
+export class XoCapacityArray extends XoArray<XoCapacity> {}
