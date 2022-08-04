@@ -23,7 +23,7 @@ import { AuthService } from '@zeta/auth';
 import { coerceBoolean } from '@zeta/base';
 import { XcDialogService } from '@zeta/xc';
 
-import { throwError } from 'rxjs/';
+import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 

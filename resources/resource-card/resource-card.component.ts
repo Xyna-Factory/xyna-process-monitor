@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inpu
 import { Router } from '@angular/router';
 import { ApiService } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
-import { Subscription } from 'rxjs/';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ResourceInfo } from '../resource-data-source';
 import { XoOrder } from '../xo/order.model';

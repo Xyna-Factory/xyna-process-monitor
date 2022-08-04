@@ -19,7 +19,7 @@ import { ChangeDetectorRef, Component, Injector, OnDestroy } from '@angular/core
 import { ApiService, Xo } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
 import { XcTabComponent } from '@zeta/xc';
-import { Subscription } from 'rxjs/';
+import { Subscription } from 'rxjs';
 import { resourcesTranslations_deDE } from './locale/resources-translations.de-DE';
 import { resourcesTranslations_enUS } from './locale/resources-translations.en-US';
 import { ResourceDataSource } from './resource-data-source';
