@@ -20,7 +20,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, E
 import { templateClassType } from '@zeta/base';
 import { XcDialogService } from '@zeta/xc';
 
-import { Observer, Subscription } from 'rxjs/';
+import { Observer, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { DocumentService } from '../../document.service';

@@ -26,7 +26,7 @@ import { XoRuntimeInfo } from '@pmod/xo/runtime-info.model';
 import { downloadFile, MimeTypes } from '@zeta/base';
 import { XcDialogService } from '@zeta/xc';
 
-import { BehaviorSubject, EMPTY, Observable } from 'rxjs/';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { XoCatchBranchRuntimeInfo } from './xo/catch-branch-runtime-info.model';

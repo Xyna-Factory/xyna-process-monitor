@@ -24,7 +24,7 @@ import { I18nService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
-import { fromEvent, Subscription } from 'rxjs/';
+import { fromEvent, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { RIGHT_PROCESS_MONITOR_LIVE_REPORTING, RIGHT_PROCESS_MONITOR_MI_MONITOR, RIGHT_PROCESS_MONITOR_ORDER_MONITOR, RIGHT_PROCESS_MONITOR_RESOURCE_MONITOR, RTC } from './const';

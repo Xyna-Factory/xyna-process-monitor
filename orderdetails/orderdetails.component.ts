@@ -38,7 +38,7 @@ import { templateClassType } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcMenuItem, XcTabComponent } from '@zeta/xc';
 
-import { Observable, of, Subscription } from 'rxjs/';
+import { Observable, of, Subscription } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
 import { DocumentService } from '../document.service';

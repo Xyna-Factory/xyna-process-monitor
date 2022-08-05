@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 
 import { IterationInfo, IterationInfoController } from '@pmod/xo/runtime-info.model';
 
-import { BehaviorSubject, Observable } from 'rxjs/';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { XoStepRuntimeInfo } from '../xo/step-runtime-info.model';
 
