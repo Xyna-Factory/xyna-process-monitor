@@ -18,9 +18,8 @@
 import { Component, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
-import { AuthService } from '@zeta/auth';
 import { I18nService } from '@zeta/i18n';
-import { XcDialogService, XcRemoteTableDataSource, XcTabComponent } from '@zeta/xc';
+import { XcRemoteTableDataSource, XcTabComponent } from '@zeta/xc';
 
 import { RTC } from '../const';
 import { DocumentService } from '../document.service';
@@ -50,9 +49,7 @@ export class OrderoverviewComponent extends XcTabComponent<string> {
         injector: Injector,
         i18nService: I18nService,
         private readonly apiService: ApiService,
-        private readonly authService: AuthService,
-        private readonly documentService: DocumentService,
-        private readonly dialogService: XcDialogService
+        private readonly documentService: DocumentService
     ) {
         super(injector);
 
