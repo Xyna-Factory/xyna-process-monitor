@@ -17,7 +17,7 @@
  */
 import { ChangeDetectorRef, Component, Injector, OnDestroy } from '@angular/core';
 import { ApiService, Xo } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcTabComponent } from '@zeta/xc';
 import { Subscription } from 'rxjs';
 import { resourcesTranslations_deDE } from './locale/resources-translations.de-DE';
@@ -45,8 +45,8 @@ export class ResourceOverviewComponent<T extends XoResource> extends XcTabCompon
     ) {
         super(injector);
 
-        i18n.setTranslations(I18nService.EN_US, resourcesTranslations_enUS);
-        i18n.setTranslations(I18nService.DE_DE, resourcesTranslations_deDE);
+        i18n.setTranslations(LocaleService.EN_US, resourcesTranslations_enUS);
+        i18n.setTranslations(LocaleService.DE_DE, resourcesTranslations_deDE);
         i18n.contextDismantlingSearch = true;
 
         this.subscriptions.push(this.getDataSource().dataChange.subscribe(() =>

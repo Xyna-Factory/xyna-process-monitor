@@ -18,7 +18,7 @@
 import { Component, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcRemoteTableDataSource, XcTabComponent } from '@zeta/xc';
 
 import { RTC } from '../const';
@@ -53,8 +53,8 @@ export class OrderoverviewComponent extends XcTabComponent<string> {
     ) {
         super(injector);
 
-        i18nService.setTranslations(I18nService.EN_US, orderoverviewTranslations_enUS);
-        i18nService.setTranslations(I18nService.DE_DE, orderoverviewTranslations_deDE);
+        i18nService.setTranslations(LocaleService.EN_US, orderoverviewTranslations_enUS);
+        i18nService.setTranslations(LocaleService.DE_DE, orderoverviewTranslations_deDE);
 
         const orderType = 'xmcp.processmonitor.GetOrderOverview';
         this.dataSource = new XcRemoteTableDataSource(apiService, i18nService, RTC, orderType);

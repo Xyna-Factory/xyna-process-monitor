@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector } from 
 import { Router } from '@angular/router';
 
 import { ApiService, Xo } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XoIncludeUnused, XoSearchFlagArray } from '../../xo/search-flag.model';
 import { resourcesTranslations_deDE } from '../locale/resources-translations.de-DE';
 import { resourcesTranslations_enUS } from '../locale/resources-translations.en-US';
@@ -58,8 +58,8 @@ export class CapacitiesComponent extends ResourceOverviewComponent<XoCapacity> {
     ) {
         super(injector, i18n, api, cdr);
 
-        i18n.setTranslations(I18nService.EN_US, resourcesTranslations_enUS);
-        i18n.setTranslations(I18nService.DE_DE, resourcesTranslations_deDE);
+        i18n.setTranslations(LocaleService.EN_US, resourcesTranslations_enUS);
+        i18n.setTranslations(LocaleService.DE_DE, resourcesTranslations_deDE);
 
         this.subscriptions.push(this.dataSource.dataChange.subscribe(() =>
             cdr.markForCheck()

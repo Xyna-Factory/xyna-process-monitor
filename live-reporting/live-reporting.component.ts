@@ -18,7 +18,7 @@
 import { Component, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcRemoteTableDataSource, XcTabBarItem, XcTabComponent, XoTableInfo } from '@zeta/xc';
 
 import { RTC } from '../const';
@@ -101,8 +101,8 @@ export class LiveReportingComponent extends XcTabComponent<string> {
     ) {
         super(injector);
 
-        i18nService.setTranslations(I18nService.EN_US, liveReportingTranslations_enUS);
-        i18nService.setTranslations(I18nService.DE_DE, liveReportingTranslations_deDE);
+        i18nService.setTranslations(LocaleService.EN_US, liveReportingTranslations_enUS);
+        i18nService.setTranslations(LocaleService.DE_DE, liveReportingTranslations_deDE);
 
         this.dataSource = new XcRemoteTableDataSource(apiService, i18nService, RTC, WF_GET_LIVE_REPORTING_ENTRIES);
         this.dataSource.output = XoFrequencyControlledTaskDetailsArray;

@@ -18,7 +18,7 @@
 import { ChangeDetectorRef, Component, Injector, OnInit, Optional, ViewChild } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcTabComponent } from '@zeta/xc';
 import { XoGraphDataArray, XoGraphInfo, XoTimeInterval, XoTimeIntervalArray } from '@zeta/xc/xc-graph/xc-remote-graph-data-source';
 import { XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
@@ -195,8 +195,8 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
     ) {
         super(injector);
 
-        i18nService.setTranslations(I18nService.EN_US, liveReportingDetailsTranslations_enUS);
-        i18nService.setTranslations(I18nService.DE_DE, liveReportingDetailsTranslations_deDE);
+        i18nService.setTranslations(LocaleService.EN_US, liveReportingDetailsTranslations_enUS);
+        i18nService.setTranslations(LocaleService.DE_DE, liveReportingDetailsTranslations_deDE);
 
         this.task = this.injectedData.data as XoFrequencyControlledTaskDetails;
         this._progressString = this.i18nService.translate('${started} of ${total} started'); // let's replace params by the components to save unnecessesary calculations

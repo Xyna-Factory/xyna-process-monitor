@@ -18,7 +18,7 @@
 import { Component, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcRemoteTableDataSource, XcTabComponent, XDSIconName, XoRemappingTableInfoClass, XoTableInfo } from '@zeta/xc';
 
 import { RTC } from '../const';
@@ -61,8 +61,8 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
     ) {
         super(injector);
 
-        i18nService.setTranslations(I18nService.EN_US, miMonitorTranslations_enUS);
-        i18nService.setTranslations(I18nService.DE_DE, miMonitorTranslations_deDE);
+        i18nService.setTranslations(LocaleService.EN_US, miMonitorTranslations_enUS);
+        i18nService.setTranslations(LocaleService.DE_DE, miMonitorTranslations_deDE);
 
         this.dataSource = new XcRemoteTableDataSource(apiService, i18nService, RTC, WF_GET_MI_ENTIES);
         this.dataSource.output = XoManualInteractionEntryArray;
