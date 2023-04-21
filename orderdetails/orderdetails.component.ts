@@ -35,7 +35,7 @@ import { XoXmomItem } from '@pmod/xo/xmom-item.model';
 import { FullQualifiedName, XoWorkspace } from '@zeta/api';
 import { XoXPRCApplication } from '@zeta/api/xo/runtime-context.model';
 import { templateClassType } from '@zeta/base';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcMenuItem, XcTabComponent } from '@zeta/xc';
 
 import { Observable, of, Subscription } from 'rxjs';
@@ -96,8 +96,8 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
     ) {
         super(injector);
 
-        i18n.setTranslations(I18nService.EN_US, orderdetailsTranslations_enUS);
-        i18n.setTranslations(I18nService.DE_DE, orderdetailsTranslations_deDE);
+        i18n.setTranslations(LocaleService.EN_US, orderdetailsTranslations_enUS);
+        i18n.setTranslations(LocaleService.DE_DE, orderdetailsTranslations_deDE);
 
         this.menuItems.push(
             <XcMenuItem>{

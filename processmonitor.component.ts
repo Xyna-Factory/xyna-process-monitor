@@ -15,12 +15,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Injector, LOCALE_ID, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 import { ApiService } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
@@ -69,7 +69,6 @@ export class ProcessmonitorComponent extends RouteComponent {
 
 
     constructor(
-        injector: Injector,
         private readonly authService: AuthService,
         private readonly apiService: ApiService,
         private readonly dialogService: XcDialogService,
@@ -81,9 +80,8 @@ export class ProcessmonitorComponent extends RouteComponent {
     ) {
         super();
 
-        i18n.setTranslations(I18nService.EN_US, pmonTranslations_enUS);
-        i18n.setTranslations(I18nService.DE_DE, pmonTranslations_deDE);
-        i18n.language = injector.get(LOCALE_ID) ?? I18nService.EN_US;
+        i18n.setTranslations(LocaleService.EN_US, pmonTranslations_enUS);
+        i18n.setTranslations(LocaleService.DE_DE, pmonTranslations_deDE);
 
         // add default tabs
         if (authService.hasRight(RIGHT_PROCESS_MONITOR_ORDER_MONITOR)) {
