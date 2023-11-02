@@ -145,7 +145,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
                         this.refresh();
                     }
                 },
-                error => { console.error('Error: ', error); }
+                error => console.error('Error: ', error)
             );
         }
     }
@@ -187,7 +187,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
                         this.refresh();
                     }
                 },
-                error => { console.error('Error: ', error); }
+                error => console.error('Error: ', error)
             );
         }
     }
@@ -230,7 +230,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
                         this.refresh();
                     }
                 },
-                error => { console.error('Error: ', error); }
+                error => console.error('Error: ', error)
             );
         }
     }
