@@ -101,7 +101,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
         this.menuItems.push(
             <XcMenuItem>{
-                name: 'Open in new Tab', translate: true,
+                name: 'Open in Process Modeller', translate: true,
                 visible: () => true,
                 click: () => {
                     pmodDocumentService.loadWorkflow(this.workflow.toRtc(), this.workflow.toFqn());
