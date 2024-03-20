@@ -135,8 +135,8 @@ export const orderdetailsTranslations_enUS: I18nTranslation[] = [
         value: 'Open'
     },
     {
-        key: 'pmon.orderdetails.audit-details.tooltip-open-in-new-tab',
-        value: 'Open in new Tab'
+        key: 'pmon.orderdetails.audit-details.tooltip-open-in-process-modeller',
+        value: 'Open in Process Modeller'
     },
     {
         key: 'pmon.orderdetails.audit-details.label-end-time',
