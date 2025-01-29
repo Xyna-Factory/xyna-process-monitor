@@ -26,7 +26,8 @@ import { DataSourceUpdateInterval, LiveReportingDataSourceName } from '../classe
 @Component({
     selector: 'live-reporting-plot',
     templateUrl: './live-reporting-plot.component.html',
-    styleUrls: ['./live-reporting-plot.component.scss']
+    styleUrls: ['./live-reporting-plot.component.scss'],
+    standalone: false
 })
 export class LiveReportingPlotComponent {
 

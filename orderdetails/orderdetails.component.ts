@@ -57,7 +57,8 @@ import { orderdetailsTranslations_enUS } from './locale/orderdetails-translation
     selector: 'xfm-mon-orderdetails',
     templateUrl: './orderdetails.component.html',
     styleUrls: ['./orderdetails.component.scss'],
-    providers: [SelectionService, AuditService, WorkflowDetailLevelService]
+    providers: [SelectionService, AuditService, WorkflowDetailLevelService],
+    standalone: false
 })
 export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewEntry> {
 

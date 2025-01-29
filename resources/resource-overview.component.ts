@@ -29,7 +29,8 @@ import { XoResource } from './xo/resource.model';
 
 
 @Component({
-    template: ''
+    template: '',
+    standalone: false
 })
 export class ResourceOverviewComponent<T extends XoResource> extends XcTabComponent<string> implements OnDestroy {
 

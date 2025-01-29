@@ -32,7 +32,8 @@ import { XoResource } from '../xo/resource.model';
     selector: 'xfm-mon-resource-card',
     templateUrl: './resource-card.component.html',
     styleUrls: ['./resource-card.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ResourceCardComponent implements OnDestroy {
 

@@ -41,7 +41,8 @@ export interface OpenAuditData {
     selector: 'xfm-mon-audit-details',
     templateUrl: './audit-details.component.html',
     styleUrls: ['./audit-details.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
 
