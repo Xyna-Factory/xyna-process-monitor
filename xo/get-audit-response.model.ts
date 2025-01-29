@@ -77,7 +77,7 @@ export class XoGetAuditResponse extends XoResponse {
         // set OrderId of enclosing Workflow-Runtime Info, because the backend data type doesn't set this data
         const workflowRuntimeInfo = this.info.data.find(info => info instanceof XoWorkflowRuntimeInfo);
         if (workflowRuntimeInfo) {
-            (workflowRuntimeInfo as XoWorkflowRuntimeInfo).orderId = this.orderId;
+            (workflowRuntimeInfo).orderId = this.orderId;
         }
     }
 }

@@ -16,4 +16,4 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 export const ProcessMonitorName = 'Process Monitor';
-export const ProcessMonitorVersion = '2.1.0';
+export const ProcessMonitorVersion = '2.2.0';
