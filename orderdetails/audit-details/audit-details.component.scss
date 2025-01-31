@@ -25,7 +25,7 @@ $auditdetails-status-color: unset !default;
 $auditdetails-status-background-color: unset !default;
 
 
-@import 'const';
+@use '../../const' as *;
 
 
 :host {
