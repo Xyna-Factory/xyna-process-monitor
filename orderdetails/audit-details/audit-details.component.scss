@@ -15,15 +15,6 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-$auditdetails-color: unset !default;
-$auditdetails-label-color: unset !default;
-$auditdetails-font-size: unset !default;
-$auditdetails-label-font-size: unset !default;
-$auditdetails-background-color: unset !default;
-$auditdetails-border-color: unset !default;
-$auditdetails-status-color: unset !default;
-$auditdetails-status-background-color: unset !default;
-
 
 @use '../../const' as *;
 
@@ -101,7 +92,7 @@ $auditdetails-status-background-color: unset !default;
 
                         &.error {
                             background-color: $color-warn;
-                            color: $color-white;
+                            color: $color-normal;
                         }
 
                         &:empty {
