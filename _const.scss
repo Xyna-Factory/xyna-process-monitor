@@ -15,14 +15,16 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
- @import '../../zeta/const';
+ @forward "../../const";
+ @use "../../const" as *;
+
 
 
 /****************************************************
  * Process Monitor Variables
  ****************************************************/
 
-@if $theme == xyna {
+@if $theme ==xyna {
     $auditstep-background-color: $color-black;
     $auditstep-border-color: $color-black;
     $auditstep-label-color: $color-white;
@@ -40,7 +42,9 @@
     $auditdetails-input-background-color: #424244;
     $auditdetails-output-background-color: #424244;
     $auditdetails-error-background-color: #424244;
-} @else {
+}
+
+@else {
     $auditstep-background-color: $color-black;
     $auditstep-border-color: $color-black;
     $auditstep-label-color: $color-white;
