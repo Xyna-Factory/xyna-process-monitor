@@ -1,44 +1,50 @@
-<xc-panel *ngIf="this.resourceInfo.resource"
+@if (this.resourceInfo.resource) {
+  <xc-panel
     xc-panel-collapsable
     [(xc-panel-collapsed)]="this.resourceInfo.collapsed"
->
+    >
     <header>
-        <label class="name">{{resource.name}}<label *ngIf="!this.resourceInfo.resource.enabled" class="active-state" xc-i18n>resource-inactive</label></label>
-        <xc-template class="usage" [xc-template-instance]="resourceInfo.resource.usageTemplate"></xc-template>
-        <aside class="items-right aside">
-            <div class="order-ids">
-                <label *ngFor="let orderId of resource.runningOrders"
-                    class="order-id"
-                    (click)="openAudit('' + orderId)"
-                    (mouseup)="$event.stopImmediatePropagation()"
-                    xc-tooltip="{{'tooltip-open-audit' | xcI18n}}"
-                >{{orderId}}</label>
-            </div>
-        </aside>
+      <label class="name">{{resource.name}}@if (!this.resourceInfo.resource.enabled) {
+        <label class="active-state" xc-i18n>resource-inactive</label>
+      }</label>
+      <xc-template class="usage" [xc-template-instance]="resourceInfo.resource.usageTemplate"></xc-template>
+      <aside class="items-right aside">
+        <div class="order-ids">
+          @for (orderId of resource.runningOrders; track orderId) {
+            <label
+              class="order-id"
+              (click)="openAudit('' + orderId)"
+              (mouseup)="$event.stopImmediatePropagation()"
+              xc-tooltip="{{'tooltip-open-audit' | xcI18n}}"
+            >{{orderId}}</label>
+          }
+        </div>
+      </aside>
     </header>
     <section>
-        <xc-table [xc-table-datasource]="resourceInfo?.ordersDataSource"
-            xc-table-allowsort
-            xc-table-allowfilter
-            xc-table-allowselect
-            xc-table-multiselect
-            xc-table-allowactivate
-            xc-table-lazyupdate
-        ></xc-table>
+      <xc-table [xc-table-datasource]="resourceInfo?.ordersDataSource"
+        xc-table-allowsort
+        xc-table-allowfilter
+        xc-table-allowselect
+        xc-table-multiselect
+        xc-table-allowactivate
+        xc-table-lazyupdate
+      ></xc-table>
     </section>
     <footer>
-        <xfm-mon-kill-order-button
-            [disabled]="selectedOrders.length === 0"
-            [orderIds]="orderIds"
-            (refresh)="refresh()"
-        ></xfm-mon-kill-order-button>
-        <xc-button
-            [disabled]="selectedOrders.length !== 1"
-            (click)="openAudit(selectedOrders[0].id)"
-            xc-i18n
-        >show-details</xc-button>
-        <div class="items-right">
-            <ng-content select="[footer-content]"></ng-content>
-        </div>
+      <xfm-mon-kill-order-button
+        [disabled]="selectedOrders.length === 0"
+        [orderIds]="orderIds"
+        (refresh)="refresh()"
+      ></xfm-mon-kill-order-button>
+      <xc-button
+        [disabled]="selectedOrders.length !== 1"
+        (click)="openAudit(selectedOrders[0].id)"
+        xc-i18n
+      >show-details</xc-button>
+      <div class="items-right">
+        <ng-content select="[footer-content]"></ng-content>
+      </div>
     </footer>
-</xc-panel>
+  </xc-panel>
+}

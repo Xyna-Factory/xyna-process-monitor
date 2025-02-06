@@ -1,19 +1,21 @@
 <!-- regular button -->
-<xc-button
-    *ngIf="visible && !icon"
+@if (visible && !icon) {
+  <xc-button
     [disabled]="disabled"
     (click)="kill()"
->
+    >
     <xc-icon xc-icon-name="close" xc-i18n>button-kill</xc-icon>
-</xc-button>
+  </xc-button>
+}
 
 <!-- icon button -->
-<xc-icon-button
-    *ngIf="visible && icon"
+@if (visible && icon) {
+  <xc-icon-button
     [disabled]="disabled"
     (click)="kill()"
     xc-i18n
     xc-tooltip="button-kill"
     xc-icon-name="close"
     color="color-black"
-></xc-icon-button>
+  ></xc-icon-button>
+}

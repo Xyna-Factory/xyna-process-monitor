@@ -1,81 +1,131 @@
-<div class="info zeta-scrollbar" *ngIf="runtimeInfo">
+@if (runtimeInfo) {
+  <div class="info zeta-scrollbar">
     <ng-template #noitem>
-        <div class="item">
-            <label class="label"></label>
-            <label class="value"></label>
-        </div>
+      <div class="item">
+        <label class="label"></label>
+        <label class="value"></label>
+      </div>
     </ng-template>
     <div class="row">
-        <div *ngIf="runtimeInfo.runningTime?.startDateTime; else noitem" class="item">
-            <label class="label" xc-i18n>label-start-time</label>
-            <label class="value" xc-tooltip="UTC: {{runtimeInfo.runningTime.startDateTimeUTC}}" xc-tooltip-position="top">{{runtimeInfo.runningTime.startDateTime}}</label>
-        </div>
+      @if (runtimeInfo.runningTime?.startDateTime) {
         <div class="item">
-            <label class="label" xc-i18n>label-step-id</label>
-            <label class="value">{{runtimeInfo.id}}</label>
+          <label class="label" xc-i18n>label-start-time</label>
+          <label class="value" xc-tooltip="UTC: {{runtimeInfo.runningTime.startDateTimeUTC}}" xc-tooltip-position="top">{{runtimeInfo.runningTime.startDateTime}}</label>
         </div>
-        <div class="item" *ngIf="XoStepRuntimeInfo.of(runtimeInfo) && runtimeInfo.executionRTC; else noitem">
-            <label class="label" xc-i18n>label-execution-rtc</label>
-            <label class="value" [xc-tooltip]="runtimeInfo.executionRTC" xc-tooltip-position="top">{{runtimeInfo.executionRTC}}</label>
+      } @else {
+        <div class="item">
+          <label class="label"></label>
+          <label class="value"></label>
         </div>
-        <div class="item" *ngIf="(XoServiceRuntimeInfo.of(runtimeInfo) || XoWorkflowRuntimeInfo.of(runtimeInfo)) && runtimeInfo.orderId && runtimeInfo.orderId !== '0'; else noitem">
-            <label class="label" xc-i18n>label-order-id</label>
-            <label class="value" [class.order-id]="!disabled && runtimeInfo.orderId !== workflowOrderId"
-                [xc-tooltip]="!disabled && runtimeInfo.orderId !== workflowOrderId ? ('tooltip-open' | xcI18n) : ''" xc-tooltip-position="top"
-                (click)="openAudit.emit({sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId})"
-            >{{runtimeInfo.orderId}}</label>
-            <xc-icon-button *ngIf="runtimeInfo.orderId !== workflowOrderId" [disabled]="disabled"
-                xc-icon-size="small" xc-icon-name="external" color="color-black"
-                xc-i18n
-                xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
-                (click)="openAudit.emit({sameTab: false, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId})"
+      }
+      <div class="item">
+        <label class="label" xc-i18n>label-step-id</label>
+        <label class="value">{{runtimeInfo.id}}</label>
+      </div>
+      @if (XoStepRuntimeInfo.of(runtimeInfo) && runtimeInfo.executionRTC) {
+        <div class="item">
+          <label class="label" xc-i18n>label-execution-rtc</label>
+          <label class="value" [xc-tooltip]="runtimeInfo.executionRTC" xc-tooltip-position="top">{{runtimeInfo.executionRTC}}</label>
+        </div>
+      } @else {
+        <div class="item">
+          <label class="label"></label>
+          <label class="value"></label>
+        </div>
+      }
+      @if ((XoServiceRuntimeInfo.of(runtimeInfo) || XoWorkflowRuntimeInfo.of(runtimeInfo)) && runtimeInfo.orderId && runtimeInfo.orderId !== '0') {
+        <div class="item">
+          <label class="label" xc-i18n>label-order-id</label>
+          <label class="value" [class.order-id]="!disabled && runtimeInfo.orderId !== workflowOrderId"
+            [xc-tooltip]="!disabled && runtimeInfo.orderId !== workflowOrderId ? ('tooltip-open' | xcI18n) : ''" xc-tooltip-position="top"
+            (click)="openAudit.emit({sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId})"
+          >{{runtimeInfo.orderId}}</label>
+          @if (runtimeInfo.orderId !== workflowOrderId) {
+            <xc-icon-button [disabled]="disabled"
+              xc-icon-size="small" xc-icon-name="external" color="color-black"
+              xc-i18n
+              xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
+              (click)="openAudit.emit({sameTab: false, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId})"
             ></xc-icon-button>
+          }
         </div>
+      } @else {
+        <div class="item">
+          <label class="label"></label>
+          <label class="value"></label>
+        </div>
+      }
     </div>
     <div class="row">
-        <div *ngIf="runtimeInfo.runningTime?.lastUpdateDateTime; else noitem" class="item">
-            <label class="label" xc-i18n>label-end-time</label>
-            <label class="value" xc-tooltip="UTC: {{runtimeInfo.runningTime.lastUpdateDateTimeUTC}}" xc-tooltip-position="top">{{runtimeInfo.runningTime.lastUpdateDateTime}}</label>
-        </div>
+      @if (runtimeInfo.runningTime?.lastUpdateDateTime) {
         <div class="item">
-            <label class="label" xc-i18n>label-status</label>
-            <label class="value"><span class="status" [class.error]="runtimeInfo.status === 'Failed'">{{runtimeInfo.status}}</span></label>
-            <xfm-mon-kill-order-button icon
-                xc-i18n-context="kill-order-button"
-                [disabled]="!runtimeInfo.isKillable"
-                [orderIds]="[workflowOrderId]"
-                (refresh)="refresh()"
-            ></xfm-mon-kill-order-button>
+          <label class="label" xc-i18n>label-end-time</label>
+          <label class="value" xc-tooltip="UTC: {{runtimeInfo.runningTime.lastUpdateDateTimeUTC}}" xc-tooltip-position="top">{{runtimeInfo.runningTime.lastUpdateDateTime}}</label>
         </div>
-        <div class="item" *ngIf="XoStepRuntimeInfo.of(runtimeInfo) && runtimeInfo.originalRTC; else noitem">
-            <label class="label" xc-i18n>label-origin-rtc</label>
-            <label class="value" [xc-tooltip]="runtimeInfo.originalRTC" xc-tooltip-position="top">{{runtimeInfo.originalRTC}}</label>
-        </div>
-        <div class="item" *ngIf="parentOrderId && parentOrderId !== '0'; else noitem">
-            <label class="label" xc-i18n>label-parent-order-id</label>
-            <label class="value" [class.order-id]="!disabled"
-                [xc-tooltip]="(!disabled ? 'tooltip-open' : '') | xcI18n" xc-tooltip-position="top"
-                (click)="openAudit.emit({orderId: parentOrderId, sameTab: true})"
-            >{{parentOrderId}}</label>
-            <xc-icon-button
-                xc-icon-size="small" xc-icon-name="external" color="color-black" [disabled]="disabled"
-                xc-i18n
-                xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
-                (click)="openAudit.emit({orderId: parentOrderId, sameTab: false})"
-            ></xc-icon-button>
-        </div>
-    </div>
-    <div *ngIf="runtimeInfo.runningTime?.duration" class="row">
+      } @else {
         <div class="item">
-            <label class="label" xc-i18n>label-duration</label>
-            <label class="value">{{runtimeInfo.runningTime.duration}}</label>
+          <label class="label"></label>
+          <label class="value"></label>
+        </div>
+      }
+      <div class="item">
+        <label class="label" xc-i18n>label-status</label>
+        <label class="value"><span class="status" [class.error]="runtimeInfo.status === 'Failed'">{{runtimeInfo.status}}</span></label>
+        <xfm-mon-kill-order-button icon
+          xc-i18n-context="kill-order-button"
+          [disabled]="!runtimeInfo.isKillable"
+          [orderIds]="[workflowOrderId]"
+          (refresh)="refresh()"
+        ></xfm-mon-kill-order-button>
+      </div>
+      @if (XoStepRuntimeInfo.of(runtimeInfo) && runtimeInfo.originalRTC) {
+        <div class="item">
+          <label class="label" xc-i18n>label-origin-rtc</label>
+          <label class="value" [xc-tooltip]="runtimeInfo.originalRTC" xc-tooltip-position="top">{{runtimeInfo.originalRTC}}</label>
+        </div>
+      } @else {
+        <div class="item">
+          <label class="label"></label>
+          <label class="value"></label>
+        </div>
+      }
+      @if (parentOrderId && parentOrderId !== '0') {
+        <div class="item">
+          <label class="label" xc-i18n>label-parent-order-id</label>
+          <label class="value" [class.order-id]="!disabled"
+            [xc-tooltip]="(!disabled ? 'tooltip-open' : '') | xcI18n" xc-tooltip-position="top"
+            (click)="openAudit.emit({orderId: parentOrderId, sameTab: true})"
+          >{{parentOrderId}}</label>
+          <xc-icon-button
+            xc-icon-size="small" xc-icon-name="external" color="color-black" [disabled]="disabled"
+            xc-i18n
+            xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
+            (click)="openAudit.emit({orderId: parentOrderId, sameTab: false})"
+          ></xc-icon-button>
+        </div>
+      } @else {
+        <div class="item">
+          <label class="label"></label>
+          <label class="value"></label>
+        </div>
+      }
+    </div>
+    @if (runtimeInfo.runningTime?.duration) {
+      <div class="row">
+        <div class="item">
+          <label class="label" xc-i18n>label-duration</label>
+          <label class="value">{{runtimeInfo.runningTime.duration}}</label>
         </div>
         <ng-container *ngTemplateOutlet="noitem"></ng-container>
         <ng-container *ngTemplateOutlet="noitem"></ng-container>
         <ng-container *ngTemplateOutlet="noitem"></ng-container>
-    </div>
-</div>
+      </div>
+    }
+  </div>
+}
 <div class="spacer"></div>
-<div class="action" *ngIf="runtimeInfo">
+@if (runtimeInfo) {
+  <div class="action">
     <xc-button (click)="exportAudit()" [disabled]="disabled" xc-i18n>button-export-audit</xc-button>
-</div>
+  </div>
+}

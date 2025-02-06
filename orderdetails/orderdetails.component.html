@@ -1,81 +1,89 @@
 <section class="main" [class.details-expanded]="detailsExpanded" xc-i18n-context="pmon.orderdetails">
-    <div *ngIf="workflow" class="workflow-container" dataflow-container>
-        <dataflow *ngIf="dataflowReady"
-            [dataflow]="dataflow"
-            [workflow]="workflow"
+  @if (workflow) {
+    <div class="workflow-container" dataflow-container>
+      @if (dataflowReady) {
+        <dataflow
+          [dataflow]="dataflow"
+          [workflow]="workflow"
         ></dataflow>
-        <variable-area-document
-            [variableArea]="workflow.inputArea" xc-variable-area-kind="input-area"
-            [documentModel]="document"
-        ></variable-area-document>
-        <type-label-area
-            [typeLabelArea]="workflow.typeLabelArea"
-            [menuItems]="menuItems"
-            [menuTemplateRef]="menuTemplate"
-            [documentModel]="document"
-        ></type-label-area>
-        <workflow
-            [workflow]="workflow"
-            [documentModel]="document"
-            (initialized)="workflowInitialized($event)"
-            class="zeta-scrollbar"
-        ></workflow>
-        <exception-handling-area
-            [exceptionHandlingArea]="workflow.exceptionHandlingArea"
-            [documentModel]="document"
-        ></exception-handling-area>
-        <variable-area-document
-            [variableArea]="workflow.outputArea" xc-variable-area-kind="output-area"
-            [documentModel]="document"
-        ></variable-area-document>
+      }
+      <variable-area-document
+        [variableArea]="workflow.inputArea" xc-variable-area-kind="input-area"
+        [documentModel]="document"
+      ></variable-area-document>
+      <type-label-area
+        [typeLabelArea]="workflow.typeLabelArea"
+        [menuItems]="menuItems"
+        [menuTemplateRef]="menuTemplate"
+        [documentModel]="document"
+      ></type-label-area>
+      <workflow
+        [workflow]="workflow"
+        [documentModel]="document"
+        (initialized)="workflowInitialized($event)"
+        class="zeta-scrollbar"
+      ></workflow>
+      <exception-handling-area
+        [exceptionHandlingArea]="workflow.exceptionHandlingArea"
+        [documentModel]="document"
+      ></exception-handling-area>
+      <variable-area-document
+        [variableArea]="workflow.outputArea" xc-variable-area-kind="output-area"
+        [documentModel]="document"
+      ></variable-area-document>
     </div>
-    <label xc-i18n *ngIf="!workflow" class="no-audit-available">
-        label-no-data
+  }
+  @if (!workflow) {
+    <label xc-i18n class="no-audit-available">
+      label-no-data
     </label>
-    <xfm-mon-audit-details
-        xc-i18n-context="audit-details"
-        [fqn]="workflowFqn"
-        [workflowOrderId]="workflow?.orderId"
-        [parentOrderId]="parentOrderId"
-        [disabled]="isImportedAudit"
-        (openAudit)="openAudit($event)"
-        class="details-footer"
-        (refreshAudit)="refreshAudit()"
-    ></xfm-mon-audit-details>
+  }
+  <xfm-mon-audit-details
+    xc-i18n-context="audit-details"
+    [fqn]="workflowFqn"
+    [workflowOrderId]="workflow?.orderId"
+    [parentOrderId]="parentOrderId"
+    [disabled]="isImportedAudit"
+    (openAudit)="openAudit($event)"
+    class="details-footer"
+    (refreshAudit)="refreshAudit()"
+  ></xfm-mon-audit-details>
 </section>
 <xc-panel class="details-right" [class.expanded]="detailsExpanded" xc-i18n-context="pmon.orderdetails">
-    <header>
-        <xc-icon-button
-            xc-i18n
-            xc-icon-name="{{detailsExpanded ? 'arrowright' : 'arrowleft'}}" xc-icon-size="small" color="color-white"
-            xc-tooltip="tooltip-expand-shrink-details"
-            (click)="detailsExpanded = !detailsExpanded"
-        ></xc-icon-button>
-        <h1 xc-i18n>header-details</h1>
-        <div class="items-right">
-            <xc-icon-button (click)="refreshAudit()" xc-tooltip="Refresh Audit" xc-icon-tooltip="Refresh" class="refresh" xc-icon-name="reload"></xc-icon-button>
-        </div>
-    </header>
-    <section class="stretch scroll zeta-scrollbar">
-        <xfm-mon-runtime-info
-            xc-i18n-context="runtime-info"
-            [runtimeInfo]="runtimeInfo"
-            [iterationDepth]="0"
-            [lazyLoadingLimit]="lazyLoadingLimit"
-        ></xfm-mon-runtime-info>
-    </section>
-</xc-panel>
-<div *ngIf="pending" class="pending">
-    <xc-spinner color="primary"></xc-spinner>
-</div>
-<ng-template #menuTemplate>
+  <header>
     <xc-icon-button
-        *xc-menu-service="showMenu; let menuService"
-        [xc-menu-trigger]="menuService.component"
-        (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
-        xc-icon-name="misc-contextmenu"
-        xc-icon-style="modeller"
-        xc-icon-size="small"
-        class="menu-button"
+      xc-i18n
+      xc-icon-name="{{detailsExpanded ? 'arrowright' : 'arrowleft'}}" xc-icon-size="small" color="color-white"
+      xc-tooltip="tooltip-expand-shrink-details"
+      (click)="detailsExpanded = !detailsExpanded"
     ></xc-icon-button>
+    <h1 xc-i18n>header-details</h1>
+    <div class="items-right">
+      <xc-icon-button (click)="refreshAudit()" xc-tooltip="Refresh Audit" xc-icon-tooltip="Refresh" class="refresh" xc-icon-name="reload"></xc-icon-button>
+    </div>
+  </header>
+  <section class="stretch scroll zeta-scrollbar">
+    <xfm-mon-runtime-info
+      xc-i18n-context="runtime-info"
+      [runtimeInfo]="runtimeInfo"
+      [iterationDepth]="0"
+      [lazyLoadingLimit]="lazyLoadingLimit"
+    ></xfm-mon-runtime-info>
+  </section>
+</xc-panel>
+@if (pending) {
+  <div class="pending">
+    <xc-spinner color="primary"></xc-spinner>
+  </div>
+}
+<ng-template #menuTemplate>
+  <xc-icon-button
+    *xc-menu-service="showMenu; let menuService"
+    [xc-menu-trigger]="menuService.component"
+    (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
+    xc-icon-name="misc-contextmenu"
+    xc-icon-style="modeller"
+    xc-icon-size="small"
+    class="menu-button"
+  ></xc-icon-button>
 </ng-template>
