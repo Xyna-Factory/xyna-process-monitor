@@ -1,107 +1,106 @@
 <xc-master-detail
-    [xc-master-detail-opened]="task"
-    xc-master-detail-side-area-size="small"
-    xc-i18n-context="pmon.live-reporting-details"
->
-    <xc-panel master>
-        <header>
-            <h1 class="items-left" xc-i18n>header-live-reporting-task</h1>
-            <div class="items-right">
-                <xc-icon-button xc-tooltip="icon-refresh" xc-i18n class="refresh" xc-icon-name="reload" (click)="refresh()"></xc-icon-button>
-            </div>
-        </header>
-        <section class="stretch scroll">
+  [xc-master-detail-opened]="task"
+  xc-master-detail-side-area-size="small"
+  xc-i18n-context="pmon.live-reporting-details"
+  >
+  <xc-panel master>
+    <header>
+      <h1 class="items-left" xc-i18n>header-live-reporting-task</h1>
+      <div class="items-right">
+        <xc-icon-button xc-tooltip="icon-refresh" xc-i18n class="refresh" xc-icon-name="reload" (click)="refresh()"></xc-icon-button>
+      </div>
+    </header>
+    <section class="stretch scroll">
 
-            <div [ngClass]="getPlotClass()">
+      <div [ngClass]="getPlotClass()">
 
-                <ng-container *ngIf="executionResponseTimePlotFlag">
-                    <live-reporting-plot #executionResponseTimePlot [name]="LiveReportingDataSourceName.ExecutionResponseTime"
-                        (requestDataChange)="requestData($event)"></live-reporting-plot>
-                </ng-container>
+        @if (executionResponseTimePlotFlag) {
+          <live-reporting-plot #executionResponseTimePlot [name]="LiveReportingDataSourceName.ExecutionResponseTime"
+          (requestDataChange)="requestData($event)"></live-reporting-plot>
+        }
 
-                <ng-container *ngIf="failedPlotFlag">
-                    <live-reporting-plot #failedPlot [name]="LiveReportingDataSourceName.Failed"
-                        (requestDataChange)="requestData($event)"></live-reporting-plot>
-                </ng-container>
+        @if (failedPlotFlag) {
+          <live-reporting-plot #failedPlot [name]="LiveReportingDataSourceName.Failed"
+          (requestDataChange)="requestData($event)"></live-reporting-plot>
+        }
 
-                <ng-container *ngIf="failedRatePlotFlag">
-                    <live-reporting-plot #failedRatePlot [name]="LiveReportingDataSourceName.FailedRate"
-                        (requestDataChange)="requestData($event)"></live-reporting-plot>
-                </ng-container>
+        @if (failedRatePlotFlag) {
+          <live-reporting-plot #failedRatePlot [name]="LiveReportingDataSourceName.FailedRate"
+          (requestDataChange)="requestData($event)"></live-reporting-plot>
+        }
 
-                <ng-container *ngIf="finishedPlotFlag">
-                    <live-reporting-plot #finishedPlot [name]="LiveReportingDataSourceName.Finished"
-                        (requestDataChange)="requestData($event)"></live-reporting-plot>
-                </ng-container>
+        @if (finishedPlotFlag) {
+          <live-reporting-plot #finishedPlot [name]="LiveReportingDataSourceName.Finished"
+          (requestDataChange)="requestData($event)"></live-reporting-plot>
+        }
 
-                <ng-container *ngIf="finishedRatePlotFlag">
-                    <live-reporting-plot #finishedRatePlot [name]="LiveReportingDataSourceName.FinishedRate"
-                        (requestDataChange)="requestData($event)"></live-reporting-plot>
-                </ng-container>
+        @if (finishedRatePlotFlag) {
+          <live-reporting-plot #finishedRatePlot [name]="LiveReportingDataSourceName.FinishedRate"
+          (requestDataChange)="requestData($event)"></live-reporting-plot>
+        }
 
-                <ng-container *ngIf="overallResponseTimePlotFlag">
-                    <live-reporting-plot #overallResponseTimePlot [name]="LiveReportingDataSourceName.OverallResponseTime"
-                        (requestDataChange)="requestData($event)"></live-reporting-plot>
-                </ng-container>
+        @if (overallResponseTimePlotFlag) {
+          <live-reporting-plot #overallResponseTimePlot [name]="LiveReportingDataSourceName.OverallResponseTime"
+          (requestDataChange)="requestData($event)"></live-reporting-plot>
+        }
 
-                <ng-container *ngIf="runningPlotFlag">
-                    <live-reporting-plot #runningPlot [name]="LiveReportingDataSourceName.Running"
-                        (requestDataChange)="requestData($event)"></live-reporting-plot>
-                </ng-container>
+        @if (runningPlotFlag) {
+          <live-reporting-plot #runningPlot [name]="LiveReportingDataSourceName.Running"
+          (requestDataChange)="requestData($event)"></live-reporting-plot>
+        }
 
-                <ng-container *ngIf="waitingPlotFlag">
-                    <live-reporting-plot #waitingPlot [name]="LiveReportingDataSourceName.Waiting"
-                        (requestDataChange)="requestData($event)"></live-reporting-plot>
-                </ng-container>
+        @if (waitingPlotFlag) {
+          <live-reporting-plot #waitingPlot [name]="LiveReportingDataSourceName.Waiting"
+          (requestDataChange)="requestData($event)"></live-reporting-plot>
+        }
 
-            </div>
+      </div>
 
-        </section>
-        <footer></footer>
+    </section>
+    <footer></footer>
+  </xc-panel>
+  @if (task) {
+    <xc-panel detail>
+      <header>
+        <h2 class="items-left"><b class="with-colon" xc-i18n>header-task-id</b><b>{{task.taskId.id}}</b></h2>
+      </header>
+      <section xc-form class="stretch scroll">
+        <div class="definition"><label xc-i18n>label-task-name</label><span>{{task.label}}</span></div>
+        <div class="definition"><label xc-i18n>label-task-type</label><span>{{task.eventCreationInfo}}</span></div>
+        <div class="definition"><label xc-i18n>label-status</label><span>{{task.taskStatus}}</span></div>
+        <div role="presentation" class="horizontal-space"></div>
+        <div class="definition"><label xc-i18n>label-start-time</label><span>{{task.startTimeString}}</span></div>
+        <div class="definition"><label xc-i18n>label-end-time</label><span>{{task.stopTimeString}}</span></div>
+        <xc-button (click)="cancel()" xc-i18n>button-cancel</xc-button>
+        <xc-panel>
+          <section>
+            <xc-form-label><span class="with-colon" xc-i18n>label-progress</span>{{progressString}}</xc-form-label>
+            <xc-form-label><span class="with-colon" xc-i18n>label-running-events</span>{{task.runningEvents}}</xc-form-label>
+            <xc-form-label><span class="with-colon" xc-i18n>label-finished-events</span>{{task.finishedEvents}}</xc-form-label>
+            <xc-form-label><span class="with-colon" xc-i18n>label-failed-events</span>{{task.failedEvents}}</xc-form-label>
+          </section>
+        </xc-panel>
+        <xc-panel class="data-source-box">
+          <header><h3 xc-i18n>header-data-sources</h3></header>
+          <section>
+            <xc-checkbox [(checked)]="executionResponseTimePlotFlag" [label]="LiveReportingDataSourceName.ExecutionResponseTime"></xc-checkbox>
+            <xc-checkbox [(checked)]="failedPlotFlag" [label]="LiveReportingDataSourceName.Failed"></xc-checkbox>
+            <xc-checkbox [(checked)]="failedRatePlotFlag" [label]="LiveReportingDataSourceName.FailedRate"></xc-checkbox>
+            <xc-checkbox [(checked)]="finishedPlotFlag" [label]="LiveReportingDataSourceName.Finished"></xc-checkbox>
+            <xc-checkbox [(checked)]="finishedRatePlotFlag" [label]="LiveReportingDataSourceName.FinishedRate"></xc-checkbox>
+            <xc-checkbox [(checked)]="overallResponseTimePlotFlag" [label]="LiveReportingDataSourceName.OverallResponseTime">
+            </xc-checkbox>
+            <xc-checkbox [(checked)]="runningPlotFlag" [label]="LiveReportingDataSourceName.Running"></xc-checkbox>
+            <xc-checkbox [(checked)]="waitingPlotFlag" [label]="LiveReportingDataSourceName.Waiting"></xc-checkbox>
+          </section>
+          <footer>
+            <xc-button (click)="setAllDataSources(true)" [disabled]="allDataSourcesSelected" xc-i18n>button-select-all</xc-button>
+            <xc-button (click)="setAllDataSources(false)" [disabled]="noDataSourcesSelected" xc-i18n>button-deselect-all</xc-button>
+          </footer>
+        </xc-panel>
+      </section>
+      <footer class='items-row'>
+      </footer>
     </xc-panel>
-    <xc-panel detail *ngIf="task">
-        <header>
-            <h2 class="items-left"><b class="with-colon" xc-i18n>header-task-id</b><b>{{task.taskId.id}}</b></h2>
-        </header>
-        <section xc-form class="stretch scroll">
-            <div class="definition"><label xc-i18n>label-task-name</label><span>{{task.label}}</span></div>
-            <div class="definition"><label xc-i18n>label-task-type</label><span>{{task.eventCreationInfo}}</span></div>
-            <div class="definition"><label xc-i18n>label-status</label><span>{{task.taskStatus}}</span></div>
-            <div role="presentation" class="horizontal-space"></div>
-            <div class="definition"><label xc-i18n>label-start-time</label><span>{{task.startTimeString}}</span></div>
-            <div class="definition"><label xc-i18n>label-end-time</label><span>{{task.stopTimeString}}</span></div>
-            <xc-button (click)="cancel()" xc-i18n>button-cancel</xc-button>
-
-            <xc-panel>
-                <section>
-                    <xc-form-label><span class="with-colon" xc-i18n>label-progress</span>{{progressString}}</xc-form-label>
-                    <xc-form-label><span class="with-colon" xc-i18n>label-running-events</span>{{task.runningEvents}}</xc-form-label>
-                    <xc-form-label><span class="with-colon" xc-i18n>label-finished-events</span>{{task.finishedEvents}}</xc-form-label>
-                    <xc-form-label><span class="with-colon" xc-i18n>label-failed-events</span>{{task.failedEvents}}</xc-form-label>
-                </section>
-            </xc-panel>
-
-            <xc-panel class="data-source-box">
-                <header><h3 xc-i18n>header-data-sources</h3></header>
-                <section>
-                    <xc-checkbox [(checked)]="executionResponseTimePlotFlag" [label]="LiveReportingDataSourceName.ExecutionResponseTime"></xc-checkbox>
-                    <xc-checkbox [(checked)]="failedPlotFlag" [label]="LiveReportingDataSourceName.Failed"></xc-checkbox>
-                    <xc-checkbox [(checked)]="failedRatePlotFlag" [label]="LiveReportingDataSourceName.FailedRate"></xc-checkbox>
-                    <xc-checkbox [(checked)]="finishedPlotFlag" [label]="LiveReportingDataSourceName.Finished"></xc-checkbox>
-                    <xc-checkbox [(checked)]="finishedRatePlotFlag" [label]="LiveReportingDataSourceName.FinishedRate"></xc-checkbox>
-                    <xc-checkbox [(checked)]="overallResponseTimePlotFlag" [label]="LiveReportingDataSourceName.OverallResponseTime">
-                    </xc-checkbox>
-                    <xc-checkbox [(checked)]="runningPlotFlag" [label]="LiveReportingDataSourceName.Running"></xc-checkbox>
-                    <xc-checkbox [(checked)]="waitingPlotFlag" [label]="LiveReportingDataSourceName.Waiting"></xc-checkbox>
-                </section>
-                <footer>
-                    <xc-button (click)="setAllDataSources(true)" [disabled]="allDataSourcesSelected" xc-i18n>button-select-all</xc-button>
-                    <xc-button (click)="setAllDataSources(false)" [disabled]="noDataSourcesSelected" xc-i18n>button-deselect-all</xc-button>
-                </footer>
-            </xc-panel>
-
-        </section>
-        <footer class='items-row'>
-        </footer>
-    </xc-panel>
+  }
 </xc-master-detail>

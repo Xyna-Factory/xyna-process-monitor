@@ -31,7 +31,8 @@ import { AuditService } from '../../audit.service';
 @Component({
     selector: 'xfm-mon-step-runtime-info',
     templateUrl: './step-runtime-info.component.html',
-    styleUrls: ['./step-runtime-info.component.scss']
+    styleUrls: ['./step-runtime-info.component.scss'],
+    standalone: false
 })
 export class StepRuntimeInfoComponent implements AfterContentChecked {
 

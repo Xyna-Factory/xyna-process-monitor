@@ -80,7 +80,7 @@ export class XoStepRuntimeInfo extends XoRuntimeInfo {
         let json: XoJson;
         try {
             json = JSON.parse(value);
-        } catch (error) {
+        } catch {
             console.warn('invalid JSON:', value);
             return undefined;
         }

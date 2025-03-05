@@ -44,7 +44,8 @@ const WF_PROCESS_MI = 'xmcp.processmonitor.ProcessMI';
 @Component({
     selector: 'xfm-mon-mi-monitor',
     templateUrl: './mi-monitor.component.html',
-    styleUrls: ['./mi-monitor.component.scss']
+    styleUrls: ['./mi-monitor.component.scss'],
+    standalone: false
 })
 export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
 

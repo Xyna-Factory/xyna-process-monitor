@@ -30,7 +30,8 @@ export interface ResourceUsageTemplateData {
     selector: 'xfm-mon-resource-usage',
     templateUrl: './resource-usage-template.component.html',
     styleUrls: ['./resource-usage-template.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ResourceUsageTemplateComponent extends XcDynamicComponent<ResourceUsageTemplateData> {
 

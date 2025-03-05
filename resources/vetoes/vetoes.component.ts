@@ -31,7 +31,8 @@ import { XoVeto, XoVetoArray } from '../xo/veto.model';
     selector: 'xfm-mon-vetoes',
     templateUrl: './vetoes.component.html',
     styleUrls: ['./vetoes.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class VetoesComponent extends ResourceOverviewComponent<XoVeto> {
 

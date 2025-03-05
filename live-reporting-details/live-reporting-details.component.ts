@@ -37,7 +37,8 @@ import { liveReportingDetailsTranslations_enUS } from './locale/live-reporting-d
 @Component({
     selector: 'xfm-mon-live-reporting-details',
     templateUrl: './live-reporting-details.component.html',
-    styleUrls: ['./live-reporting-details.component.scss']
+    styleUrls: ['./live-reporting-details.component.scss'],
+    standalone: false
 })
 export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFrequencyControlledTaskDetails> implements OnInit {
 

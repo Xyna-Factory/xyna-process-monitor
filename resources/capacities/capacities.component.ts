@@ -33,7 +33,8 @@ import { XoCapacity, XoCapacityArray } from '../xo/capacity.model';
     selector: 'xfm-mon-capacities',
     templateUrl: './capacities.component.html',
     styleUrls: ['./capacities.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class CapacitiesComponent extends ResourceOverviewComponent<XoCapacity> {
 

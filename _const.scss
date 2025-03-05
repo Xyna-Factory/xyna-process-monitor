@@ -15,46 +15,47 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import 'zeta/const';
+@forward "../../const";
+@use "../../const" as *;
+
 
 
 /****************************************************
  * Process Monitor Variables
  ****************************************************/
+$auditstep-background-color: $color-invert;
+$auditstep-border-color: $color-invert;
+$auditstep-label-color: $color-normal;
+$auditstep-fqn-color: $color-gray-4;
+$auditstep-variable-area-background-color: #ededef;
+$auditstep-variable-area-border-color: #babac0;
+$auditdetails-color: $color-invert;
+$auditdetails-label-color: $color-invert;
+$auditdetails-font-size: 13px;
+$auditdetails-label-font-size: 11px;
+$auditdetails-background-color: #ededef;
+$auditdetails-border-color: #76767a;
+$auditdetails-status-color: $color-normal;
+$auditdetails-status-background-color: $color-gray-0;
+$auditdetails-input-background-color: #424244;
+$auditdetails-output-background-color: #424244;
+$auditdetails-error-background-color: #424244;
 
 @if $theme == xyna {
-    $auditstep-background-color: $color-black;
-    $auditstep-border-color: $color-black;
-    $auditstep-label-color: $color-white;
+    $auditstep-background-color: $color-invert;
+    $auditstep-border-color: $color-invert;
+    $auditstep-label-color: $color-normal;
     $auditstep-fqn-color: $color-gray-4;
     $auditstep-variable-area-background-color: #ededef;
     $auditstep-variable-area-border-color: #babac0;
-    $auditdetails-color: $color-black;
+    $auditdetails-color: $color-invert;
     $auditdetails-label-color: $color-gray-2;
     $auditdetails-font-size: 13px;
     $auditdetails-label-font-size: 11px;
     $auditdetails-background-color: #ededef;
     $auditdetails-border-color: #76767a;
-    $auditdetails-status-color: $color-white;
+    $auditdetails-status-color: $color-normal;
     $auditdetails-status-background-color: $color-gray-2;
-    $auditdetails-input-background-color: #424244;
-    $auditdetails-output-background-color: #424244;
-    $auditdetails-error-background-color: #424244;
-} @else {
-    $auditstep-background-color: $color-black;
-    $auditstep-border-color: $color-black;
-    $auditstep-label-color: $color-white;
-    $auditstep-fqn-color: $color-gray-4;
-    $auditstep-variable-area-background-color: #ededef;
-    $auditstep-variable-area-border-color: #babac0;
-    $auditdetails-color: $color-black;
-    $auditdetails-label-color: $color-black;
-    $auditdetails-font-size: 13px;
-    $auditdetails-label-font-size: 11px;
-    $auditdetails-background-color: #ededef;
-    $auditdetails-border-color: #76767a;
-    $auditdetails-status-color: $color-white;
-    $auditdetails-status-background-color: $color-gray-0;
     $auditdetails-input-background-color: #424244;
     $auditdetails-output-background-color: #424244;
     $auditdetails-error-background-color: #424244;

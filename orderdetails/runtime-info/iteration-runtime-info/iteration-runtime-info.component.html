@@ -1,35 +1,40 @@
 <xc-panel>
-    <header>
-        <h2>{{runtimeInfo.kind}}</h2>
-        <div class="iteration-control">
-            <xc-button [disabled]="!hasPrev" (click)="start()">&#10072;&lt;</xc-button>
-            <xc-button [disabled]="!hasPrev" (click)="prev()">&lt;</xc-button>
-            <xc-form-input
-                #indexInput
-                [value]="selectedIndex"
-                (drop)="$event.preventDefault()"
-                (keyup)="$event.stopPropagation()"
-                (keydown)="indexKeydown($event, indexInput.value)"
-                (blur)="indexBlur(indexInput.value)"
-                class="iteration-index"
-                xc-form-field-compact
-            ></xc-form-input>
-            <label class="iteration-last">{{'/ ' + lastIndex}}</label>
-            <xc-button [disabled]="!hasNext" (click)="next()">&gt;</xc-button>
-            <xc-button [disabled]="!hasNext" (click)="end()">&gt;&#10072;</xc-button>
-            <label
-                *ngIf="iterationStatus"
-                class="iteration-status"
-                [ngClass]="{'error': iterationStatus === 'Failed'}"
-            >{{'Status: ' + iterationStatus}}</label>
-        </div>
-    </header>
-    <section *ngIf="violatesLimit">
-        <label>{{limitError}}</label>
+  <header>
+    <h2>{{runtimeInfo.kind}}</h2>
+    <div class="iteration-control">
+      <xc-button [disabled]="!hasPrev" (click)="start()">&#10072;&lt;</xc-button>
+      <xc-button [disabled]="!hasPrev" (click)="prev()">&lt;</xc-button>
+      <xc-form-input
+        #indexInput
+        [value]="selectedIndex"
+        (drop)="$event.preventDefault()"
+        (keyup)="$event.stopPropagation()"
+        (keydown)="indexKeydown($event, indexInput.value)"
+        (blur)="indexBlur(indexInput.value)"
+        class="iteration-index"
+        xc-form-field-compact
+      ></xc-form-input>
+      <label class="iteration-last">{{'/ ' + lastIndex}}</label>
+      <xc-button [disabled]="!hasNext" (click)="next()">&gt;</xc-button>
+      <xc-button [disabled]="!hasNext" (click)="end()">&gt;&#10072;</xc-button>
+      @if (iterationStatus) {
+        <label
+          class="iteration-status"
+          [ngClass]="{'error': iterationStatus === 'Failed'}"
+        >{{'Status: ' + iterationStatus}}</label>
+      }
+    </div>
+  </header>
+  @if (violatesLimit) {
+    <section>
+      <label>{{limitError}}</label>
     </section>
+  }
 </xc-panel>
-<xfm-mon-runtime-info *ngIf="selectedIteration"
+@if (selectedIteration) {
+  <xfm-mon-runtime-info
     [runtimeInfo]="selectedIteration.runtimeInfo"
     [lazyLoadingLimit]="lazyLoadingLimit"
     [iterationDepth]="iterationDepth"
-></xfm-mon-runtime-info>
+  ></xfm-mon-runtime-info>
+}

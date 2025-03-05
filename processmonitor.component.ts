@@ -47,7 +47,8 @@ import { XoOrderOverviewEntry } from './xo/order-overview-entry.model';
 @Component({
     templateUrl: './processmonitor.component.html',
     styleUrls: ['./processmonitor.component.scss'],
-    providers: [I18nService]
+    providers: [I18nService],
+    standalone: false
 })
 export class ProcessmonitorComponent extends RouteComponent {
 

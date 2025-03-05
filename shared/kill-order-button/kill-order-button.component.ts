@@ -30,7 +30,8 @@ import { catchError } from 'rxjs/operators';
 @Component({
     selector: 'xfm-mon-kill-order-button',
     templateUrl: './kill-order-button.component.html',
-    styleUrls: ['./kill-order-button.component.scss']
+    styleUrls: ['./kill-order-button.component.scss'],
+    standalone: false
 })
 export class KillOrderButtonComponent {
 

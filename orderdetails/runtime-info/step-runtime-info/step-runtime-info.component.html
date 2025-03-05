@@ -1,36 +1,50 @@
-<xc-panel *ngIf="hasData(dsTreeIn)" xc-panel-collapsable class="input">
+@if (hasData(dsTreeIn)) {
+  <xc-panel xc-panel-collapsable class="input">
     <header>
-        <h2 xc-i18n>header-input</h2>
-        <xc-button (click)="toClipboard(dsTreeIn)" class="items-right" xc-i18n>button-copy-to-clipboard</xc-button>
+      <h2 xc-i18n>header-input</h2>
+      <xc-button (click)="toClipboard(dsTreeIn)" class="items-right" xc-i18n>button-copy-to-clipboard</xc-button>
     </header>
     <section class="tree-wrapper">
-        <xc-readonly-tree #treeIn [xc-tree-datasource]="dsTreeIn"></xc-readonly-tree>
+      <xc-readonly-tree #treeIn [xc-tree-datasource]="dsTreeIn"></xc-readonly-tree>
     </section>
-    <label *ngIf="violatesInputLimit">{{limitError}}</label>
-</xc-panel>
+    @if (violatesInputLimit) {
+      <label>{{limitError}}</label>
+    }
+  </xc-panel>
+}
 
-<xc-panel *ngIf="hasData(dsTreeOut)" xc-panel-collapsable class="output">
+@if (hasData(dsTreeOut)) {
+  <xc-panel xc-panel-collapsable class="output">
     <header>
-        <h2 xc-i18n>header-output</h2>
-        <xc-button (click)="toClipboard(dsTreeOut)" class="items-right" xc-i18n>button-copy-to-clipboard</xc-button>
+      <h2 xc-i18n>header-output</h2>
+      <xc-button (click)="toClipboard(dsTreeOut)" class="items-right" xc-i18n>button-copy-to-clipboard</xc-button>
     </header>
     <section class="tree-wrapper">
-        <xc-readonly-tree #treeOut [xc-tree-datasource]="dsTreeOut"></xc-readonly-tree>
+      <xc-readonly-tree #treeOut [xc-tree-datasource]="dsTreeOut"></xc-readonly-tree>
     </section>
-    <label *ngIf="violatesOutputLimit">{{limitError}}</label>
-</xc-panel>
+    @if (violatesOutputLimit) {
+      <label>{{limitError}}</label>
+    }
+  </xc-panel>
+}
 
-<xc-panel *ngIf="hasData(dsTreeErr)" xc-panel-collapsable class="error">
+@if (hasData(dsTreeErr)) {
+  <xc-panel xc-panel-collapsable class="error">
     <header>
-        <h2 xc-i18n>header-error</h2>
-        <xc-button (click)="toClipboard(dsTreeErr)" class="items-right" xc-i18n>button-copy-to-clipboard</xc-button>
+      <h2 xc-i18n>header-error</h2>
+      <xc-button (click)="toClipboard(dsTreeErr)" class="items-right" xc-i18n>button-copy-to-clipboard</xc-button>
     </header>
     <section class="tree-wrapper zeta-scrollbar">
-        <xc-readonly-tree #treeErr [xc-tree-datasource]="dsTreeErr" xc-tree-keep-breaks></xc-readonly-tree>
+      <xc-readonly-tree #treeErr [xc-tree-datasource]="dsTreeErr" xc-tree-keep-breaks></xc-readonly-tree>
     </section>
-    <label *ngIf="violatesErrorLimit">{{limitError}}</label>
-</xc-panel>
+    @if (violatesErrorLimit) {
+      <label>{{limitError}}</label>
+    }
+  </xc-panel>
+}
 
-<label *ngIf="noDataAvailable" class="no-data" xc-i18n>
+@if (noDataAvailable) {
+  <label class="no-data" xc-i18n>
     no-input
-</label>
+  </label>
+}

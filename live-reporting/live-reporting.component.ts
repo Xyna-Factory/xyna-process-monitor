@@ -86,7 +86,8 @@ class DateTimeTableInfo extends XoTableInfo {
 @Component({
     selector: 'xfm-mon-live-reporting',
     templateUrl: './live-reporting.component.html',
-    styleUrls: ['./live-reporting.component.scss']
+    styleUrls: ['./live-reporting.component.scss'],
+    standalone: false
 })
 export class LiveReportingComponent extends XcTabComponent<string> {
 

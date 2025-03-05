@@ -29,7 +29,8 @@ import { AuditService } from '../../audit.service';
 @Component({
     selector: 'xfm-mon-iteration-runtime-info',
     templateUrl: './iteration-runtime-info.component.html',
-    styleUrls: ['./iteration-runtime-info.component.scss']
+    styleUrls: ['./iteration-runtime-info.component.scss'],
+    standalone: false
 })
 export class IterationRuntimeInfoComponent {
 

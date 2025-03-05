@@ -60,7 +60,7 @@ export class DocumentService {
 
     constructor(private readonly http: HttpClient, private readonly dialogs: XcDialogService) {
         // instantiate models such that they aren't pruned during a release-build
-        /* eslint-disable @typescript-eslint/no-unused-vars */
+         
         let m: XoRuntimeInfo;
         m = new XoCatchBranchRuntimeInfo();
         m = new XoCatchableRuntimeInfo();
@@ -82,7 +82,7 @@ export class DocumentService {
         m = new XoThrowRuntimeInfo();
         m = new XoWorkflowRuntimeInfo();
         const entry = new XoRepairEntry();
-        /* eslint-enable @typescript-eslint/no-unused-vars */
+         
     }
 
 
@@ -188,6 +188,7 @@ export class DocumentService {
     }
 
 
+    // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
     handleAudit(auditObservable: Observable<Object>, id: string): Observable<XoGetAuditResponse> {
         return auditObservable.pipe(
             map((response: any) => {

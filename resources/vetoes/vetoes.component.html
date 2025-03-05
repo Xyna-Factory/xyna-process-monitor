@@ -1,42 +1,46 @@
 <xc-panel xc-i18n-context="pmon.vetoes">
-    <header>
-        <h1 xc-i18n>header-label</h1>
-        <div class="items-right config-bar">
-            <div class="filter">
-                <xc-icon xc-icon-name="search"></xc-icon>
-                <xc-form-input [(value)]="filter.filter" xc-form-field-compact xc-form-field-suffix="clear" xc-i18n placeholder="filter-placeholder" (keydown.enter)="refresh()"></xc-form-input>
-            </div>
-            <div class="order-by">
-                <div class="icons" xc-tooltip="order-by" xc-i18n>
-                    <xc-icon xc-icon-name="arrowup" xc-icon-size="small"></xc-icon>
-                    <xc-icon xc-icon-name="arrowdown" xc-icon-size="small"></xc-icon>
-                </div>
-                <xc-form-autocomplete
-                    xc-form-autocomplete-asdropdown
-                    [(xc-form-autocomplete-option)]="sorting.value"
-                    [xc-form-autocomplete-options]="sorting.values"
-                    (xc-form-autocomplete-optionChange)="refresh()"
-                    xc-form-field-compact
-                    xc-i18n
-                ></xc-form-autocomplete>
-            </div>
-            <xc-icon-button
-                xc-tooltip="tooltip-refresh"
-                xc-icon-name="reload"
-                (click)="refresh()"
-                [busy]="getDataSource().refreshing"
-                [disabled]="getDataSource().refreshing"
-                xc-i18n
-            ></xc-icon-button>
+  <header>
+    <h1 xc-i18n>header-label</h1>
+    <div class="items-right config-bar">
+      <div class="filter">
+        <xc-icon xc-icon-name="search"></xc-icon>
+        <xc-form-input [(value)]="filter.filter" xc-form-field-compact xc-form-field-suffix="clear" xc-i18n placeholder="filter-placeholder" (keydown.enter)="refresh()"></xc-form-input>
+      </div>
+      <div class="order-by">
+        <div class="icons" xc-tooltip="order-by" xc-i18n>
+          <xc-icon xc-icon-name="arrowup" xc-icon-size="small"></xc-icon>
+          <xc-icon xc-icon-name="arrowdown" xc-icon-size="small"></xc-icon>
         </div>
-    </header>
-    <section class="stretch scroll list">
-        <div *ngFor="let resourceInfo of dataSource.rawData">
-            <xfm-mon-resource-card
-                [resourceInfo]="resourceInfo"
-            >
-            </xfm-mon-resource-card>
-        </div>
-        <label *ngIf="!getDataSource().refreshing && dataSource.rawData.length === 0" class="empty-label" xc-i18n>no-vetoes</label>
-    </section>
+        <xc-form-autocomplete
+          xc-form-autocomplete-asdropdown
+          [(xc-form-autocomplete-option)]="sorting.value"
+          [xc-form-autocomplete-options]="sorting.values"
+          (xc-form-autocomplete-optionChange)="refresh()"
+          xc-form-field-compact
+          xc-i18n
+        ></xc-form-autocomplete>
+      </div>
+      <xc-icon-button
+        xc-tooltip="tooltip-refresh"
+        xc-icon-name="reload"
+        (click)="refresh()"
+        [busy]="getDataSource().refreshing"
+        [disabled]="getDataSource().refreshing"
+        xc-i18n
+      ></xc-icon-button>
+    </div>
+  </header>
+  <section class="stretch scroll list">
+    @for (resourceInfo of dataSource.rawData; track resourceInfo) {
+      <div>
+        <xfm-mon-resource-card
+          [resourceInfo]="resourceInfo"
+          >
+        </xfm-mon-resource-card>
+      </div>
+    }
+    @if (!getDataSource().refreshing && dataSource.rawData.length === 0) {
+      <label class="empty-label" xc-i18n>no-vetoes</label>
+    }
+  </section>
 </xc-panel>

@@ -15,14 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-@import 'const';
+@use '../const' as *;
 
 
 :host {
     display: flex;
     flex: 1 1 auto;
     width: 100%;
-    background-color: $color-white;
+    background-color: $color-normal;
 
     > .main {
         display: flex;

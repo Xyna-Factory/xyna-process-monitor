@@ -34,7 +34,8 @@ import { orderoverviewTranslations_enUS } from './locale/orderoverview-translati
 @Component({
     selector: 'xfm-mon-orderoverview',
     templateUrl: './orderoverview.component.html',
-    styleUrls: ['./orderoverview.component.scss']
+    styleUrls: ['./orderoverview.component.scss'],
+    standalone: false
 })
 export class OrderoverviewComponent extends XcTabComponent<string> {
 

@@ -27,7 +27,8 @@ import { XoStepRuntimeInfo } from '../../xo/step-runtime-info.model';
 @Component({
     selector: 'xfm-mon-runtime-info',
     templateUrl: './runtime-info.component.html',
-    styleUrls: ['./runtime-info.component.scss']
+    styleUrls: ['./runtime-info.component.scss'],
+    standalone: false
 })
 export class RuntimeInfoComponent {
 
