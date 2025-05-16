@@ -38,6 +38,8 @@ export class ResourceInfo<T extends XoResource> extends Comparable {
 
         // if orders refresh (e. g. by sorting), the resource object has to be refreshed, too
         // skip first refresh, which is triggered on init of the orders-table
+// TODO: migrate subscribe(...) to object-based syntax for RxJS 8
+
         this.ordersDataSource.dataChange.pipe(skip(1)).subscribe(orders => this.refreshResource());
     }
 
@@ -48,6 +50,8 @@ export class ResourceInfo<T extends XoResource> extends Comparable {
 
 
     private refreshResource() {
+// TODO: migrate subscribe(...) to object-based syntax for RxJS 8
+
         this.api.startOrder(RTC, this.detailsOrderType, new XoName(undefined, this.resource?.name ?? ''), this.resource.decoratorClass as XoObjectClassInterface<T>, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(result => {
             this.resource = result.output?.[0] as T;
             this.updatedSubject.next(this);
@@ -113,6 +117,8 @@ export class ResourceDataSource<R extends XoResource, L extends XoArray<R> = XoA
         super.refresh();
 
         this.cleanup();
+// TODO: migrate subscribe(...) to object-based syntax for RxJS 8
+
         this.api.startOrderAssertFlat<R>(RTC, this.listOrderType, this.listInput, this.listOutput).subscribe(output => {
             this.data = output.map(resource => {
                 const info = new ResourceInfo(
@@ -123,6 +129,8 @@ export class ResourceDataSource<R extends XoResource, L extends XoArray<R> = XoA
                 );
                 info.ordersDataSource.input = info.resource;
                 info.ordersDataSource.output = XoOrderArray;
+
+// TODO: migrate subscribe(...) to object-based syntax for RxJS 8
 
                 this.infoSubscriptions.push(info.collapsedChange.subscribe(collapsed => {
                     if (collapsed) {
