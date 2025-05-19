@@ -388,13 +388,16 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
 
     cancel() {
 
-        this.apiService.startOrder(RTC, WF_CANCEL_TASK, this.task.taskId).subscribe(res => {
-            if (res && !res.errorMessage) {
-                this.dismiss();
-            } else {
-                this.dialogService.error(res.errorMessage);
-            }
-        }, err => this.dialogService.error(err));
+        this.apiService.startOrder(RTC, WF_CANCEL_TASK, this.task.taskId).subscribe({
+            next: res => {
+                if (res && !res.errorMessage) {
+                    this.dismiss();
+                } else {
+                    this.dialogService.error(res.errorMessage);
+                }
+            },
+            error: err => this.dialogService.error(err)
+        });
     }
 
     requestData(name: LiveReportingDataSourceName) {

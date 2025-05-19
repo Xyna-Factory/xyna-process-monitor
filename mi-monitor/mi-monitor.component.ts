@@ -121,8 +121,8 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
             });
             const action = new XoManualInteractionResponse();
             action.response = ManualInteractionResponse.Continue;
-            this.apiService.startOrder(RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe(
-                result => {
+            this.apiService.startOrder(RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe({
+                next: result => {
                     if (result && result.errorMessage) {
                         this.dialogService.error(result.errorMessage);
                     }
@@ -146,8 +146,8 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
                         this.refresh();
                     }
                 },
-                error => console.error('Error: ', error)
-            );
+                error: error => console.error('Error: ', error)
+            });
         }
     }
 
@@ -163,8 +163,8 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
             });
             const action = new XoManualInteractionResponse();
             action.response = ManualInteractionResponse.Retry;
-            this.apiService.startOrder(RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe(
-                result => {
+            this.apiService.startOrder(RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe({
+                next: result => {
                     if (result && result.errorMessage) {
                         this.dialogService.error(result.errorMessage);
                     }
@@ -188,8 +188,8 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
                         this.refresh();
                     }
                 },
-                error => console.error('Error: ', error)
-            );
+                error: error => console.error('Error: ', error)
+            });
         }
     }
 
@@ -206,8 +206,8 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
             // I have not idea why it is called "Response"
             const action = new XoManualInteractionResponse();
             action.response = ManualInteractionResponse.Abort;
-            this.apiService.startOrder(RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe(
-                result => {
+            this.apiService.startOrder(RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe({
+                next: result => {
                     if (result && result.errorMessage) {
                         this.dialogService.error(result.errorMessage);
                     }
@@ -231,8 +231,8 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
                         this.refresh();
                     }
                 },
-                error => console.error('Error: ', error)
-            );
+                error: error => console.error('Error: ', error)
+            });
         }
     }
 
