@@ -77,13 +77,12 @@
   </div>
 }
 <ng-template #menuTemplate>
-  <xc-icon-button
-    *xc-menu-service="showMenu; let menuService"
+  <xc-icon-button *xc-menu-service="showMenu; let menuService"
     [xc-menu-trigger]="menuService.component"
     (xc-menu-trigger)="menuService.set(menuItems, {withArrow: true, xNexttoTrigger: true, xOffset: 8})"
     xc-icon-name="misc-contextmenu"
     xc-icon-style="modeller"
     xc-icon-size="small"
     class="menu-button"
-  ></xc-icon-button>
+   />
 </ng-template>

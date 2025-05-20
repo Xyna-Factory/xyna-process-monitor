@@ -32,9 +32,8 @@
   }
 </xc-panel>
 @if (selectedIteration) {
-  <xfm-mon-runtime-info
-    [runtimeInfo]="selectedIteration.runtimeInfo"
+  <xfm-mon-runtime-info [runtimeInfo]="selectedIteration.runtimeInfo"
     [lazyLoadingLimit]="lazyLoadingLimit"
     [iterationDepth]="iterationDepth"
-  ></xfm-mon-runtime-info>
+   />
 }
