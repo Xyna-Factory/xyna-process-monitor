@@ -42,13 +42,14 @@ import { OrderoverviewComponent } from './orderoverview/orderoverview.component'
 import { CapacitiesComponent } from './resources/capacities/capacities.component';
 import { VetoesComponent } from './resources/vetoes/vetoes.component';
 import { XoOrderOverviewEntry } from './xo/order-overview-entry.model';
+import { XcModule } from '../../zeta/xc/xc.module';
 
 
 @Component({
     templateUrl: './processmonitor.component.html',
     styleUrls: ['./processmonitor.component.scss'],
     providers: [I18nService],
-    standalone: false
+    imports: [XcModule]
 })
 export class ProcessmonitorComponent extends RouteComponent {
 

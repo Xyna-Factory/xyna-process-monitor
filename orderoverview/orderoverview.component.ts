@@ -28,6 +28,9 @@ import { XoIncludeInternalOrders, XoSearchFlagArray, XoShowOnlyMyOwnOrders, XoSh
 import { DateTimeConverter } from '../xo/util/date-time-converter';
 import { orderoverviewTranslations_deDE } from './locale/orderoverview-translations.de-DE';
 import { orderoverviewTranslations_enUS } from './locale/orderoverview-translations.en-US';
+import { XcModule } from '../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { KillOrderButtonComponent } from '../shared/kill-order-button/kill-order-button.component';
 
 
 
@@ -35,7 +38,7 @@ import { orderoverviewTranslations_enUS } from './locale/orderoverview-translati
     selector: 'xfm-mon-orderoverview',
     templateUrl: './orderoverview.component.html',
     styleUrls: ['./orderoverview.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule, KillOrderButtonComponent]
 })
 export class OrderoverviewComponent extends XcTabComponent<string> {
 

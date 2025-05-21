@@ -29,6 +29,8 @@ import { XoManualInteractionId, XoManualInteractionIdArray } from './xo/mi-id.mo
 import { XoManualInteractionResponse } from './xo/mi-interaction-response.model';
 import { XoManualInteractionEntry, XoManualInteractionEntryArray } from './xo/mi-monitor-entry.model';
 import { XoManualInteractionProcessResponseArray } from './xo/mi-process-response.model';
+import { XcModule } from '../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
 
 
 enum ManualInteractionResponse {
@@ -45,7 +47,7 @@ const WF_PROCESS_MI = 'xmcp.processmonitor.ProcessMI';
     selector: 'xfm-mon-mi-monitor',
     templateUrl: './mi-monitor.component.html',
     styleUrls: ['./mi-monitor.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
 

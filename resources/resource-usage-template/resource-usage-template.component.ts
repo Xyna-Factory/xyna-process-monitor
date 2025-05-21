@@ -18,6 +18,9 @@
 import { ChangeDetectionStrategy, Component, InjectionToken } from '@angular/core';
 
 import { XC_COMPONENT_DATA, XcDynamicComponent } from '@zeta/xc';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { NgStyle } from '@angular/common';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
 
 
 export interface ResourceUsageTemplateData {
@@ -31,7 +34,7 @@ export interface ResourceUsageTemplateData {
     templateUrl: './resource-usage-template.component.html',
     styleUrls: ['./resource-usage-template.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, NgStyle, I18nModule]
 })
 export class ResourceUsageTemplateComponent extends XcDynamicComponent<ResourceUsageTemplateData> {
 

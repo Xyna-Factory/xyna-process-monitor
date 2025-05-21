@@ -47,10 +47,18 @@ import { XoRetryIterationContainer } from '../xo/retry-iteration-container.model
 import { XoServiceRuntimeInfo } from '../xo/service-runtime-info.model';
 import { XoStepRuntimeInfo } from '../xo/step-runtime-info.model';
 import { XoWorkflowRuntimeInfo } from '../xo/workflow-runtime-info.model';
-import { OpenAuditData } from './audit-details/audit-details.component';
+import { OpenAuditData, AuditDetailsComponent } from './audit-details/audit-details.component';
 import { AuditService } from './audit.service';
 import { orderdetailsTranslations_deDE } from './locale/orderdetails-translations.de-DE';
 import { orderdetailsTranslations_enUS } from './locale/orderdetails-translations.en-US';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { DataflowComponent } from '../../processmodeller/document/workflow/dataflow/dataflow.component';
+import { VariableAreaDocumentComponent } from '../../processmodeller/document/workflow/variable-area/variable-area-document.component';
+import { TypeLabelAreaComponent } from '../../processmodeller/document/workflow/type-label-area/type-label-area.component';
+import { WorkflowComponent } from '../../processmodeller/document/workflow/workflow/workflow.component';
+import { ExceptionHandlingAreaComponent } from '../../processmodeller/document/workflow/exception/exception-handling-area/exception-handling-area.component';
+import { XcModule } from '../../../zeta/xc/xc.module';
+import { RuntimeInfoComponent } from './runtime-info/runtime-info.component';
 
 
 @Component({
@@ -58,7 +66,7 @@ import { orderdetailsTranslations_enUS } from './locale/orderdetails-translation
     templateUrl: './orderdetails.component.html',
     styleUrls: ['./orderdetails.component.scss'],
     providers: [SelectionService, AuditService, WorkflowDetailLevelService],
-    standalone: false
+    imports: [I18nModule, DataflowComponent, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, AuditDetailsComponent, XcModule, RuntimeInfoComponent]
 })
 export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewEntry> {
 

@@ -28,6 +28,10 @@ import { XoServiceRuntimeInfo } from '../../xo/service-runtime-info.model';
 import { XoStepRuntimeInfo } from '../../xo/step-runtime-info.model';
 import { XoWorkflowRuntimeInfo } from '../../xo/workflow-runtime-info.model';
 import { AuditService } from '../audit.service';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
+import { NgTemplateOutlet } from '@angular/common';
 
 
 export interface OpenAuditData {
@@ -42,7 +46,7 @@ export interface OpenAuditData {
     templateUrl: './audit-details.component.html',
     styleUrls: ['./audit-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [I18nModule, XcModule, KillOrderButtonComponent, NgTemplateOutlet]
 })
 export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
 

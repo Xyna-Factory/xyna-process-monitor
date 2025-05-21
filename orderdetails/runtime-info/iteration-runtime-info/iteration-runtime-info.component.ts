@@ -24,13 +24,16 @@ import { XoIterationContainer } from '../../../xo/iteration-container.model';
 import { XoIterationEntry } from '../../../xo/iteration-entry.model';
 import { XoStepRuntimeInfo } from '../../../xo/step-runtime-info.model';
 import { AuditService } from '../../audit.service';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { NgClass } from '@angular/common';
+import { RuntimeInfoComponent } from '../runtime-info.component';
 
 
 @Component({
     selector: 'xfm-mon-iteration-runtime-info',
     templateUrl: './iteration-runtime-info.component.html',
     styleUrls: ['./iteration-runtime-info.component.scss'],
-    standalone: false
+    imports: [XcModule, NgClass, RuntimeInfoComponent]
 })
 export class IterationRuntimeInfoComponent {
 

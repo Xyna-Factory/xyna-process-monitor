@@ -26,13 +26,15 @@ import { RTC } from '../../../const';
 import { DocumentService } from '../../../document.service';
 import { XoStepRuntimeInfo } from '../../../xo/step-runtime-info.model';
 import { AuditService } from '../../audit.service';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'xfm-mon-step-runtime-info',
     templateUrl: './step-runtime-info.component.html',
     styleUrls: ['./step-runtime-info.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class StepRuntimeInfoComponent implements AfterContentChecked {
 

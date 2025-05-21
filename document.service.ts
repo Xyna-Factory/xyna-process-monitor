@@ -52,7 +52,9 @@ import { XoThrowRuntimeInfo } from './xo/throw-runtime-info.model';
 import { XoWorkflowRuntimeInfo } from './xo/workflow-runtime-info.model';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DocumentService {
 
     private readonly _documentListSubject = new BehaviorSubject<XoOrderOverviewEntry[]>([]);

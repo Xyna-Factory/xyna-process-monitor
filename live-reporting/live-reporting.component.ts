@@ -30,6 +30,8 @@ import { liveReportingTranslations_deDE } from './locale/live-reporting-translat
 import { liveReportingTranslations_enUS } from './locale/live-reporting-translations.en-US';
 import { XoFrequencyControlledTaskDetails, XoFrequencyControlledTaskDetailsArray } from './xo/xo-frequency-controlled-task-details.model';
 import { XoTaskId } from './xo/xo-task-id.model';
+import { XcModule } from '../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
 
 
 class DateTimeTableInfo extends XoTableInfo {
@@ -87,7 +89,7 @@ class DateTimeTableInfo extends XoTableInfo {
     selector: 'xfm-mon-live-reporting',
     templateUrl: './live-reporting.component.html',
     styleUrls: ['./live-reporting.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class LiveReportingComponent extends XcTabComponent<string> {
 

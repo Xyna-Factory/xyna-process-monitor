@@ -32,13 +32,16 @@ import { GraphInfoDataToPlotDataSourceConverter } from './components/graph-info-
 import { LiveReportingPlotComponent } from './components/live-reporting-plot.component';
 import { liveReportingDetailsTranslations_deDE } from './locale/live-reporting-details-translations.de-DE';
 import { liveReportingDetailsTranslations_enUS } from './locale/live-reporting-details-translations.en-US';
+import { XcModule } from '../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { NgClass } from '@angular/common';
 
 
 @Component({
     selector: 'xfm-mon-live-reporting-details',
     templateUrl: './live-reporting-details.component.html',
     styleUrls: ['./live-reporting-details.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule, NgClass, LiveReportingPlotComponent]
 })
 export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFrequencyControlledTaskDetails> implements OnInit {
 
