@@ -87,6 +87,7 @@ export class ProcessmonitorComponent extends RouteComponent {
         // add default tabs
         if (authService.hasRight(RIGHT_PROCESS_MONITOR_ORDER_MONITOR)) {
             this.tabBarItems.push(this.orderOverview);
+            this.orderReturnTab = this.orderOverview;
         }
         if (authService.hasRight(RIGHT_PROCESS_MONITOR_MI_MONITOR)) {
             this.tabBarItems.push(this.miMonitor);
@@ -245,7 +246,7 @@ export class ProcessmonitorComponent extends RouteComponent {
     tabChanged(item: XcTabBarItem) {
         this.updateRoute();
         // remember order tab to switch back to
-        if (item === this.orderOverview || item === this.capacities || item === this.vetoes) {
+        if (item === this.orderOverview || item === this.miMonitor || item === this.capacities || item === this.vetoes) {
             this.orderReturnTab = item;
         }
         // remember order parent tab
