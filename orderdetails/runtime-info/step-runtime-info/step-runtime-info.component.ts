@@ -101,10 +101,10 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
             .forEach((tree, t) => tree?.dataSource.structureTreeData
                 .filter((_, n) => this.expandTree.has(this.getExpandTreeKey(t, n)))
                 .forEach((node, n) => tree.items
-                    .filter(item => item.node === node && !item.expanded)
+                    .filter(item => item.node === node)
                     .forEach(item => {
                         this.expandTree.delete(this.getExpandTreeKey(t, n));
-                        item.toggle();
+                        item.expandItem();
                     })
                 )
             );
