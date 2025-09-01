@@ -218,7 +218,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
             }
             this.parentOrderId = response.parentOrderId;
 
-            this.workflowFqn = this.workflow ? FullQualifiedName.decode(this.workflow.$fqn).name : null;
+            this.workflowFqn = this.workflow ? FullQualifiedName.decode(this.workflow.$fqn)?.name : null;
 
             // provide all RuntimeInfo objects with the AuditService to track current iteration
             response.info.data.forEach(runtimeInfo => runtimeInfo.setIterationInfoController(this.auditService));
@@ -228,7 +228,9 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
             this.injectedData.id = response.orderId;
 
             // assemble document model with rtc information
-            this.document = new WorkflowDocumentModel(this.workflow, this.workflow.$rtc.runtimeContext());
+            if (this.workflow) {
+                this.document = new WorkflowDocumentModel(this.workflow, this.workflow.$rtc.runtimeContext());
+            }
 
             // if there are errors in the response, show them
             if (response.errors && response.errors.length > 0) {

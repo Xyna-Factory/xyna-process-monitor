@@ -18,11 +18,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { XoContentArea } from '@pmod/xo/content-area.model';
+import { XoExceptionHandlingArea } from '@pmod/xo/exception-handling-area.model';
 import { XoItem } from '@pmod/xo/item.model';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { XoRepairEntry } from '@pmod/xo/repair-entry.model';
 import { XoRuntimeContext as PMODRuntimeContext } from '@pmod/xo/runtime-context.model';
 import { XoRuntimeInfo } from '@pmod/xo/runtime-info.model';
+import { XoVariableArea } from '@pmod/xo/variable-area.model';
+import { XoVariable } from '@pmod/xo/variable.model';
+import { XoWorkflow, XoWorkflowStub } from '@pmod/xo/workflow.model';
 import { downloadFile, MimeTypes } from '@zeta/base';
 import { XcDialogService } from '@zeta/xc';
 
@@ -47,6 +52,7 @@ import { XoRetryIterationContainer } from './xo/retry-iteration-container.model'
 import { XoRetryRuntimeInfo } from './xo/retry-runtime-info.model';
 import { XoRollbackStep } from './xo/rollback-step.model';
 import { XoServiceRuntimeInfo } from './xo/service-runtime-info.model';
+import { XoStepRuntimeInfo } from './xo/step-runtime-info.model';
 import { XoTemplateRuntimeInfo } from './xo/template-runtime-info.model';
 import { XoThrowRuntimeInfo } from './xo/throw-runtime-info.model';
 import { XoWorkflowRuntimeInfo } from './xo/workflow-runtime-info.model';
@@ -60,7 +66,7 @@ export class DocumentService {
 
     constructor(private readonly http: HttpClient, private readonly dialogs: XcDialogService) {
         // instantiate models such that they aren't pruned during a release-build
-         
+
         let m: XoRuntimeInfo;
         m = new XoCatchBranchRuntimeInfo();
         m = new XoCatchableRuntimeInfo();
@@ -82,7 +88,7 @@ export class DocumentService {
         m = new XoThrowRuntimeInfo();
         m = new XoWorkflowRuntimeInfo();
         const entry = new XoRepairEntry();
-         
+
     }
 
 
@@ -202,6 +208,10 @@ export class DocumentService {
 
                 const provideWithRuntimeInfo = (item: XoItem) => {
 
+                    if (item instanceof XoWorkflowStub) {
+                        this.createFakeInAndOutputs(runtimeInfoMap.get(item.id) as XoStepRuntimeInfo, item);
+                    }
+
                     if (!item.runtimeInfo) {
                         item.setRuntimeInfo(runtimeInfoMap.get(item.id));
                     }
@@ -217,11 +227,14 @@ export class DocumentService {
                         item.containerAreas.forEach(area => area.items.data.forEach(subItem => provideWithRuntimeInfo(subItem)));
                     }
                 };
-                if (auditResponse.workflow) {
-                    // if workflow doesn't know its RTC, take the one from the Audit
-                    auditResponse.workflow.$rtc = PMODRuntimeContext.fromRuntimeContext(auditResponse.rootRtc.toRuntimeContext());
-                    provideWithRuntimeInfo(auditResponse.workflow);
+
+                if (!auditResponse.workflow) {
+                    auditResponse.workflow = new XoWorkflowStub();
                 }
+
+                // if workflow doesn't know its RTC, take the one from the Audit
+                auditResponse.workflow.$rtc = PMODRuntimeContext.fromRuntimeContext(auditResponse.rootRtc.toRuntimeContext());
+                provideWithRuntimeInfo(auditResponse.workflow);
 
                 runtimeInfoMap.forEach((value, key) => console.warn(`Could not map Runtime Info ${key} to an item.`));
 
@@ -234,4 +247,15 @@ export class DocumentService {
             })
         );
     }
+
+    private createFakeInAndOutputs(wfRuntimeInfo: XoStepRuntimeInfo, workflow: XoWorkflowStub) {
+        if (!wfRuntimeInfo || !workflow) {
+            return;
+        }
+
+        // add workflow fake variables for inputs/outputs that have runtime info
+        wfRuntimeInfo.inputObjects.data.forEach(input => workflow.inputArea.variables.push(new XoVariable()));
+        wfRuntimeInfo.outputObjects.data.forEach(output => workflow.outputArea.variables.push(new XoVariable()));
+    }
+
 }
