@@ -24,6 +24,9 @@ import { ResourceDataSource } from '../resource-data-source';
 import { ResourceOverviewComponent } from '../resource-overview.component';
 import { XoSortCriterion } from '../xo/sort-criterion.model';
 import { XoVeto, XoVetoArray } from '../xo/veto.model';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { ResourceCardComponent } from '../resource-card/resource-card.component';
 
 
 
@@ -32,7 +35,7 @@ import { XoVeto, XoVetoArray } from '../xo/veto.model';
     templateUrl: './vetoes.component.html',
     styleUrls: ['./vetoes.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, I18nModule, ResourceCardComponent]
 })
 export class VetoesComponent extends ResourceOverviewComponent<XoVeto> {
 

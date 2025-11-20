@@ -28,10 +28,7 @@ import { XoResource } from './xo/resource.model';
 
 
 
-@Component({
-    template: '',
-    standalone: false
-})
+@Component({ template: '' })
 export class ResourceOverviewComponent<T extends XoResource> extends XcTabComponent<string> implements OnDestroy {
 
     protected readonly subscriptions: Subscription[] = [];

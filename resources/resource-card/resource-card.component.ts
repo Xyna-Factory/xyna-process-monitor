@@ -25,6 +25,9 @@ import { ResourceInfo } from '../resource-data-source';
 import { XoOrder } from '../xo/order.model';
 
 import { XoResource } from '../xo/resource.model';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
 
 
 
@@ -33,7 +36,7 @@ import { XoResource } from '../xo/resource.model';
     templateUrl: './resource-card.component.html',
     styleUrls: ['./resource-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, I18nModule, KillOrderButtonComponent]
 })
 export class ResourceCardComponent implements OnDestroy {
 

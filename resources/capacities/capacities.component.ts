@@ -26,6 +26,9 @@ import { resourcesTranslations_enUS } from '../locale/resources-translations.en-
 import { ResourceDataSource } from '../resource-data-source';
 import { ResourceOverviewComponent } from '../resource-overview.component';
 import { XoCapacity, XoCapacityArray } from '../xo/capacity.model';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { ResourceCardComponent } from '../resource-card/resource-card.component';
 
 
 
@@ -34,7 +37,7 @@ import { XoCapacity, XoCapacityArray } from '../xo/capacity.model';
     templateUrl: './capacities.component.html',
     styleUrls: ['./capacities.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [XcModule, I18nModule, ResourceCardComponent]
 })
 export class CapacitiesComponent extends ResourceOverviewComponent<XoCapacity> {
 

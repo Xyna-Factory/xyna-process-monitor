@@ -21,13 +21,15 @@ import { XcAutocompleteDataWrapper } from '@zeta/xc';
 import { XcPlotDataChangeBehavior, XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
 
 import { DataSourceUpdateInterval, LiveReportingDataSourceName } from '../classes/live-reporting-time-helper';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'live-reporting-plot',
     templateUrl: './live-reporting-plot.component.html',
     styleUrls: ['./live-reporting-plot.component.scss'],
-    standalone: false
+    imports: [XcModule, I18nModule]
 })
 export class LiveReportingPlotComponent {
 

@@ -22,13 +22,16 @@ import { templateClassType } from '@zeta/base';
 
 import { XoIterationContainer } from '../../xo/iteration-container.model';
 import { XoStepRuntimeInfo } from '../../xo/step-runtime-info.model';
+import { IterationRuntimeInfoComponent } from './iteration-runtime-info/iteration-runtime-info.component';
+import { StepRuntimeInfoComponent } from './step-runtime-info/step-runtime-info.component';
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
 
 
 @Component({
     selector: 'xfm-mon-runtime-info',
     templateUrl: './runtime-info.component.html',
     styleUrls: ['./runtime-info.component.scss'],
-    standalone: false
+    imports: [IterationRuntimeInfoComponent, StepRuntimeInfoComponent, I18nModule]
 })
 export class RuntimeInfoComponent {
 

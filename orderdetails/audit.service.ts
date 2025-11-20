@@ -24,7 +24,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { XoStepRuntimeInfo } from '../xo/step-runtime-info.model';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuditService implements IterationInfoController {
 
     /** currently selected Step Runtime Info */
