@@ -15,17 +15,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { ChangeDetectorRef, Component, forwardRef, Input } from '@angular/core';
 
 import { IterationInfo } from '@pmod/xo/runtime-info.model';
 import { I18nService } from '@zeta/i18n';
 
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XoIterationContainer } from '../../../xo/iteration-container.model';
 import { XoIterationEntry } from '../../../xo/iteration-entry.model';
 import { XoStepRuntimeInfo } from '../../../xo/step-runtime-info.model';
 import { AuditService } from '../../audit.service';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { NgClass } from '@angular/common';
 import { RuntimeInfoComponent } from '../runtime-info.component';
 
 
@@ -33,7 +33,7 @@ import { RuntimeInfoComponent } from '../runtime-info.component';
     selector: 'xfm-mon-iteration-runtime-info',
     templateUrl: './iteration-runtime-info.component.html',
     styleUrls: ['./iteration-runtime-info.component.scss'],
-    imports: [XcModule, NgClass, RuntimeInfoComponent]
+    imports: [XcModule, NgClass, forwardRef(() => RuntimeInfoComponent)]
 })
 export class IterationRuntimeInfoComponent {
 
