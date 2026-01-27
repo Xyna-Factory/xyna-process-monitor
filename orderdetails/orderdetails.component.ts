@@ -24,7 +24,10 @@ import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model
 import { WorkflowDocumentModel } from '@pmod/document/model/workflow-document.model';
 import { SelectionService } from '@pmod/document/selection.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
-import { ProcessmodellerModule } from '@pmod/processmodeller.module';
+import { ExceptionHandlingAreaComponent } from '@pmod/document/workflow/exception/exception-handling-area/exception-handling-area.component';
+import { TypeLabelAreaComponent } from '@pmod/document/workflow/type-label-area/type-label-area.component';
+import { VariableAreaDocumentComponent } from '@pmod/document/workflow/variable-area/variable-area-document.component';
+import { WorkflowComponent } from '@pmod/document/workflow/workflow/workflow.component';
 import { XoConnectionArray } from '@pmod/xo/connection.model';
 import { XoInvocation } from '@pmod/xo/invocation.model';
 import { XoItem } from '@pmod/xo/item.model';
@@ -62,7 +65,7 @@ import { RuntimeInfoComponent } from './runtime-info/runtime-info.component';
     templateUrl: './orderdetails.component.html',
     styleUrls: ['./orderdetails.component.scss'],
     providers: [SelectionService, AuditService, WorkflowDetailLevelService],
-    imports: [I18nModule, ProcessmodellerModule, AuditDetailsComponent, XcModule, RuntimeInfoComponent]
+    imports: [I18nModule, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, AuditDetailsComponent, XcModule, RuntimeInfoComponent]
 })
 export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewEntry> {
 
