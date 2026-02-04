@@ -18,16 +18,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { XoContentArea } from '@pmod/xo/content-area.model';
-import { XoExceptionHandlingArea } from '@pmod/xo/exception-handling-area.model';
 import { XoItem } from '@pmod/xo/item.model';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
 import { XoRepairEntry } from '@pmod/xo/repair-entry.model';
 import { XoRuntimeContext as PMODRuntimeContext } from '@pmod/xo/runtime-context.model';
 import { XoRuntimeInfo } from '@pmod/xo/runtime-info.model';
-import { XoVariableArea } from '@pmod/xo/variable-area.model';
 import { XoVariable } from '@pmod/xo/variable.model';
-import { XoWorkflow, XoWorkflowStub } from '@pmod/xo/workflow.model';
+import { XoWorkflowStub } from '@pmod/xo/workflow.model';
 import { downloadFile, MimeTypes } from '@zeta/base';
 import { XcDialogService } from '@zeta/xc';
 
