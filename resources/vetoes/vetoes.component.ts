@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector } from '@angular/core';
 
 import { ApiService, Xo, XoPropertyBinding } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
@@ -55,7 +55,7 @@ export class VetoesComponent extends ResourceOverviewComponent<XoVeto> {
         this.sorting = XcAutocompleteDataWrapper.fromXoEnumeratedPropertyBinding(
             XoPropertyBinding(this.sortCriterion, s => s.field),
             false,
-            { options: options => options.forEach(item => item.name = this.i18n.translate(item.value)) }
+            { options: options => options.forEach(item => item.name = this.i18n.translate(`pmon.vetoes.${item.value}`)) }
         );
         this.sorting.update();
     }
