@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector } from '@angular/core';
 
 import { ApiService, Xo, XoPropertyBinding } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
