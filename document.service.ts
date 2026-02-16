@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { XoItem } from '@pmod/xo/item.model';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
@@ -59,11 +59,14 @@ import { XoWorkflowRuntimeInfo } from './xo/workflow-runtime-info.model';
     providedIn: 'root'
 })
 export class DocumentService {
+    private readonly http = inject(HttpClient);
+    private readonly dialogs = inject(XcDialogService);
+
 
     private readonly _documentListSubject = new BehaviorSubject<XoOrderOverviewEntry[]>([]);
     private readonly _selectionSubject = new BehaviorSubject<XoOrderOverviewEntry>(null);
 
-    constructor(private readonly http: HttpClient, private readonly dialogs: XcDialogService) {
+    constructor() {
         // instantiate models such that they aren't pruned during a release-build
 
         let m: XoRuntimeInfo;

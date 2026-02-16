@@ -15,19 +15,18 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ApiService, Xo, XoPropertyBinding } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { Xo, XoPropertyBinding } from '@zeta/api';
 import { XcAutocompleteDataWrapper } from '@zeta/xc';
+
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { ResourceCardComponent } from '../resource-card/resource-card.component';
 import { ResourceDataSource } from '../resource-data-source';
 import { ResourceOverviewComponent } from '../resource-overview.component';
 import { XoSortCriterion } from '../xo/sort-criterion.model';
 import { XoVeto, XoVetoArray } from '../xo/veto.model';
-import { XcModule } from '../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
-import { ResourceCardComponent } from '../resource-card/resource-card.component';
-
 
 
 @Component({
@@ -44,13 +43,8 @@ export class VetoesComponent extends ResourceOverviewComponent<XoVeto> {
     sorting: XcAutocompleteDataWrapper;
 
 
-    constructor(
-        injector: Injector,
-        i18n: I18nService,
-        api: ApiService,
-        cdr: ChangeDetectorRef
-    ) {
-        super(injector, i18n, api, cdr);
+    constructor() {
+        super();
 
         this.sorting = XcAutocompleteDataWrapper.fromXoEnumeratedPropertyBinding(
             XoPropertyBinding(this.sortCriterion, s => s.field),

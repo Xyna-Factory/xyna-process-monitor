@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output, inject } from '@angular/core';
 
 import { templateClassType } from '@zeta/base';
 import { XcDialogService } from '@zeta/xc';
@@ -49,6 +49,11 @@ export interface OpenAuditData {
     imports: [I18nModule, XcModule, KillOrderButtonComponent, NgTemplateOutlet]
 })
 export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
+    private readonly cdRef = inject(ChangeDetectorRef);
+    private readonly dialogs = inject(XcDialogService);
+    private readonly documents = inject(DocumentService);
+    private readonly auditService = inject(AuditService);
+
 
     readonly XoStepRuntimeInfo = templateClassType<XoStepRuntimeInfo>(XoStepRuntimeInfo);
     readonly XoServiceRuntimeInfo = templateClassType<XoServiceRuntimeInfo>(XoServiceRuntimeInfo);
@@ -75,15 +80,6 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
     runtimeInfo: XoStepRuntimeInfo;
 
     private readonly subscriptions: Subscription[] = [];
-
-
-    constructor(
-        private readonly cdRef: ChangeDetectorRef,
-        private readonly dialogs: XcDialogService,
-        private readonly documents: DocumentService,
-        private readonly auditService: AuditService
-    ) {
-    }
 
 
     ngOnDestroy(): void {

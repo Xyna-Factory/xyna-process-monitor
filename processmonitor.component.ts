@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 import { ApiService } from '@zeta/api';
@@ -51,6 +51,15 @@ import { XoOrderOverviewEntry } from './xo/order-overview-entry.model';
     imports: [XcModule]
 })
 export class ProcessmonitorComponent extends RouteComponent {
+    private readonly authService = inject(AuthService);
+    private readonly apiService = inject(ApiService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly documentService = inject(DocumentService);
+    private readonly route = inject(ActivatedRoute);
+    private readonly router = inject(Router);
+    private readonly i18n = inject(I18nService);
+    private readonly cdr = inject(ChangeDetectorRef);
+
 
     private _tabBar: XcTabBarComponent;
     private queryParamSubscription: Subscription;
@@ -69,39 +78,29 @@ export class ProcessmonitorComponent extends RouteComponent {
     private orderParentTab: XcTabBarItem;
 
 
-    constructor(
-        private readonly authService: AuthService,
-        private readonly apiService: ApiService,
-        private readonly dialogService: XcDialogService,
-        private readonly documentService: DocumentService,
-        private readonly route: ActivatedRoute,
-        private readonly router: Router,
-        private readonly i18n: I18nService,
-        private readonly cdr: ChangeDetectorRef
-    ) {
+    constructor() {
         super();
-
-        i18n.setTranslations(LocaleService.EN_US, pmonTranslations_enUS);
-        i18n.setTranslations(LocaleService.DE_DE, pmonTranslations_deDE);
+        this.i18n.setTranslations(LocaleService.EN_US, pmonTranslations_enUS);
+        this.i18n.setTranslations(LocaleService.DE_DE, pmonTranslations_deDE);
 
         // add default tabs
-        if (authService.hasRight(RIGHT_PROCESS_MONITOR_ORDER_MONITOR)) {
+        if (this.authService.hasRight(RIGHT_PROCESS_MONITOR_ORDER_MONITOR)) {
             this.tabBarItems.push(this.orderOverview);
             this.orderReturnTab = this.orderOverview;
         }
-        if (authService.hasRight(RIGHT_PROCESS_MONITOR_MI_MONITOR)) {
+        if (this.authService.hasRight(RIGHT_PROCESS_MONITOR_MI_MONITOR)) {
             this.tabBarItems.push(this.miMonitor);
         }
-        if (authService.hasRight(RIGHT_PROCESS_MONITOR_RESOURCE_MONITOR)) {
+        if (this.authService.hasRight(RIGHT_PROCESS_MONITOR_RESOURCE_MONITOR)) {
             this.tabBarItems.push(this.capacities);
             this.tabBarItems.push(this.vetoes);
         }
-        if (authService.hasRight(RIGHT_PROCESS_MONITOR_LIVE_REPORTING)) {
+        if (this.authService.hasRight(RIGHT_PROCESS_MONITOR_LIVE_REPORTING)) {
             this.tabBarItems.push(this.liveReporting);
         }
 
         // translate tab item names
-        this.tabBarItems.forEach(item => item.name = i18n.translate(item.name));
+        this.tabBarItems.forEach(item => item.name = this.i18n.translate(item.name));
 
         // sync documents with tabs
         this.documentService.documentListChange.pipe(filter(() => !!this.tabBar)).subscribe(documents => {

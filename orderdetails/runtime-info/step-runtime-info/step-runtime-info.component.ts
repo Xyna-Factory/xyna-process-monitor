@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterContentChecked, Component, Input, ViewChild } from '@angular/core';
+import { AfterContentChecked, Component, Input, ViewChild, inject } from '@angular/core';
 
 import { ApiService, Xo, XoArray, XoDescriberCache, XoObject, XoStructureObject } from '@zeta/api';
 import { copyToClipboard, isArray } from '@zeta/base';
@@ -37,6 +37,11 @@ import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
     imports: [XcModule, I18nModule]
 })
 export class StepRuntimeInfoComponent implements AfterContentChecked {
+    private readonly i18n = inject(I18nService);
+    private readonly auditService = inject(AuditService);
+    private readonly documentService = inject(DocumentService);
+    private readonly dialogs = inject(XcDialogService);
+
 
     private _runtimeInfo: XoStepRuntimeInfo;
 
@@ -65,13 +70,9 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     violatesErrorLimit = false;
 
 
-    constructor(
-        apiService: ApiService,
-        private readonly i18n: I18nService,
-        private readonly auditService: AuditService,
-        private readonly documentService: DocumentService,
-        private readonly dialogs: XcDialogService
-    ) {
+    constructor() {
+        const apiService = inject(ApiService);
+
         // create tree data sources
         const newDataSource = () => new XcReadonlyStructureTreeDataSource(apiService, undefined, RTC, []);
         this.dataSources = [

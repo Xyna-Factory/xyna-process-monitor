@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector, Optional } from '@angular/core';
+import { Component, inject, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
@@ -68,6 +68,15 @@ import { RuntimeInfoComponent } from './runtime-info/runtime-info.component';
     imports: [I18nModule, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, AuditDetailsComponent, XcModule, RuntimeInfoComponent]
 })
 export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewEntry> {
+    private readonly auditService = inject(AuditService);
+    private readonly documentService = inject(DocumentService);
+    private readonly selectionService = inject(SelectionService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly i18n = inject(I18nService);
+    private readonly router = inject(Router);
+    private readonly pmodDocumentService = inject(PMODDocumentService);
+    private readonly detailLevelService = inject(WorkflowDetailLevelService);
+
 
     readonly XoServiceRuntimeInfo = templateClassType<XoServiceRuntimeInfo>(XoServiceRuntimeInfo);
     readonly XoXmomItem = templateClassType<XoXmomItem>(XoXmomItem);
@@ -92,28 +101,21 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
     document: DocumentModel<DocumentItem>;
 
 
-    constructor(@Optional() injector: Injector,
-        router: Router,
-        pmodDocumentService: PMODDocumentService,
-        detailLevelService: WorkflowDetailLevelService,
-        private readonly auditService: AuditService,
-        private readonly documentService: DocumentService,
-        private readonly selectionService: SelectionService,
-        private readonly dialogService: XcDialogService,
-        private readonly i18n: I18nService
-    ) {
+    constructor() {
+        const injector = inject(Injector, { optional: true });
+
         super(injector);
 
-        i18n.setTranslations(LocaleService.EN_US, orderdetailsTranslations_enUS);
-        i18n.setTranslations(LocaleService.DE_DE, orderdetailsTranslations_deDE);
+        this.i18n.setTranslations(LocaleService.EN_US, orderdetailsTranslations_enUS);
+        this.i18n.setTranslations(LocaleService.DE_DE, orderdetailsTranslations_deDE);
 
         this.menuItems.push(
             <XcMenuItem>{
                 name: 'Open in Process Modeller', translate: true,
                 visible: () => true,
                 click: () => {
-                    pmodDocumentService.loadWorkflow(this.workflow.toRtc(), this.workflow.toFqn());
-                    void router.navigate(['xfm/Process-Modeller/']);
+                    this.pmodDocumentService.loadWorkflow(this.workflow.toRtc(), this.workflow.toFqn());
+                    void this.router.navigate(['xfm/Process-Modeller/']);
                 }
             },
             <XcMenuItem>{
@@ -135,7 +137,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
             <XcMenuItem>{
                 name: 'Show/Hide Paths inside Workflow', translate: true,
                 visible: () => true,
-                click: () => detailLevelService.setShowFQN(!detailLevelService.showFQN)
+                click: () => this.detailLevelService.setShowFQN(!this.detailLevelService.showFQN)
             }
         );
 

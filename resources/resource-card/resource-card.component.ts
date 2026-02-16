@@ -15,20 +15,21 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { ApiService } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
+
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
+import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
 import { ResourceInfo } from '../resource-data-source';
 import { XoOrder } from '../xo/order.model';
-
 import { XoResource } from '../xo/resource.model';
-import { XcModule } from '../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
-import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
-
 
 
 @Component({
@@ -39,6 +40,12 @@ import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-or
     imports: [XcModule, I18nModule, KillOrderButtonComponent]
 })
 export class ResourceCardComponent implements OnDestroy {
+    private readonly elementRef = inject(ElementRef<HTMLElement>);
+    readonly api = inject(ApiService);
+    readonly i18n = inject(I18nService);
+    private readonly router = inject(Router);
+    private readonly cdr = inject(ChangeDetectorRef);
+
 
     private _resourceInfo: ResourceInfo<XoResource>;
     selectedOrders: XoOrder[] = [];
@@ -72,10 +79,6 @@ export class ResourceCardComponent implements OnDestroy {
 
     get resourceInfo(): ResourceInfo<XoResource> {
         return this._resourceInfo;
-    }
-
-
-    constructor(private readonly elementRef: ElementRef, readonly api: ApiService, readonly i18n: I18nService, private readonly router: Router, private readonly cdr: ChangeDetectorRef) {
     }
 
 

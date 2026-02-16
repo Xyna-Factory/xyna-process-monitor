@@ -15,12 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component, inject, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcRemoteTableDataSource, XcTabBarItem, XcTabComponent, XoTableInfo } from '@zeta/xc';
 
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../zeta/xc/xc.module';
 import { RTC } from '../const';
 import { LiveReportingDetailsComponent } from '../live-reporting-details/live-reporting-details.component';
 import { ProcessmonitorSettingsService } from '../processmonitor-settings.service';
@@ -30,8 +32,6 @@ import { liveReportingTranslations_deDE } from './locale/live-reporting-translat
 import { liveReportingTranslations_enUS } from './locale/live-reporting-translations.en-US';
 import { XoFrequencyControlledTaskDetails, XoFrequencyControlledTaskDetailsArray } from './xo/xo-frequency-controlled-task-details.model';
 import { XoTaskId } from './xo/xo-task-id.model';
-import { XcModule } from '../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
 
 
 class DateTimeTableInfo extends XoTableInfo {
@@ -92,22 +92,25 @@ class DateTimeTableInfo extends XoTableInfo {
     imports: [XcModule, I18nModule]
 })
 export class LiveReportingComponent extends XcTabComponent<string> {
+    private readonly apiService = inject(ApiService);
+    private readonly dialogService = inject(XcDialogService);
+   private readonly i18nService = inject(I18nService);
+    private readonly settings = inject(ProcessmonitorSettingsService);
+
 
     dataSource: XcRemoteTableDataSource<XoFrequencyControlledTaskDetails>;
 
-    constructor(
-        injector: Injector,
-        settings: ProcessmonitorSettingsService,
-        private readonly apiService: ApiService,
-        private readonly dialogService: XcDialogService,
-        private readonly i18nService: I18nService
-    ) {
+    constructor() {
+        const injector = inject(Injector);
+
         super(injector);
 
-        i18nService.setTranslations(LocaleService.EN_US, liveReportingTranslations_enUS);
-        i18nService.setTranslations(LocaleService.DE_DE, liveReportingTranslations_deDE);
 
-        this.dataSource = new XcRemoteTableDataSource(apiService, i18nService, RTC, WF_GET_LIVE_REPORTING_ENTRIES);
+
+        this.i18nService.setTranslations(LocaleService.EN_US, liveReportingTranslations_enUS);
+        this.i18nService.setTranslations(LocaleService.DE_DE, liveReportingTranslations_deDE);
+
+        this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, RTC, WF_GET_LIVE_REPORTING_ENTRIES);
         this.dataSource.output = XoFrequencyControlledTaskDetailsArray;
         this.dataSource.tableInfoClass = DateTimeTableInfo;
         /*this.dataSource.tableInfoClass = XoRemappingTableInfoClass(
@@ -120,7 +123,7 @@ export class LiveReportingComponent extends XcTabComponent<string> {
 
         this.dataSource.selectionModel.selectionChangeForUnchangedSelection = true;
         this.dataSource.selectionModel.activatedChange.subscribe(() => this.showDetails());
-        this.dataSource.refreshOnFilterChange = settings.tableRefreshOnFilterChange;
+        this.dataSource.refreshOnFilterChange = this.settings.tableRefreshOnFilterChange;
     }
 
     showDetails() {
