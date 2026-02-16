@@ -4,7 +4,11 @@
     [(xc-panel-collapsed)]="this.resourceInfo.collapsed"
     >
     <header>
-      <label class="name">{{resource.name}}@if (!this.resourceInfo.resource.enabled) {
+      <label class="name">
+      @if (this.resourceInfo.resource.created) {
+        <label class="created-time" xc-i18n>{{resource.created}} (UTC) </label>
+      }{{resource.name}}
+      @if (!this.resourceInfo.resource.enabled) {
         <label class="active-state" xc-i18n>resource-inactive</label>
       }</label>
       <xc-template class="usage" [xc-template-instance]="resourceInfo.resource.usageTemplate"></xc-template>

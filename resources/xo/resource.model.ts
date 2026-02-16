@@ -34,6 +34,7 @@ export class XoResource extends XoObject {
 
     usageTemplate: XcComponentTemplate<ResourceUsageTemplateData>;
     enabled = true;
+    createdTime = null;
 
     afterDecode() {
         super.afterDecode();

@@ -61,16 +61,20 @@ export const resourcesTranslations_enUS: I18nTranslation[] = [
         value: '$0 of $1 of this Resource\'s units are in use'
     },
     {
-        key: 'ORDER_ID',
+        key: 'pmon.vetoes.ORDER_ID',
         value: 'Order ID'
     },
     {
-        key: 'NAME',
+        key: 'pmon.vetoes.NAME',
         value: 'Name'
     },
     {
-        key: 'WAITING_ORDERS_COUNT',
+        key: 'pmon.vetoes.WAITING_ORDERS_COUNT',
         value: 'Number of Waiting Orders'
+    },
+    {
+        key: 'pmon.vetoes.CREATED',
+        value: 'Creation date'
     },
 
     // Capacities

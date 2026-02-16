@@ -22,7 +22,7 @@ import { XoObjectClass, XoArrayClass, XoProperty, XoObject, XoArray, XoEnumerate
 export class XoSortCriterion extends XoObject {
 
     @XoProperty()
-    @XoEnumerated(['ORDER_ID', 'NAME', 'WAITING_ORDERS_COUNT'])
+    @XoEnumerated(['ORDER_ID', 'NAME', 'WAITING_ORDERS_COUNT', 'CREATED'])
     field: string;
 }
 

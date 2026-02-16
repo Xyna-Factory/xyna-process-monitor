@@ -15,12 +15,22 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoObjectClass, XoArrayClass, XoArray } from '@zeta/api';
+import { XoObjectClass, XoArrayClass, XoArray, XoProperty } from '@zeta/api';
 import { XoResource } from './resource.model';
 
 
 @XoObjectClass(XoResource, 'xmcp.processmonitor.resources', 'Veto')
 export class XoVeto extends XoResource {
+
+    @XoProperty()
+    created: string;
+
+
+    afterDecode() {
+        super.afterDecode();
+
+        this.createdTime = this.created;
+    }
 }
 
 

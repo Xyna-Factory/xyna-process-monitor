@@ -23,7 +23,7 @@
             flex: 4;
             user-select: text;
 
-            .active-state {
+            .active-state, .created-time {
                 margin-left: 8px;
                 font-style: italic;
                 color: $color-gray-4;
