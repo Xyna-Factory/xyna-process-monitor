@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 
 import { XoError } from '@pmod/xo/error.model';
 import { ApiService } from '@zeta/api';
@@ -36,6 +36,10 @@ import { I18nModule } from '../../../../zeta/i18n/i18n.module';
     imports: [XcModule, I18nModule]
 })
 export class KillOrderButtonComponent {
+    private readonly authService = inject(AuthService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly api = inject(ApiService);
+
 
     private _icon = false;
     private _disabled = false;
@@ -45,14 +49,6 @@ export class KillOrderButtonComponent {
 
     @Output()
     readonly refresh = new EventEmitter<void>();
-
-
-    constructor(
-        private readonly authService: AuthService,
-        private readonly dialogService: XcDialogService,
-        private readonly api: ApiService
-    ) {
-    }
 
 
     kill() {

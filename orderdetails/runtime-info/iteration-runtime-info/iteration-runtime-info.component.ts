@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { NgClass } from '@angular/common';
-import { ChangeDetectorRef, Component, forwardRef, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, Input, inject } from '@angular/core';
 
 import { IterationInfo } from '@pmod/xo/runtime-info.model';
 import { I18nService } from '@zeta/i18n';
@@ -36,6 +36,10 @@ import { RuntimeInfoComponent } from '../runtime-info.component';
     imports: [XcModule, NgClass, forwardRef(() => RuntimeInfoComponent)]
 })
 export class IterationRuntimeInfoComponent {
+    private readonly i18n = inject(I18nService);
+    private readonly cdref = inject(ChangeDetectorRef);
+    private readonly auditService = inject(AuditService);
+
 
     private readonly allowedKeys = new Set(['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight']);
 
@@ -58,14 +62,6 @@ export class IterationRuntimeInfoComponent {
 
     limitError: string;
     violatesLimit = false;
-
-
-    constructor(
-        private readonly i18n: I18nService,
-        private readonly cdref: ChangeDetectorRef,
-        private readonly auditService: AuditService
-    ) {
-    }
 
 
     private selectIteration(arrayIdx: number) {

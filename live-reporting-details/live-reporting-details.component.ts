@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,7 +16,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Injector, OnInit, Optional, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Injector, OnInit, ViewChild } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
@@ -23,6 +24,8 @@ import { XcDialogService, XcTabComponent } from '@zeta/xc';
 import { XoGraphDataArray, XoGraphInfo, XoTimeInterval, XoTimeIntervalArray } from '@zeta/xc/xc-graph/xc-remote-graph-data-source';
 import { XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
 
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../zeta/xc/xc.module';
 import { RTC } from '../const';
 import { WF_CANCEL_TASK, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS, WF_GET_GRAPH_DATA } from '../live-reporting/live-reporting.consts';
 import { XoFrequencyControlledTaskDetails } from '../live-reporting/xo/xo-frequency-controlled-task-details.model';
@@ -32,9 +35,6 @@ import { GraphInfoDataToPlotDataSourceConverter } from './components/graph-info-
 import { LiveReportingPlotComponent } from './components/live-reporting-plot.component';
 import { liveReportingDetailsTranslations_deDE } from './locale/live-reporting-details-translations.de-DE';
 import { liveReportingDetailsTranslations_enUS } from './locale/live-reporting-details-translations.en-US';
-import { XcModule } from '../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
-import { NgClass } from '@angular/common';
 
 
 @Component({
@@ -44,6 +44,11 @@ import { NgClass } from '@angular/common';
     imports: [XcModule, I18nModule, NgClass, LiveReportingPlotComponent]
 })
 export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFrequencyControlledTaskDetails> implements OnInit {
+    private readonly apiService = inject(ApiService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly i18nService = inject(I18nService);
+    private readonly cdr = inject(ChangeDetectorRef);
+
 
     task: XoFrequencyControlledTaskDetails;
     // enum access in the view
@@ -191,16 +196,13 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
             .replace('${total}', '' + this.task.maxEvents);
     }
 
-    constructor(@Optional() injector: Injector,
-        private readonly apiService: ApiService,
-        private readonly dialogService: XcDialogService,
-        private readonly i18nService: I18nService,
-        private readonly cdr: ChangeDetectorRef
-    ) {
+    constructor() {
+        const injector = inject(Injector, { optional: true });
+
         super(injector);
 
-        i18nService.setTranslations(LocaleService.EN_US, liveReportingDetailsTranslations_enUS);
-        i18nService.setTranslations(LocaleService.DE_DE, liveReportingDetailsTranslations_deDE);
+        this.i18nService.setTranslations(LocaleService.EN_US, liveReportingDetailsTranslations_enUS);
+        this.i18nService.setTranslations(LocaleService.DE_DE, liveReportingDetailsTranslations_deDE);
 
         this.task = this.injectedData.data as XoFrequencyControlledTaskDetails;
         this._progressString = this.i18nService.translate('${started} of ${total} started'); // let's replace params by the components to save unnecessesary calculations

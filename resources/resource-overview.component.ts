@@ -15,11 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, Injector, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Injector, OnDestroy } from '@angular/core';
+
 import { ApiService, Xo } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcTabComponent } from '@zeta/xc';
+
 import { Subscription } from 'rxjs';
+
 import { resourcesTranslations_deDE } from './locale/resources-translations.de-DE';
 import { resourcesTranslations_enUS } from './locale/resources-translations.en-US';
 import { ResourceDataSource } from './resource-data-source';
@@ -27,28 +30,28 @@ import { XoFilter } from './xo/filter.model';
 import { XoResource } from './xo/resource.model';
 
 
-
 @Component({ template: '' })
 export class ResourceOverviewComponent<T extends XoResource> extends XcTabComponent<string> implements OnDestroy {
+    readonly i18n = inject(I18nService);
+    readonly api = inject(ApiService);
+    readonly cdr = inject(ChangeDetectorRef);
+
 
     protected readonly subscriptions: Subscription[] = [];
     filter = new XoFilter();
 
 
-    constructor(
-        injector: Injector,
-        readonly i18n: I18nService,
-        readonly api: ApiService,
-        readonly cdr: ChangeDetectorRef
-    ) {
+    constructor() {
+        const injector = inject(Injector);
+
         super(injector);
 
-        i18n.setTranslations(LocaleService.EN_US, resourcesTranslations_enUS);
-        i18n.setTranslations(LocaleService.DE_DE, resourcesTranslations_deDE);
-        i18n.contextDismantlingSearch = true;
+        this.i18n.setTranslations(LocaleService.EN_US, resourcesTranslations_enUS);
+        this.i18n.setTranslations(LocaleService.DE_DE, resourcesTranslations_deDE);
+        this.i18n.contextDismantlingSearch = true;
 
         this.subscriptions.push(this.getDataSource().dataChange.subscribe(() =>
-            cdr.markForCheck()
+            this.cdr.markForCheck()
         ));
         this.refresh();
     }

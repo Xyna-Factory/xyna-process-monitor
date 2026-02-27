@@ -15,12 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component, inject, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcRemoteTableDataSource, XcTabComponent, XDSIconName, XoRemappingTableInfoClass, XoTableInfo } from '@zeta/xc';
 
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../zeta/xc/xc.module';
 import { RTC } from '../const';
 import { ProcessmonitorSettingsService } from '../processmonitor-settings.service';
 import { miMonitorTranslations_deDE } from './locale/mi-monitor-translations.de-DE';
@@ -29,8 +31,6 @@ import { XoManualInteractionId, XoManualInteractionIdArray } from './xo/mi-id.mo
 import { XoManualInteractionResponse } from './xo/mi-interaction-response.model';
 import { XoManualInteractionEntry, XoManualInteractionEntryArray } from './xo/mi-monitor-entry.model';
 import { XoManualInteractionProcessResponseArray } from './xo/mi-process-response.model';
-import { XcModule } from '../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
 
 
 enum ManualInteractionResponse {
@@ -50,24 +50,25 @@ const WF_PROCESS_MI = 'xmcp.processmonitor.ProcessMI';
     imports: [XcModule, I18nModule]
 })
 export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
+    private readonly apiService = inject(ApiService);
+    private readonly dialogService = inject(XcDialogService);
+    private readonly i18nService = inject(I18nService);
+    private readonly settings = inject(ProcessmonitorSettingsService);
+
 
     dataSource: XcRemoteTableDataSource<XoManualInteractionEntry>;
 
     XDSIconName = XDSIconName;
 
-    constructor(
-        injector: Injector,
-        i18nService: I18nService,
-        settings: ProcessmonitorSettingsService,
-        private readonly apiService: ApiService,
-        private readonly dialogService: XcDialogService
-    ) {
+    constructor() {
+        const injector = inject(Injector);
+
         super(injector);
 
-        i18nService.setTranslations(LocaleService.EN_US, miMonitorTranslations_enUS);
-        i18nService.setTranslations(LocaleService.DE_DE, miMonitorTranslations_deDE);
+        this.i18nService.setTranslations(LocaleService.EN_US, miMonitorTranslations_enUS);
+        this.i18nService.setTranslations(LocaleService.DE_DE, miMonitorTranslations_deDE);
 
-        this.dataSource = new XcRemoteTableDataSource(apiService, i18nService, RTC, WF_GET_MI_ENTIES);
+        this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, RTC, WF_GET_MI_ENTIES);
         this.dataSource.output = XoManualInteractionEntryArray;
         this.dataSource.tableInfoClass = XoRemappingTableInfoClass(
             XoTableInfo,
@@ -78,25 +79,25 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
 
         this.refresh();
 
-        this.dataSource.refreshOnFilterChange = settings.tableRefreshOnFilterChange;
+        this.dataSource.refreshOnFilterChange = this.settings.tableRefreshOnFilterChange;
         this.dataSource.actionElements = [
             {
                 iconName: XDSIconName.ARROWRIGHT,
                 onShow: entry => entry.allowContinue,
                 onAction: entry => this.continue([entry]),
-                tooltip: i18nService.translate('Continue')
+                tooltip: this.i18nService.translate('Continue')
             },
             {
                 iconName: XDSIconName.RELOAD,
                 onShow: entry => entry.allowRetry,
                 onAction: entry => this.retry([entry]),
-                tooltip: i18nService.translate('Retry')
+                tooltip: this.i18nService.translate('Retry')
             },
             {
                 iconName: XDSIconName.CLOSE,
                 onShow: entry => entry.allowAbort,
                 onAction: entry => this.cancel([entry]),
-                tooltip: i18nService.translate('Cancel')
+                tooltip: this.i18nService.translate('Cancel')
             }
         ];
     }

@@ -15,21 +15,21 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ApiService, Xo } from '@zeta/api';
-import { I18nService, LocaleService } from '@zeta/i18n';
+import { Xo } from '@zeta/api';
+import { LocaleService } from '@zeta/i18n';
+
+import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../../zeta/xc/xc.module';
 import { XoIncludeUnused, XoSearchFlagArray } from '../../xo/search-flag.model';
 import { resourcesTranslations_deDE } from '../locale/resources-translations.de-DE';
 import { resourcesTranslations_enUS } from '../locale/resources-translations.en-US';
+import { ResourceCardComponent } from '../resource-card/resource-card.component';
 import { ResourceDataSource } from '../resource-data-source';
 import { ResourceOverviewComponent } from '../resource-overview.component';
 import { XoCapacity, XoCapacityArray } from '../xo/capacity.model';
-import { XcModule } from '../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
-import { ResourceCardComponent } from '../resource-card/resource-card.component';
-
 
 
 @Component({
@@ -40,6 +40,8 @@ import { ResourceCardComponent } from '../resource-card/resource-card.component'
     imports: [XcModule, I18nModule, ResourceCardComponent]
 })
 export class CapacitiesComponent extends ResourceOverviewComponent<XoCapacity> {
+    private readonly router = inject(Router);
+
 
     dataSource: ResourceDataSource<XoCapacity>;
 
@@ -53,20 +55,15 @@ export class CapacitiesComponent extends ResourceOverviewComponent<XoCapacity> {
     }
 
 
-    constructor(
-        injector: Injector,
-        i18n: I18nService,
-        api: ApiService,
-        cdr: ChangeDetectorRef,
-        private readonly router: Router
-    ) {
-        super(injector, i18n, api, cdr);
+    constructor() {
 
-        i18n.setTranslations(LocaleService.EN_US, resourcesTranslations_enUS);
-        i18n.setTranslations(LocaleService.DE_DE, resourcesTranslations_deDE);
+        super();
+
+        this.i18n.setTranslations(LocaleService.EN_US, resourcesTranslations_enUS);
+        this.i18n.setTranslations(LocaleService.DE_DE, resourcesTranslations_deDE);
 
         this.subscriptions.push(this.dataSource.dataChange.subscribe(() =>
-            cdr.markForCheck()
+            this.cdr.markForCheck()
         ));
     }
 

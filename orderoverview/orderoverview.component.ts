@@ -15,23 +15,22 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Injector } from '@angular/core';
+import { Component, inject, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcRemoteTableDataSource, XcTabComponent } from '@zeta/xc';
 
+import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { XcModule } from '../../../zeta/xc/xc.module';
 import { RTC } from '../const';
 import { DocumentService } from '../document.service';
+import { KillOrderButtonComponent } from '../shared/kill-order-button/kill-order-button.component';
 import { XoOrderOverviewEntry, XoOrderOverviewEntryArray } from '../xo/order-overview-entry.model';
 import { XoIncludeInternalOrders, XoSearchFlagArray, XoShowOnlyMyOwnOrders, XoShowOnlyRootOrders } from '../xo/search-flag.model';
 import { DateTimeConverter } from '../xo/util/date-time-converter';
 import { orderoverviewTranslations_deDE } from './locale/orderoverview-translations.de-DE';
 import { orderoverviewTranslations_enUS } from './locale/orderoverview-translations.en-US';
-import { XcModule } from '../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
-import { KillOrderButtonComponent } from '../shared/kill-order-button/kill-order-button.component';
-
 
 
 @Component({
@@ -41,6 +40,10 @@ import { KillOrderButtonComponent } from '../shared/kill-order-button/kill-order
     imports: [XcModule, I18nModule, KillOrderButtonComponent]
 })
 export class OrderoverviewComponent extends XcTabComponent<string> {
+    private readonly apiService = inject(ApiService);
+    private readonly documentService = inject(DocumentService);
+    
+    private readonly i18nService = inject(I18nService);
 
     dataSource: XcRemoteTableDataSource<XoOrderOverviewEntry>;
 
@@ -49,19 +52,16 @@ export class OrderoverviewComponent extends XcTabComponent<string> {
     private includeInternalOrders = false;
 
 
-    constructor(
-        injector: Injector,
-        i18nService: I18nService,
-        private readonly apiService: ApiService,
-        private readonly documentService: DocumentService
-    ) {
-        super(injector);
+    constructor() {
+        const injector = inject(Injector);
 
-        i18nService.setTranslations(LocaleService.EN_US, orderoverviewTranslations_enUS);
-        i18nService.setTranslations(LocaleService.DE_DE, orderoverviewTranslations_deDE);
+        super(injector);
+    
+        this.i18nService.setTranslations(LocaleService.EN_US, orderoverviewTranslations_enUS);
+        this.i18nService.setTranslations(LocaleService.DE_DE, orderoverviewTranslations_deDE);
 
         const orderType = 'xmcp.processmonitor.GetOrderOverview';
-        this.dataSource = new XcRemoteTableDataSource(apiService, i18nService, RTC, orderType);
+        this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, RTC, orderType);
         this.dataSource.output = XoOrderOverviewEntryArray;
         // this.dataSource.tableInfoClass = DateTimeTableInfo;
         this.refresh();
