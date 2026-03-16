@@ -19,9 +19,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Xo } from '@zeta/api';
-import { LocaleService } from '@zeta/i18n';
 
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
 import { XcModule } from '../../../../zeta/xc/xc.module';
 import { XoIncludeUnused, XoSearchFlagArray } from '../../xo/search-flag.model';
 import { resourcesTranslations_deDE } from '../locale/resources-translations.de-DE';
@@ -30,6 +28,7 @@ import { ResourceCardComponent } from '../resource-card/resource-card.component'
 import { ResourceDataSource } from '../resource-data-source';
 import { ResourceOverviewComponent } from '../resource-overview.component';
 import { XoCapacity, XoCapacityArray } from '../xo/capacity.model';
+import { XcI18nContextDirective, XcI18nTranslateDirective, LocaleService } from '@zeta/i18n';
 
 
 @Component({
@@ -37,7 +36,7 @@ import { XoCapacity, XoCapacityArray } from '../xo/capacity.model';
     templateUrl: './capacities.component.html',
     styleUrls: ['./capacities.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, ResourceCardComponent]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, ResourceCardComponent]
 })
 export class CapacitiesComponent extends ResourceOverviewComponent<XoCapacity> {
     private readonly router = inject(Router);

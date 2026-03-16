@@ -18,10 +18,10 @@
 import { Component, inject, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
-import { I18nService, LocaleService } from '@zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcRemoteTableDataSource, XcTabComponent } from '@zeta/xc';
 
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
+
 import { XcModule } from '../../../zeta/xc/xc.module';
 import { RTC } from '../const';
 import { DocumentService } from '../document.service';
@@ -37,7 +37,7 @@ import { orderoverviewTranslations_enUS } from './locale/orderoverview-translati
     selector: 'xfm-mon-orderoverview',
     templateUrl: './orderoverview.component.html',
     styleUrls: ['./orderoverview.component.scss'],
-    imports: [XcModule, I18nModule, KillOrderButtonComponent]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, KillOrderButtonComponent]
 })
 export class OrderoverviewComponent extends XcTabComponent<string> {
     private readonly apiService = inject(ApiService);

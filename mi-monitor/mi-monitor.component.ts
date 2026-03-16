@@ -18,10 +18,8 @@
 import { Component, inject, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
-import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcRemoteTableDataSource, XcTabComponent, XDSIconName, XoRemappingTableInfoClass, XoTableInfo } from '@zeta/xc';
 
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
 import { XcModule } from '../../../zeta/xc/xc.module';
 import { RTC } from '../const';
 import { ProcessmonitorSettingsService } from '../processmonitor-settings.service';
@@ -31,6 +29,7 @@ import { XoManualInteractionId, XoManualInteractionIdArray } from './xo/mi-id.mo
 import { XoManualInteractionResponse } from './xo/mi-interaction-response.model';
 import { XoManualInteractionEntry, XoManualInteractionEntryArray } from './xo/mi-monitor-entry.model';
 import { XoManualInteractionProcessResponseArray } from './xo/mi-process-response.model';
+import { XcI18nContextDirective, XcI18nTranslateDirective, I18nService, LocaleService } from '@zeta/i18n';
 
 
 enum ManualInteractionResponse {
@@ -47,7 +46,7 @@ const WF_PROCESS_MI = 'xmcp.processmonitor.ProcessMI';
     selector: 'xfm-mon-mi-monitor',
     templateUrl: './mi-monitor.component.html',
     styleUrls: ['./mi-monitor.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
     private readonly apiService = inject(ApiService);

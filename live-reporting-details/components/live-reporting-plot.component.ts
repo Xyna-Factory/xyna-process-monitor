@@ -22,14 +22,14 @@ import { XcPlotDataChangeBehavior, XcPlotDataSource } from '@zeta/xc/xc-plot/xc-
 
 import { DataSourceUpdateInterval, LiveReportingDataSourceName } from '../classes/live-reporting-time-helper';
 import { XcModule } from '../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 
 
 @Component({
     selector: 'live-reporting-plot',
     templateUrl: './live-reporting-plot.component.html',
     styleUrls: ['./live-reporting-plot.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class LiveReportingPlotComponent {
 

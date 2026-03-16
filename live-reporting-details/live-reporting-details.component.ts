@@ -19,12 +19,11 @@ import { NgClass } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, Injector, OnInit, ViewChild } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
-import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcTabComponent } from '@zeta/xc';
 import { XoGraphDataArray, XoGraphInfo, XoTimeInterval, XoTimeIntervalArray } from '@zeta/xc/xc-graph/xc-remote-graph-data-source';
 import { XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
 
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
 import { XcModule } from '../../../zeta/xc/xc.module';
 import { RTC } from '../const';
 import { WF_CANCEL_TASK, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS, WF_GET_GRAPH_DATA } from '../live-reporting/live-reporting.consts';
@@ -41,7 +40,7 @@ import { liveReportingDetailsTranslations_enUS } from './locale/live-reporting-d
     selector: 'xfm-mon-live-reporting-details',
     templateUrl: './live-reporting-details.component.html',
     styleUrls: ['./live-reporting-details.component.scss'],
-    imports: [XcModule, I18nModule, NgClass, LiveReportingPlotComponent]
+    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, NgClass, LiveReportingPlotComponent]
 })
 export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFrequencyControlledTaskDetails> implements OnInit {
     private readonly apiService = inject(ApiService);
