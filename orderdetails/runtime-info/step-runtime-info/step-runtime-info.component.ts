@@ -27,14 +27,14 @@ import { DocumentService } from '../../../document.service';
 import { XoStepRuntimeInfo } from '../../../xo/step-runtime-info.model';
 import { AuditService } from '../../audit.service';
 import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({
     selector: 'xfm-mon-step-runtime-info',
     templateUrl: './step-runtime-info.component.html',
     styleUrls: ['./step-runtime-info.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nTranslateDirective]
 })
 export class StepRuntimeInfoComponent implements AfterContentChecked {
     private readonly i18n = inject(I18nService);

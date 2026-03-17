@@ -26,14 +26,14 @@ import { XcDialogService } from '@zeta/xc';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { XcModule } from '../../../../zeta/xc/xc.module';
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 
 
 @Component({
     selector: 'xfm-mon-kill-order-button',
     templateUrl: './kill-order-button.component.html',
     styleUrls: ['./kill-order-button.component.scss'],
-    imports: [XcModule, I18nModule]
+    imports: [XcModule, XcI18nTranslateDirective]
 })
 export class KillOrderButtonComponent {
     private readonly authService = inject(AuthService);

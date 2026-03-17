@@ -24,7 +24,7 @@ import { I18nService } from '@zeta/i18n';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { I18nModule } from '../../../../zeta/i18n/i18n.module';
+import { XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { XcModule } from '../../../../zeta/xc/xc.module';
 import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
 import { ResourceInfo } from '../resource-data-source';
@@ -37,7 +37,7 @@ import { XoResource } from '../xo/resource.model';
     templateUrl: './resource-card.component.html',
     styleUrls: ['./resource-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, I18nModule, KillOrderButtonComponent]
+    imports: [XcModule, XcI18nTranslateDirective, XcI18nPipe, KillOrderButtonComponent]
 })
 export class ResourceCardComponent implements OnDestroy {
     private readonly elementRef = inject(ElementRef<HTMLElement>);

@@ -39,13 +39,9 @@ import { XoXmomItem } from '@pmod/xo/xmom-item.model';
 import { FullQualifiedName, XoWorkspace } from '@zeta/api';
 import { XoXPRCApplication } from '@zeta/api/xo/runtime-context.model';
 import { templateClassType } from '@zeta/base';
-import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcDialogService, XcMenuItem, XcTabComponent } from '@zeta/xc';
-
 import { Observable, of, Subscription } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
-
-import { I18nModule } from '../../../zeta/i18n/i18n.module';
 import { XcModule } from '../../../zeta/xc/xc.module';
 import { DocumentService } from '../document.service';
 import { XoOrderOverviewEntry } from '../xo/order-overview-entry.model';
@@ -58,6 +54,7 @@ import { AuditService } from './audit.service';
 import { orderdetailsTranslations_deDE } from './locale/orderdetails-translations.de-DE';
 import { orderdetailsTranslations_enUS } from './locale/orderdetails-translations.en-US';
 import { RuntimeInfoComponent } from './runtime-info/runtime-info.component';
+import { XcI18nContextDirective, XcI18nTranslateDirective, I18nService, LocaleService } from '@zeta/i18n';
 
 
 @Component({
@@ -65,7 +62,7 @@ import { RuntimeInfoComponent } from './runtime-info/runtime-info.component';
     templateUrl: './orderdetails.component.html',
     styleUrls: ['./orderdetails.component.scss'],
     providers: [SelectionService, AuditService, WorkflowDetailLevelService],
-    imports: [I18nModule, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, AuditDetailsComponent, XcModule, RuntimeInfoComponent]
+    imports: [XcI18nContextDirective, XcI18nTranslateDirective, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, AuditDetailsComponent, XcModule, RuntimeInfoComponent]
 })
 export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewEntry> {
     private readonly auditService = inject(AuditService);
