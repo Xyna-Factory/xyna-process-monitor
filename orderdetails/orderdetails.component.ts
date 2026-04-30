@@ -55,6 +55,7 @@ import { orderdetailsTranslations_deDE } from './locale/orderdetails-translation
 import { orderdetailsTranslations_enUS } from './locale/orderdetails-translations.en-US';
 import { RuntimeInfoComponent } from './runtime-info/runtime-info.component';
 import { XcI18nContextDirective, XcI18nTranslateDirective, I18nService, LocaleService } from '@zeta/i18n';
+import { DataflowComponent } from '@pmod/document/workflow/dataflow/dataflow.component';
 
 
 @Component({
@@ -62,7 +63,7 @@ import { XcI18nContextDirective, XcI18nTranslateDirective, I18nService, LocaleSe
     templateUrl: './orderdetails.component.html',
     styleUrls: ['./orderdetails.component.scss'],
     providers: [SelectionService, AuditService, WorkflowDetailLevelService],
-    imports: [XcI18nContextDirective, XcI18nTranslateDirective, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, AuditDetailsComponent, XcModule, RuntimeInfoComponent]
+    imports: [XcI18nContextDirective, XcI18nTranslateDirective, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, AuditDetailsComponent, XcModule, RuntimeInfoComponent, DataflowComponent]
 })
 export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewEntry> {
     private readonly auditService = inject(AuditService);
