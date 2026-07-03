@@ -237,6 +237,11 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
             // assemble document model with rtc information
             if (this.workflow) {
                 this.document = new WorkflowDocumentModel(this.workflow, this.workflow.$rtc.runtimeContext());
+                this.document.updateLock({
+                    userLock: '',
+                    rtcLock: false,
+                    readonly: this.document.item.readonly
+                })
             }
 
             // if there are errors in the response, show them
