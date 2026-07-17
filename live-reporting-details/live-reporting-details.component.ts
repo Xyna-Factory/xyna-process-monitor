@@ -25,7 +25,6 @@ import { XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
 import { XcModule } from '../../../zeta/xc/xc.module';
-import { RTC } from '../const';
 import { WF_CANCEL_TASK, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS, WF_GET_GRAPH_DATA } from '../live-reporting/live-reporting.consts';
 import { XoFrequencyControlledTaskDetails } from '../live-reporting/xo/xo-frequency-controlled-task-details.model';
 import { XoGraphDatasource } from '../live-reporting/xo/xo-graph-data-source.model';
@@ -34,6 +33,7 @@ import { GraphInfoDataToPlotDataSourceConverter } from './components/graph-info-
 import { LiveReportingPlotComponent } from './components/live-reporting-plot.component';
 import { liveReportingDetailsTranslations_deDE } from './locale/live-reporting-details-translations.de-DE';
 import { liveReportingDetailsTranslations_enUS } from './locale/live-reporting-details-translations.en-US';
+import { PMON_RTC } from '../processmonitor.component';
 
 
 @Component({
@@ -278,7 +278,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
                 const resolution = LiveReportingTimeAxisDimensionHelper.recommendResolution(duration);
                 info.resolution = resolution;
 
-                this.apiService.startOrder(RTC, WF_GET_GRAPH_DATA, [info, dsType, this.task.taskId], [XoGraphInfo, XoGraphDataArray]).subscribe(res => {
+                this.apiService.startOrder(PMON_RTC, WF_GET_GRAPH_DATA, [info, dsType, this.task.taskId], [XoGraphInfo, XoGraphDataArray]).subscribe(res => {
                     if (res && !res.errorMessage) {
                         const graphInfo = res.output[0] as XoGraphInfo;
                         const dataArray = res.output[1] as XoGraphDataArray;
@@ -392,7 +392,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
 
     cancel() {
 
-        this.apiService.startOrder(RTC, WF_CANCEL_TASK, this.task.taskId).subscribe({
+        this.apiService.startOrder(PMON_RTC, WF_CANCEL_TASK, this.task.taskId).subscribe({
             next: res => {
                 if (res && !res.errorMessage) {
                     this.dismiss();
@@ -410,7 +410,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
 
     refresh() {
         // TODO
-        this.apiService.startOrder(RTC, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS, this.task.taskId, XoFrequencyControlledTaskDetails).subscribe(res => {
+        this.apiService.startOrder(PMON_RTC, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS, this.task.taskId, XoFrequencyControlledTaskDetails).subscribe(res => {
             if (res && !res.errorMessage) {
                 const task = res.output[0] as XoFrequencyControlledTaskDetails;
                 this.task = task;

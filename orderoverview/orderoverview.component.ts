@@ -23,7 +23,7 @@ import { XcRemoteTableDataSource, XcTabComponent } from '@zeta/xc';
 
 
 import { XcModule } from '../../../zeta/xc/xc.module';
-import { RTC } from '../const';
+import { PMON_RTC } from '../processmonitor.component';
 import { DocumentService } from '../document.service';
 import { KillOrderButtonComponent } from '../shared/kill-order-button/kill-order-button.component';
 import { XoOrderOverviewEntry, XoOrderOverviewEntryArray } from '../xo/order-overview-entry.model';
@@ -61,7 +61,7 @@ export class OrderoverviewComponent extends XcTabComponent<string> {
         this.i18nService.setTranslations(LocaleService.DE_DE, orderoverviewTranslations_deDE);
 
         const orderType = 'xmcp.processmonitor.GetOrderOverview';
-        this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, RTC, orderType);
+        this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, PMON_RTC, orderType);
         this.dataSource.output = XoOrderOverviewEntryArray;
         // this.dataSource.tableInfoClass = DateTimeTableInfo;
         this.refresh();

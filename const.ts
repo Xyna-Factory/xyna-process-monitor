@@ -15,10 +15,6 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { RuntimeContext } from '@zeta/api';
-
-
-export const RTC = RuntimeContext.guiHttpApplication;
 
 export const RIGHT_PROCESS_MONITOR = 'xmcp.xfm.processMonitor';
 
