@@ -18,7 +18,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output, inject } from '@angular/core';
 
 import { templateClassType } from '@zeta/base';
-import { XcDialogService } from '@zeta/xc';
+import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { Observer, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -29,7 +29,6 @@ import { XoStepRuntimeInfo } from '../../xo/step-runtime-info.model';
 import { XoWorkflowRuntimeInfo } from '../../xo/workflow-runtime-info.model';
 import { AuditService } from '../audit.service';
 import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
 import { NgTemplateOutlet } from '@angular/common';
 
@@ -46,7 +45,7 @@ export interface OpenAuditData {
     templateUrl: './audit-details.component.html',
     styleUrls: ['./audit-details.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcModule, KillOrderButtonComponent, NgTemplateOutlet]
+    imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcButtonComponent, XcIconButtonComponent, XcTooltipDirective, KillOrderButtonComponent, NgTemplateOutlet]
 })
 export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
     private readonly cdRef = inject(ChangeDetectorRef);

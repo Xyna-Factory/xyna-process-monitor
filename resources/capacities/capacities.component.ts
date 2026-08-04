@@ -20,7 +20,6 @@ import { Router } from '@angular/router';
 
 import { Xo } from '@zeta/api';
 
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { XoIncludeUnused, XoSearchFlagArray } from '../../xo/search-flag.model';
 import { resourcesTranslations_deDE } from '../locale/resources-translations.de-DE';
 import { resourcesTranslations_enUS } from '../locale/resources-translations.en-US';
@@ -29,6 +28,7 @@ import { ResourceDataSource } from '../resource-data-source';
 import { ResourceOverviewComponent } from '../resource-overview.component';
 import { XoCapacity, XoCapacityArray } from '../xo/capacity.model';
 import { XcI18nContextDirective, XcI18nTranslateDirective, LocaleService } from '@zeta/i18n';
+import { XcButtonComponent, XcCheckboxComponent, XcFormInputComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
@@ -36,7 +36,7 @@ import { XcI18nContextDirective, XcI18nTranslateDirective, LocaleService } from 
     templateUrl: './capacities.component.html',
     styleUrls: ['./capacities.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, ResourceCardComponent]
+    imports: [XcButtonComponent, XcCheckboxComponent, XcFormInputComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, ResourceCardComponent]
 })
 export class CapacitiesComponent extends ResourceOverviewComponent<XoCapacity> {
     private readonly router = inject(Router);

@@ -19,10 +19,9 @@ import { Component, inject, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
-import { XcRemoteTableDataSource, XcTabComponent } from '@zeta/xc';
+import { XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective } from '@zeta/xc';
 
 
-import { XcModule } from '../../../zeta/xc/xc.module';
 import { RTC } from '../const';
 import { DocumentService } from '../document.service';
 import { KillOrderButtonComponent } from '../shared/kill-order-button/kill-order-button.component';
@@ -37,7 +36,7 @@ import { orderoverviewTranslations_enUS } from './locale/orderoverview-translati
     selector: 'xfm-mon-orderoverview',
     templateUrl: './orderoverview.component.html',
     styleUrls: ['./orderoverview.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, KillOrderButtonComponent]
+    imports: [XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, KillOrderButtonComponent]
 })
 export class OrderoverviewComponent extends XcTabComponent<string> {
     private readonly apiService = inject(ApiService);
