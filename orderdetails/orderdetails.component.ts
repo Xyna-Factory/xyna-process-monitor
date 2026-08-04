@@ -39,10 +39,9 @@ import { XoXmomItem } from '@pmod/xo/xmom-item.model';
 import { FullQualifiedName, XoWorkspace } from '@zeta/api';
 import { XoXPRCApplication } from '@zeta/api/xo/runtime-context.model';
 import { templateClassType } from '@zeta/base';
-import { XcDialogService, XcMenuItem, XcTabComponent } from '@zeta/xc';
+import { XcDialogService, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcPanelComponent, XcSpinnerComponent, XcTabComponent, XcTooltipDirective } from '@zeta/xc';
 import { Observable, of, Subscription } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
-import { XcModule } from '../../../zeta/xc/xc.module';
 import { DocumentService } from '../document.service';
 import { XoOrderOverviewEntry } from '../xo/order-overview-entry.model';
 import { XoRetryIterationContainer } from '../xo/retry-iteration-container.model';
@@ -63,7 +62,7 @@ import { DataflowComponent } from '@pmod/document/workflow/dataflow/dataflow.com
     templateUrl: './orderdetails.component.html',
     styleUrls: ['./orderdetails.component.scss'],
     providers: [SelectionService, AuditService, WorkflowDetailLevelService],
-    imports: [XcI18nContextDirective, XcI18nTranslateDirective, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, AuditDetailsComponent, XcModule, RuntimeInfoComponent, DataflowComponent]
+    imports: [XcI18nContextDirective, XcI18nTranslateDirective, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, AuditDetailsComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcPanelComponent, XcSpinnerComponent, XcTooltipDirective, RuntimeInfoComponent, DataflowComponent]
 })
 export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewEntry> {
     private readonly auditService = inject(AuditService);
