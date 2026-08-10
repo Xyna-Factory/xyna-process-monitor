@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { XoItem } from '@pmod/xo/item.model';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
@@ -176,8 +176,9 @@ export class DocumentService {
     // ======================================================================================================
 
 
-    loadAudit(orderId: string): Observable<XoGetAuditResponse> {
-        return this.handleAudit(this.http.get('audits/' + orderId), orderId);
+    loadAudit(orderId: string, parentOrderId?: string): Observable<XoGetAuditResponse> {
+        const options = parentOrderId ? {params: {parent: parentOrderId}} : undefined;
+        return this.handleAudit(this.http.get('audits/' + orderId, options), orderId);
     }
 
 

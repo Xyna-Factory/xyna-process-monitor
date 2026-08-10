@@ -24,6 +24,7 @@ import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model
 import { WorkflowDocumentModel } from '@pmod/document/model/workflow-document.model';
 import { SelectionService } from '@pmod/document/selection.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
+import { DataflowComponent } from '@pmod/document/workflow/dataflow/dataflow.component';
 import { ExceptionHandlingAreaComponent } from '@pmod/document/workflow/exception/exception-handling-area/exception-handling-area.component';
 import { TypeLabelAreaComponent } from '@pmod/document/workflow/type-label-area/type-label-area.component';
 import { VariableAreaDocumentComponent } from '@pmod/document/workflow/variable-area/variable-area-document.component';
@@ -39,9 +40,12 @@ import { XoXmomItem } from '@pmod/xo/xmom-item.model';
 import { FullQualifiedName, XoWorkspace } from '@zeta/api';
 import { XoXPRCApplication } from '@zeta/api/xo/runtime-context.model';
 import { templateClassType } from '@zeta/base';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcDialogService, XcMenuItem, XcTabComponent } from '@zeta/xc';
+
 import { Observable, of, Subscription } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
+
 import { XcModule } from '../../../zeta/xc/xc.module';
 import { DocumentService } from '../document.service';
 import { XoOrderOverviewEntry } from '../xo/order-overview-entry.model';
@@ -54,8 +58,6 @@ import { AuditService } from './audit.service';
 import { orderdetailsTranslations_deDE } from './locale/orderdetails-translations.de-DE';
 import { orderdetailsTranslations_enUS } from './locale/orderdetails-translations.en-US';
 import { RuntimeInfoComponent } from './runtime-info/runtime-info.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective, I18nService, LocaleService } from '@zeta/i18n';
-import { DataflowComponent } from '@pmod/document/workflow/dataflow/dataflow.component';
 
 
 @Component({
@@ -153,11 +155,11 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
             map(modellingObject => modellingObject.modellingItem.runtimeInfo)
         ).subscribe(runtimeInfo => {
             if ((runtimeInfo instanceof XoWorkflowRuntimeInfo || runtimeInfo instanceof XoServiceRuntimeInfo) && runtimeInfo.orderId !== '0') {
-                this.openAudit({ sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: this.parentOrderId });
+                this.openAudit({ sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: this.workflow.orderId });
             }
         });
 
-        this.loadAudit(this.injectedData.id, this.injectedData.imported);
+        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.injectedData.parentId);
     }
 
 
@@ -185,11 +187,11 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
     }
 
 
-    private loadAudit(id: string, imported: boolean) {
+    private loadAudit(id: string, imported: boolean, parentOrderId?: string) {
         this.pending = true;
         (imported
             ? this.documentService.importAudit(id)
-            : this.documentService.loadAudit(id)
+            : this.documentService.loadAudit(id, parentOrderId)
         ).pipe(
             finalize(() => this.pending = false)
         ).subscribe(response => {
@@ -296,7 +298,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
 
     refreshAudit() {
-        this.loadAudit(this.injectedData.id, this.injectedData.imported);
+        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.parentOrderId);
     }
 
 

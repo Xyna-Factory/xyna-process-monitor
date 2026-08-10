@@ -42,6 +42,9 @@ export class RuntimeInfoComponent {
     runtimeInfo: XoRuntimeInfo;
 
     @Input()
+    parentOrderId: string;
+
+    @Input()
     lazyLoadingLimit: number;
 
     @Input()

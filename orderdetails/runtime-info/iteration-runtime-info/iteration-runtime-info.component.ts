@@ -60,6 +60,9 @@ export class IterationRuntimeInfoComponent {
     private _lazyLoadingLimit: number;
     private _iterationDepth: number;
 
+    @Input()
+    parentOrderId: string;
+
     limitError: string;
     violatesLimit = false;
 

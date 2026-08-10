@@ -15,19 +15,19 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterContentChecked, Component, Input, ViewChild, inject } from '@angular/core';
+import { AfterContentChecked, Component, inject, Input, ViewChild } from '@angular/core';
 
 import { ApiService, Xo, XoArray, XoDescriberCache, XoObject, XoStructureObject } from '@zeta/api';
 import { copyToClipboard, isArray } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
 import { XcDialogService, XcReadonlyStructureTreeDataSource, XcReadonlyTreeComponent } from '@zeta/xc';
 
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { RTC } from '../../../const';
 import { DocumentService } from '../../../document.service';
 import { XoStepRuntimeInfo } from '../../../xo/step-runtime-info.model';
 import { AuditService } from '../../audit.service';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 
 
 @Component({
@@ -63,6 +63,18 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     treeErr: XcReadonlyTreeComponent;
 
     private _lazyLoadingLimit: number;
+    private _parentOrderId: string;
+
+    @Input()
+    set parentOrderId(value: string) {
+        this._parentOrderId = value;
+        this.updateStructureOrderId();
+    }
+
+
+    get parentOrderId(): string {
+        return this._parentOrderId;
+    }
 
     limitError: string;
     violatesInputLimit = false;
@@ -170,6 +182,14 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     }
 
 
+    private updateStructureOrderId() {
+        const structureOrderId = this.parentOrderId || this.documentService.selectedDocument?.id;
+        if (structureOrderId) {
+            this.dataSources.forEach(ds => ds.orderId = structureOrderId);
+        }
+    }
+
+
     @Input()
     set runtimeInfo(value: XoStepRuntimeInfo) {
         this._runtimeInfo = value;
@@ -179,8 +199,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
         this.auditService.setRuntimeInfo(this.runtimeInfo);
 
         // update tree data sources
-        this.dsTreeIn.orderId  = this.documentService.selectedDocument.id;
-        this.dsTreeOut.orderId = this.documentService.selectedDocument.id;
+        this.updateStructureOrderId();
 
         this.dsTreeIn.container.clear().append(...this.runtimeInfo.inputObjects.data);
         this.dsTreeOut.container.clear().append(...this.runtimeInfo.outputObjects.data);
