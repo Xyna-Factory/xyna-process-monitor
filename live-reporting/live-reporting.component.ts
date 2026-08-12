@@ -21,7 +21,6 @@ import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabBarItem, XcTabComponent, XcTableComponent, XcTooltipDirective, XoTableInfo } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
-import { RTC } from '../const';
 import { LiveReportingDetailsComponent } from '../live-reporting-details/live-reporting-details.component';
 import { ProcessmonitorSettingsService } from '../processmonitor-settings.service';
 import { DateTimeConverter } from '../xo/util/date-time-converter';
@@ -30,6 +29,7 @@ import { liveReportingTranslations_deDE } from './locale/live-reporting-translat
 import { liveReportingTranslations_enUS } from './locale/live-reporting-translations.en-US';
 import { XoFrequencyControlledTaskDetails, XoFrequencyControlledTaskDetailsArray } from './xo/xo-frequency-controlled-task-details.model';
 import { XoTaskId } from './xo/xo-task-id.model';
+import { PMON_RTC } from '../processmonitor.component';
 
 
 class DateTimeTableInfo extends XoTableInfo {
@@ -108,7 +108,7 @@ export class LiveReportingComponent extends XcTabComponent<string> {
         this.i18nService.setTranslations(LocaleService.EN_US, liveReportingTranslations_enUS);
         this.i18nService.setTranslations(LocaleService.DE_DE, liveReportingTranslations_deDE);
 
-        this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, RTC, WF_GET_LIVE_REPORTING_ENTRIES);
+        this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, PMON_RTC, WF_GET_LIVE_REPORTING_ENTRIES);
         this.dataSource.output = XoFrequencyControlledTaskDetailsArray;
         this.dataSource.tableInfoClass = DateTimeTableInfo;
         /*this.dataSource.tableInfoClass = XoRemappingTableInfoClass(
@@ -128,7 +128,7 @@ export class LiveReportingComponent extends XcTabComponent<string> {
         const selection = this.dataSource.selectionModel.selection[0];
 
         this.apiService.startOrder(
-            RTC, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS,
+            PMON_RTC, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS,
             new XoTaskId(undefined, selection.taskId.id),
             XoFrequencyControlledTaskDetails
         ).subscribe(res => {

@@ -18,7 +18,7 @@
 import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
-import { ApiService } from '@zeta/api';
+import { ApiService, RuntimeContext } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
@@ -27,7 +27,7 @@ import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 import { fromEvent, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { RIGHT_PROCESS_MONITOR_LIVE_REPORTING, RIGHT_PROCESS_MONITOR_MI_MONITOR, RIGHT_PROCESS_MONITOR_ORDER_MONITOR, RIGHT_PROCESS_MONITOR_RESOURCE_MONITOR, RTC } from './const';
+import { RIGHT_PROCESS_MONITOR_LIVE_REPORTING, RIGHT_PROCESS_MONITOR_MI_MONITOR, RIGHT_PROCESS_MONITOR_ORDER_MONITOR, RIGHT_PROCESS_MONITOR_RESOURCE_MONITOR } from './const';
 import { DocumentService } from './document.service';
 import { LiveReportingDetailsComponent } from './live-reporting-details/live-reporting-details.component';
 import { LiveReportingComponent } from './live-reporting/live-reporting.component';
@@ -42,7 +42,10 @@ import { OrderoverviewComponent } from './orderoverview/orderoverview.component'
 import { CapacitiesComponent } from './resources/capacities/capacities.component';
 import { VetoesComponent } from './resources/vetoes/vetoes.component';
 import { XoOrderOverviewEntry } from './xo/order-overview-entry.model';
+import { ConfigService } from '@zeta/api/config.service';
 
+
+export let PMON_RTC = RuntimeContext.guiHttpApplication;
 
 @Component({
     templateUrl: './processmonitor.component.html',
@@ -79,6 +82,19 @@ export class ProcessmonitorComponent extends RouteComponent {
 
     constructor() {
         super();
+        const configService = inject(ConfigService);
+        if (configService.config['modeller']?.runtimeContext) {
+            if (configService.config['modeller'].runtimeContext.application) {
+                PMON_RTC = RuntimeContext.fromApplicationVersion(
+                    configService.config['modeller'].runtimeContext.application,
+                    configService.config['modeller'].runtimeContext.version
+                );
+            } else if (configService.config['modeller'].runtimeContext.workspace) {
+                PMON_RTC = RuntimeContext.fromWorkspace(
+                    configService.config['modeller'].runtimeContext.workspace
+                );
+            }
+        }
         this.i18n.setTranslations(LocaleService.EN_US, pmonTranslations_enUS);
         this.i18n.setTranslations(LocaleService.DE_DE, pmonTranslations_deDE);
 
@@ -183,7 +199,7 @@ export class ProcessmonitorComponent extends RouteComponent {
                 } else {
                     // get task details
                     this.apiService.startOrder(
-                        RTC, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS,
+                        PMON_RTC, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS,
                         new XoTaskId(undefined, taskId),
                         XoFrequencyControlledTaskDetails
                     ).subscribe(result => {

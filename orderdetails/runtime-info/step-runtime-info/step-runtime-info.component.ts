@@ -22,11 +22,12 @@ import { copyToClipboard, isArray } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService, XcPanelComponent, XcReadonlyStructureTreeDataSource, XcReadonlyTreeComponent } from '@zeta/xc';
 
-import { RTC } from '../../../const';
+
 import { DocumentService } from '../../../document.service';
 import { XoStepRuntimeInfo } from '../../../xo/step-runtime-info.model';
 import { AuditService } from '../../audit.service';
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
+import { PMON_RTC } from '../../../processmonitor.component';
 
 
 @Component({
@@ -73,7 +74,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
         const apiService = inject(ApiService);
 
         // create tree data sources
-        const newDataSource = () => new XcReadonlyStructureTreeDataSource(apiService, undefined, RTC, []);
+        const newDataSource = () => new XcReadonlyStructureTreeDataSource(apiService, undefined, PMON_RTC, []);
         this.dataSources = [
             this.dsTreeIn  = newDataSource(),
             this.dsTreeOut = newDataSource(),
