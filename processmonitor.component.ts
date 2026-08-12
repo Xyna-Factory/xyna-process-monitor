@@ -27,7 +27,6 @@ import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 import { fromEvent, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { XcModule } from '../../zeta/xc/xc.module';
 import { RIGHT_PROCESS_MONITOR_LIVE_REPORTING, RIGHT_PROCESS_MONITOR_MI_MONITOR, RIGHT_PROCESS_MONITOR_ORDER_MONITOR, RIGHT_PROCESS_MONITOR_RESOURCE_MONITOR } from './const';
 import { DocumentService } from './document.service';
 import { LiveReportingDetailsComponent } from './live-reporting-details/live-reporting-details.component';
@@ -51,7 +50,7 @@ export let PMON_RTC = RuntimeContext.guiHttpApplication;
 @Component({
     templateUrl: './processmonitor.component.html',
     styleUrls: ['./processmonitor.component.scss'],
-    imports: [XcModule]
+    imports: [XcTabBarComponent]
 })
 export class ProcessmonitorComponent extends RouteComponent {
     private readonly authService = inject(AuthService);

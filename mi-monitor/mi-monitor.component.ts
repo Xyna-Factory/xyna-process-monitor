@@ -18,9 +18,8 @@
 import { Component, inject, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
-import { XcDialogService, XcRemoteTableDataSource, XcTabComponent, XDSIconName, XoRemappingTableInfoClass, XoTableInfo } from '@zeta/xc';
+import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective, XDSIconName, XoRemappingTableInfoClass, XoTableInfo } from '@zeta/xc';
 
-import { XcModule } from '../../../zeta/xc/xc.module';
 import { PMON_RTC } from '../processmonitor.component';
 import { ProcessmonitorSettingsService } from '../processmonitor-settings.service';
 import { miMonitorTranslations_deDE } from './locale/mi-monitor-translations.de-DE';
@@ -46,7 +45,7 @@ const WF_PROCESS_MI = 'xmcp.processmonitor.ProcessMI';
     selector: 'xfm-mon-mi-monitor',
     templateUrl: './mi-monitor.component.html',
     styleUrls: ['./mi-monitor.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
+    imports: [XcButtonComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
     private readonly apiService = inject(ApiService);

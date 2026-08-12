@@ -18,10 +18,9 @@
 import { Component, inject, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
-import { XcDialogService, XcRemoteTableDataSource, XcTabBarItem, XcTabComponent, XoTableInfo } from '@zeta/xc';
+import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabBarItem, XcTabComponent, XcTableComponent, XcTooltipDirective, XoTableInfo } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
-import { XcModule } from '../../../zeta/xc/xc.module';
 import { LiveReportingDetailsComponent } from '../live-reporting-details/live-reporting-details.component';
 import { ProcessmonitorSettingsService } from '../processmonitor-settings.service';
 import { DateTimeConverter } from '../xo/util/date-time-converter';
@@ -88,7 +87,7 @@ class DateTimeTableInfo extends XoTableInfo {
     selector: 'xfm-mon-live-reporting',
     templateUrl: './live-reporting.component.html',
     styleUrls: ['./live-reporting.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
+    imports: [XcButtonComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class LiveReportingComponent extends XcTabComponent<string> {
     private readonly apiService = inject(ApiService);
