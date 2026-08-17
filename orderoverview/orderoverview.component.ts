@@ -20,11 +20,10 @@ import { of } from 'rxjs';
 import { Component, inject, Injector } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
-import { XcRemoteTableDataSource, XcTabComponent } from '@zeta/xc';
+import { XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { XcModule } from '../../../zeta/xc/xc.module';
-import { RTC } from '../const';
 import { DocumentService } from '../document.service';
+import { PMON_RTC } from '../processmonitor.component';
 import { KillOrderButtonComponent } from '../shared/kill-order-button/kill-order-button.component';
 import { XoOrderOverviewEntry, XoOrderOverviewEntryArray } from '../xo/order-overview-entry.model';
 import { XoIncludeInternalOrders, XoSearchFlagArray, XoShowOnlyMyOwnOrders, XoShowOnlyRootOrders } from '../xo/search-flag.model';
@@ -48,7 +47,7 @@ enum OrderStatus {
     selector: 'xfm-mon-orderoverview',
     templateUrl: './orderoverview.component.html',
     styleUrls: ['./orderoverview.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, KillOrderButtonComponent]
+    imports: [XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, KillOrderButtonComponent]
 })
 export class OrderoverviewComponent extends XcTabComponent<string> {
     private readonly apiService = inject(ApiService);
@@ -72,7 +71,7 @@ export class OrderoverviewComponent extends XcTabComponent<string> {
         this.i18nService.setTranslations(LocaleService.DE_DE, orderoverviewTranslations_deDE);
 
         const orderType = 'xmcp.processmonitor.GetOrderOverview';
-        this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, RTC, orderType);
+        this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, PMON_RTC, orderType);
         this.dataSource.output = XoOrderOverviewEntryArray;
 
         const states = Object.values(OrderStatus).map(value => ({ name: this.i18nService.translate(value), value }));

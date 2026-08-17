@@ -18,10 +18,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { Xo, XoPropertyBinding } from '@zeta/api';
-import { XcAutocompleteDataWrapper } from '@zeta/xc';
+import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormInputComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { ResourceCardComponent } from '../resource-card/resource-card.component';
 import { ResourceDataSource } from '../resource-data-source';
 import { ResourceOverviewComponent } from '../resource-overview.component';
@@ -34,7 +33,7 @@ import { XoVeto, XoVetoArray } from '../xo/veto.model';
     templateUrl: './vetoes.component.html',
     styleUrls: ['./vetoes.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective, ResourceCardComponent]
+    imports: [XcFormAutocompleteComponent, XcFormInputComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, ResourceCardComponent]
 })
 export class VetoesComponent extends ResourceOverviewComponent<XoVeto> {
 

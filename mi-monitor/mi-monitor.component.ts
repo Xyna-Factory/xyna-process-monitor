@@ -18,10 +18,9 @@
 import { Component, inject, Injector } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
-import { XcDialogService, XcRemoteTableDataSource, XcTabComponent, XDSIconName, XoRemappingTableInfoClass, XoTableInfo } from '@zeta/xc';
+import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective, XDSIconName, XoRemappingTableInfoClass, XoTableInfo } from '@zeta/xc';
 
-import { XcModule } from '../../../zeta/xc/xc.module';
-import { RTC } from '../const';
+import { PMON_RTC } from '../processmonitor.component';
 import { ProcessmonitorSettingsService } from '../processmonitor-settings.service';
 import { miMonitorTranslations_deDE } from './locale/mi-monitor-translations.de-DE';
 import { miMonitorTranslations_enUS } from './locale/mi-monitor-translations.en-US';
@@ -46,7 +45,7 @@ const WF_PROCESS_MI = 'xmcp.processmonitor.ProcessMI';
     selector: 'xfm-mon-mi-monitor',
     templateUrl: './mi-monitor.component.html',
     styleUrls: ['./mi-monitor.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
+    imports: [XcButtonComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
     private readonly apiService = inject(ApiService);
@@ -67,7 +66,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
         this.i18nService.setTranslations(LocaleService.EN_US, miMonitorTranslations_enUS);
         this.i18nService.setTranslations(LocaleService.DE_DE, miMonitorTranslations_deDE);
 
-        this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, RTC, WF_GET_MI_ENTIES);
+        this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, PMON_RTC, WF_GET_MI_ENTIES);
         this.dataSource.output = XoManualInteractionEntryArray;
         this.dataSource.tableInfoClass = XoRemappingTableInfoClass(
             XoTableInfo,
@@ -123,7 +122,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
             });
             const action = new XoManualInteractionResponse();
             action.response = ManualInteractionResponse.Continue;
-            this.apiService.startOrder(RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe({
+            this.apiService.startOrder(PMON_RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe({
                 next: result => {
                     if (result && result.errorMessage) {
                         this.dialogService.error(result.errorMessage);
@@ -165,7 +164,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
             });
             const action = new XoManualInteractionResponse();
             action.response = ManualInteractionResponse.Retry;
-            this.apiService.startOrder(RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe({
+            this.apiService.startOrder(PMON_RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe({
                 next: result => {
                     if (result && result.errorMessage) {
                         this.dialogService.error(result.errorMessage);
@@ -208,7 +207,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
             // I have not idea why it is called "Response"
             const action = new XoManualInteractionResponse();
             action.response = ManualInteractionResponse.Abort;
-            this.apiService.startOrder(RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe({
+            this.apiService.startOrder(PMON_RTC, WF_PROCESS_MI, [mis, action], XoManualInteractionProcessResponseArray).subscribe({
                 next: result => {
                     if (result && result.errorMessage) {
                         this.dialogService.error(result.errorMessage);
