@@ -96,6 +96,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
     runtimeInfo: XoRuntimeInfo;
     lazyLoadingLimit: number;
+    onlyParentRuntimeInfo = false;
     readonly menuItems: XcMenuItem[] = [];
 
     document: DocumentModel<DocumentItem>;
@@ -197,6 +198,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
         ).subscribe(response => {
             this.workflow = response.workflow;
             this.dataflow = response.dataflow;
+            this.onlyParentRuntimeInfo = response.onlyParentRuntimeInfo;
 
             // FIXME use one RTC-model-class for Modeller and Monitor !! (PMON-73)
             if (response.rootRtc instanceof XoWorkspace) {
@@ -226,6 +228,10 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 }
             }
             this.parentOrderId = response.parentOrderId;
+
+            if (this.workflow) {
+                this.workflow.structureOrderId = this.parentOrderId || response.orderId;
+            }
 
             this.workflowFqn = this.workflow ? FullQualifiedName.decode(this.workflow.$fqn)?.name : null;
 
