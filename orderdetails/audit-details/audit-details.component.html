@@ -42,7 +42,7 @@
           >{{runtimeInfo.orderId}}</label>
           @if (runtimeInfo.orderId !== workflowOrderId) {
             <xc-icon-button [disabled]="disabled"
-              xc-icon-size="small" xc-icon-name="external" color="color-black"
+              xc-icon-size="small" xc-icon-name="external" color="black"
               xc-i18n
               xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
               (click)="openAudit.emit({sameTab: false, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId})"
@@ -97,7 +97,7 @@
             (click)="openAudit.emit({orderId: parentOrderId, sameTab: true})"
           >{{parentOrderId}}</label>
           <xc-icon-button
-            xc-icon-size="small" xc-icon-name="external" color="color-black" [disabled]="disabled"
+            xc-icon-size="small" xc-icon-name="external" color="black" [disabled]="disabled"
             xc-i18n
             xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
             (click)="openAudit.emit({orderId: parentOrderId, sameTab: false})"

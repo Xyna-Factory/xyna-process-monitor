@@ -16,12 +16,11 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcPlotComponent, XcTooltipDirective } from '@zeta/xc';
 import { XcPlotDataChangeBehavior, XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
 
-import { DataSourceUpdateInterval, LiveReportingDataSourceName } from '../classes/live-reporting-time-helper';
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { DataSourceUpdateInterval, LiveReportingDataSourceName } from '../classes/live-reporting-time-helper';
 
 
 @Component({
@@ -33,7 +32,7 @@ import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../ze
 export class LiveReportingPlotComponent {
 
     intervalHandler: number;
-    updateInterval: string = DataSourceUpdateInterval.Manual;
+    updateInterval = DataSourceUpdateInterval.Manual;
 
     @Input()
     name: LiveReportingDataSourceName;
