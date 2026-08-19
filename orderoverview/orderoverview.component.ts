@@ -15,15 +15,15 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Injector } from '@angular/core';
+import { of } from 'rxjs';
 
+import { Component, inject, Injector } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective } from '@zeta/xc';
 
-
-import { PMON_RTC } from '../processmonitor.component';
 import { DocumentService } from '../document.service';
+import { PMON_RTC } from '../processmonitor.component';
 import { KillOrderButtonComponent } from '../shared/kill-order-button/kill-order-button.component';
 import { XoOrderOverviewEntry, XoOrderOverviewEntryArray } from '../xo/order-overview-entry.model';
 import { XoIncludeInternalOrders, XoSearchFlagArray, XoShowOnlyMyOwnOrders, XoShowOnlyRootOrders } from '../xo/search-flag.model';
@@ -31,6 +31,17 @@ import { DateTimeConverter } from '../xo/util/date-time-converter';
 import { orderoverviewTranslations_deDE } from './locale/orderoverview-translations.de-DE';
 import { orderoverviewTranslations_enUS } from './locale/orderoverview-translations.en-US';
 
+
+enum OrderStatus {
+    Succeeded = 'Succeeded',
+    Running = 'Running',
+    Failed = 'Failed',
+    Accepted = 'Accepted',
+    Planning = 'Planning',
+    Scheduling = 'Scheduling',
+    Waiting = 'Waiting',
+    Cleanup = 'Cleanup',
+}
 
 @Component({
     selector: 'xfm-mon-orderoverview',
@@ -41,7 +52,7 @@ import { orderoverviewTranslations_enUS } from './locale/orderoverview-translati
 export class OrderoverviewComponent extends XcTabComponent<string> {
     private readonly apiService = inject(ApiService);
     private readonly documentService = inject(DocumentService);
-    
+
     private readonly i18nService = inject(I18nService);
 
     dataSource: XcRemoteTableDataSource<XoOrderOverviewEntry>;
@@ -55,13 +66,18 @@ export class OrderoverviewComponent extends XcTabComponent<string> {
         const injector = inject(Injector);
 
         super(injector);
-    
+
         this.i18nService.setTranslations(LocaleService.EN_US, orderoverviewTranslations_enUS);
         this.i18nService.setTranslations(LocaleService.DE_DE, orderoverviewTranslations_deDE);
 
         const orderType = 'xmcp.processmonitor.GetOrderOverview';
         this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, PMON_RTC, orderType);
         this.dataSource.output = XoOrderOverviewEntryArray;
+
+        const states = Object.values(OrderStatus).map(value => ({ name: this.i18nService.translate(value), value }));
+        this.dataSource.filterEnums.set(XoOrderOverviewEntry.getAccessorMap().status, of(states));
+        this.dataSource.filterEnumsAsMultiselect.add(XoOrderOverviewEntry.getAccessorMap().status);
+
         // this.dataSource.tableInfoClass = DateTimeTableInfo;
         this.refresh();
 
