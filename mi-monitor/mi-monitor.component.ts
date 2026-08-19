@@ -83,19 +83,19 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
                 iconName: XDSIconName.ARROWRIGHT,
                 onShow: entry => entry.allowContinue,
                 onAction: entry => this.continue([entry]),
-                tooltip: this.i18nService.translate('Continue')
+                tooltip: this.i18nService.translateSignal('Continue')
             },
             {
                 iconName: XDSIconName.RELOAD,
                 onShow: entry => entry.allowRetry,
                 onAction: entry => this.retry([entry]),
-                tooltip: this.i18nService.translate('Retry')
+                tooltip: this.i18nService.translateSignal('Retry')
             },
             {
                 iconName: XDSIconName.CLOSE,
                 onShow: entry => entry.allowAbort,
                 onAction: entry => this.cancel([entry]),
-                tooltip: this.i18nService.translate('Cancel')
+                tooltip: this.i18nService.translateSignal('Cancel')
             }
         ];
     }

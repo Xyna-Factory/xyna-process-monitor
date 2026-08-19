@@ -22,7 +22,7 @@ import { ApiService, RuntimeContext } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
-import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
+import { resolveXcDynamicString, XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
 import { fromEvent, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -66,11 +66,11 @@ export class ProcessmonitorComponent extends RouteComponent {
     private _tabBar: XcTabBarComponent;
     private queryParamSubscription: Subscription;
 
-    private readonly orderOverview: XcTabBarItem = {name: 'pmon.tab-header-order-overview', component: OrderoverviewComponent};
-    private readonly miMonitor:     XcTabBarItem = {name: 'pmon.tab-header-mi-monitor',     component: ManualInteractionMonitorComponent};
-    private readonly capacities:    XcTabBarItem = {name: 'pmon.tab-header-capacities',     component: CapacitiesComponent};
-    private readonly vetoes:        XcTabBarItem = {name: 'pmon.tab-header-vetoes',         component: VetoesComponent};
-    private readonly liveReporting: XcTabBarItem = {name: 'pmon.tab-header-live-reporting', component: LiveReportingComponent};
+    private readonly orderOverview: XcTabBarItem = {name: this.i18n.translateSignal('pmon.tab-header-order-overview'), component: OrderoverviewComponent};
+    private readonly miMonitor:     XcTabBarItem = {name: this.i18n.translateSignal('pmon.tab-header-mi-monitor'),     component: ManualInteractionMonitorComponent};
+    private readonly capacities:    XcTabBarItem = {name: this.i18n.translateSignal('pmon.tab-header-capacities'),     component: CapacitiesComponent};
+    private readonly vetoes:        XcTabBarItem = {name: this.i18n.translateSignal('pmon.tab-header-vetoes'),         component: VetoesComponent};
+    private readonly liveReporting: XcTabBarItem = {name: this.i18n.translateSignal('pmon.tab-header-live-reporting'), component: LiveReportingComponent};
     readonly tabBarItems: XcTabBarItem[] = [];
 
     // return to this tab, when no more order documents are opened
@@ -113,9 +113,6 @@ export class ProcessmonitorComponent extends RouteComponent {
         if (this.authService.hasRight(RIGHT_PROCESS_MONITOR_LIVE_REPORTING)) {
             this.tabBarItems.push(this.liveReporting);
         }
-
-        // translate tab item names
-        this.tabBarItems.forEach(item => item.name = this.i18n.translate(item.name));
 
         // sync documents with tabs
         this.documentService.documentListChange.pipe(filter(() => !!this.tabBar)).subscribe(documents => {

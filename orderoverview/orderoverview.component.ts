@@ -74,7 +74,7 @@ export class OrderoverviewComponent extends XcTabComponent<string> {
         this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, PMON_RTC, orderType);
         this.dataSource.output = XoOrderOverviewEntryArray;
 
-        const states = Object.values(OrderStatus).map(value => ({ name: this.i18nService.translate(value), value }));
+        const states = Object.values(OrderStatus).map(value => ({ name: this.i18nService.translateSignal(value), value }));
         this.dataSource.filterEnums.set(XoOrderOverviewEntry.getAccessorMap().status, of(states));
         this.dataSource.filterEnumsAsMultiselect.add(XoOrderOverviewEntry.getAccessorMap().status);
 
