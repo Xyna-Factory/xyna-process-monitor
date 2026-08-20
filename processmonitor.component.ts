@@ -15,14 +15,14 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
-import { resolveXcDynamicString, XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
+import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
 import { fromEvent, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -133,7 +133,7 @@ export class ProcessmonitorComponent extends RouteComponent {
                     });
                     this.tabBar.open(
                         <XcTabBarItem<XoOrderOverviewEntry>>{
-                            name: document.id,
+                            name: signal(document.id),
                             icon: 'tb-workflow',
                             iconStyle: 'modeller',
                             component: OrderdetailsComponent,
@@ -204,7 +204,7 @@ export class ProcessmonitorComponent extends RouteComponent {
                             const task = result.output[0] as XoFrequencyControlledTaskDetails;
                             // open task in a new tab
                             this.tabBar.open(<XcTabBarItem<XoFrequencyControlledTaskDetails>>{
-                                name: this.i18n.translate('pmon.task') + ' ' + task.taskId.id,
+                                name: signal(this.i18n.translate('pmon.task') + ' ' + task.taskId.id),
                                 component: LiveReportingDetailsComponent,
                                 closable: true,
                                 data: task
