@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Injector } from '@angular/core';
+import { Component, inject, Injector, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
@@ -108,7 +108,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
         this.menuItems.push(
             <XcMenuItem>{
-                name: 'Open in Process Modeller', translate: true,
+                name: signal('Open in Process Modeller'), translate: true,
                 visible: () => true,
                 click: () => {
                     this.pmodDocumentService.loadWorkflow(this.workflow.toRtc(), this.workflow.toFqn());
@@ -116,7 +116,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 }
             },
             <XcMenuItem>{
-                name: 'Test Workflow...', translate: true,
+                name: signal('Test Workflow...'), translate: true,
                 visible: () => true,
                 click: () => {
                     const fqn = this.workflow.toFqn();
@@ -132,7 +132,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 }
             },
             <XcMenuItem>{
-                name: 'Show/Hide Paths inside Workflow', translate: true,
+                name: signal('Show/Hide Paths inside Workflow'), translate: true,
                 visible: () => true,
                 click: () => this.detailLevelService.setShowFQN(!this.detailLevelService.showFQN)
             }
