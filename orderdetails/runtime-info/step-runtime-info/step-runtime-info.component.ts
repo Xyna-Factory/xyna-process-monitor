@@ -15,19 +15,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterContentChecked, Component, Input, inject, viewChild } from '@angular/core';
-
+import { AfterContentChecked, Component, inject, Input, viewChild } from '@angular/core';
 import { ApiService, Xo, XoArray, XoDescriberCache, XoObject, XoStructureObject } from '@zeta/api';
 import { copyToClipboard, isArray } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService, XcPanelComponent, XcReadonlyStructureTreeDataSource, XcReadonlyTreeComponent } from '@zeta/xc';
 
-
+import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { DocumentService } from '../../../document.service';
+import { PMON_RTC } from '../../../processmonitor.component';
 import { XoStepRuntimeInfo } from '../../../xo/step-runtime-info.model';
 import { AuditService } from '../../audit.service';
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-import { PMON_RTC } from '../../../processmonitor.component';
 
 
 @Component({

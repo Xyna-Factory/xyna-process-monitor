@@ -17,8 +17,9 @@
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { Xo } from '@zeta/api';
+import { LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
+import { XcButtonComponent, XcCheckboxComponent, XcFormInputComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XoIncludeUnused, XoSearchFlagArray } from '../../xo/search-flag.model';
 import { resourcesTranslations_deDE } from '../locale/resources-translations.de-DE';
@@ -27,8 +28,6 @@ import { ResourceCardComponent } from '../resource-card/resource-card.component'
 import { ResourceDataSource } from '../resource-data-source';
 import { ResourceOverviewComponent } from '../resource-overview.component';
 import { XoCapacity, XoCapacityArray } from '../xo/capacity.model';
-import { XcI18nContextDirective, XcI18nTranslateDirective, LocaleService } from '@zeta/i18n';
-import { XcButtonComponent, XcCheckboxComponent, XcFormInputComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({

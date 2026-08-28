@@ -1,3 +1,6 @@
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,19 +20,15 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { ApiService } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
-
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { XcButtonComponent, XcPanelComponent, XcTableComponent, XcTemplateComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
 import { ResourceInfo } from '../resource-data-source';
 import { XoOrder } from '../xo/order.model';
 import { XoResource } from '../xo/resource.model';
-import { XcButtonComponent, XcPanelComponent, XcTableComponent, XcTemplateComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({

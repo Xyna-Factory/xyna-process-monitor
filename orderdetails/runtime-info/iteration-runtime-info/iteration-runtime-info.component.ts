@@ -16,17 +16,16 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
-import { ChangeDetectorRef, Component, forwardRef, Input, inject } from '@angular/core';
-
+import { ChangeDetectorRef, Component, forwardRef, inject, Input } from '@angular/core';
 import { IterationInfo } from '@pmod/xo/runtime-info.model';
 import { I18nService } from '@zeta/i18n';
+import { XcButtonComponent, XcFormInputComponent, XcPanelComponent } from '@zeta/xc';
 
 import { XoIterationContainer } from '../../../xo/iteration-container.model';
 import { XoIterationEntry } from '../../../xo/iteration-entry.model';
 import { XoStepRuntimeInfo } from '../../../xo/step-runtime-info.model';
 import { AuditService } from '../../audit.service';
 import { RuntimeInfoComponent } from '../runtime-info.component';
-import { XcButtonComponent, XcFormInputComponent, XcPanelComponent } from '@zeta/xc';
 
 
 @Component({

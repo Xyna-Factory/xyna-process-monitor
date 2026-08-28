@@ -17,7 +17,6 @@ import { NgClass } from '@angular/common';
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { ChangeDetectorRef, Component, inject, Injector, OnInit, viewChild } from '@angular/core';
-
 import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormDirective, XcFormLabelComponent, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcTabComponent, XcTooltipDirective } from '@zeta/xc';
 import { XoGraphDataArray, XoGraphInfo, XoTimeInterval, XoTimeIntervalArray } from '@zeta/xc/xc-graph/xc-remote-graph-data-source';
@@ -27,12 +26,12 @@ import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDire
 import { WF_CANCEL_TASK, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS, WF_GET_GRAPH_DATA } from '../live-reporting/live-reporting.consts';
 import { XoFrequencyControlledTaskDetails } from '../live-reporting/xo/xo-frequency-controlled-task-details.model';
 import { XoGraphDatasource } from '../live-reporting/xo/xo-graph-data-source.model';
+import { PMON_RTC } from '../processmonitor.component';
 import { LiveReportingDataSourceName, LiveReportingDataSourceServerType, LiveReportingTimeAxisDimensionHelper } from './classes/live-reporting-time-helper';
 import { GraphInfoDataToPlotDataSourceConverter } from './components/graph-info-data-to-plot-data-source.converter';
 import { LiveReportingPlotComponent } from './components/live-reporting-plot.component';
 import { liveReportingDetailsTranslations_deDE } from './locale/live-reporting-details-translations.de-DE';
 import { liveReportingDetailsTranslations_enUS } from './locale/live-reporting-details-translations.en-US';
-import { PMON_RTC } from '../processmonitor.component';
 
 
 @Component({

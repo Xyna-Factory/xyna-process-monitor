@@ -1,3 +1,6 @@
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,16 +18,13 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-
+import { Component, inject, Input, output } from '@angular/core';
 import { XoError } from '@pmod/xo/error.model';
 import { ApiService } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
 import { coerceBoolean } from '@zeta/base';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 
 
@@ -46,8 +46,7 @@ export class KillOrderButtonComponent {
     @Input()
     orderIds: string[];
 
-    @Output()
-    readonly refresh = new EventEmitter<void>();
+    readonly refresh = output<void>();
 
 
     kill() {

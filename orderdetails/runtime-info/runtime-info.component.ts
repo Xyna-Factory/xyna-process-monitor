@@ -16,15 +16,14 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { Component, Input } from '@angular/core';
-
 import { XoRuntimeInfo } from '@pmod/xo/runtime-info.model';
 import { templateClassType } from '@zeta/base';
 
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { XoIterationContainer } from '../../xo/iteration-container.model';
 import { XoStepRuntimeInfo } from '../../xo/step-runtime-info.model';
 import { IterationRuntimeInfoComponent } from './iteration-runtime-info/iteration-runtime-info.component';
 import { StepRuntimeInfoComponent } from './step-runtime-info/step-runtime-info.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 
 
 @Component({

@@ -1,3 +1,7 @@
+import { Observer, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
+import { NgTemplateOutlet } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,22 +19,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output, inject } from '@angular/core';
-
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, output } from '@angular/core';
 import { templateClassType } from '@zeta/base';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { Observer, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-
+import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { DocumentService } from '../../document.service';
+import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
 import { XoServiceRuntimeInfo } from '../../xo/service-runtime-info.model';
 import { XoStepRuntimeInfo } from '../../xo/step-runtime-info.model';
 import { XoWorkflowRuntimeInfo } from '../../xo/workflow-runtime-info.model';
 import { AuditService } from '../audit.service';
-import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
-import { NgTemplateOutlet } from '@angular/common';
 
 
 export interface OpenAuditData {
@@ -70,11 +69,9 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
     @Input()
     disabled: boolean;
 
-    @Output()
-    readonly openAudit = new EventEmitter<OpenAuditData>();
+    readonly openAudit = output<OpenAuditData>();
 
-    @Output()
-    private readonly refreshAudit = new EventEmitter<void>();
+    readonly refreshAudit = output<void>();
 
     runtimeInfo: XoStepRuntimeInfo;
 

@@ -1,3 +1,6 @@
+import { fromEvent, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -17,15 +20,12 @@
  */
 import { ChangeDetectorRef, Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-
 import { ApiService, RuntimeContext } from '@zeta/api';
+import { ConfigService } from '@zeta/api/config.service';
 import { AuthService } from '@zeta/auth';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
-
-import { fromEvent, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 
 import { RIGHT_PROCESS_MONITOR_LIVE_REPORTING, RIGHT_PROCESS_MONITOR_MI_MONITOR, RIGHT_PROCESS_MONITOR_ORDER_MONITOR, RIGHT_PROCESS_MONITOR_RESOURCE_MONITOR } from './const';
 import { DocumentService } from './document.service';
@@ -42,7 +42,6 @@ import { OrderoverviewComponent } from './orderoverview/orderoverview.component'
 import { CapacitiesComponent } from './resources/capacities/capacities.component';
 import { VetoesComponent } from './resources/vetoes/vetoes.component';
 import { XoOrderOverviewEntry } from './xo/order-overview-entry.model';
-import { ConfigService } from '@zeta/api/config.service';
 
 
 export let PMON_RTC = RuntimeContext.guiHttpApplication;
