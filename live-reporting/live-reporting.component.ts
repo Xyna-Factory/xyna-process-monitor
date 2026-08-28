@@ -136,7 +136,7 @@ export class LiveReportingComponent extends XcTabComponent<string> {
                 const task = res.output[0] as XoFrequencyControlledTaskDetails;
 
                 const item: XcTabBarItem<XoFrequencyControlledTaskDetails> = {
-                    name: signal(String(this.i18nService.translate('Task') + ' ' + task.taskId.id)),
+                    name: signal(String(this.i18nService.translateSignal('Task')() + ' ' + task.taskId.id)),
                     component: LiveReportingDetailsComponent,
                     closable: true,
                     data: task

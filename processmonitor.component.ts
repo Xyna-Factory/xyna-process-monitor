@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, signal, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 import { ApiService, RuntimeContext } from '@zeta/api';
@@ -204,7 +204,7 @@ export class ProcessmonitorComponent extends RouteComponent {
                             const task = result.output[0] as XoFrequencyControlledTaskDetails;
                             // open task in a new tab
                             this.tabBar.open(<XcTabBarItem<XoFrequencyControlledTaskDetails>>{
-                                name: signal(this.i18n.translate('pmon.task') + ' ' + task.taskId.id),
+                                name: computed(() => this.i18n.translateSignal('pmon.task')() + ' ' + task.taskId.id),
                                 component: LiveReportingDetailsComponent,
                                 closable: true,
                                 data: task

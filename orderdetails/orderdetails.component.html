@@ -1,61 +1,61 @@
-<section class="main" [class.details-expanded]="detailsExpanded" xc-i18n-context="pmon.orderdetails">
-  @if (workflow) {
+<section class="main" [class.details-expanded]="detailsExpanded()" xc-i18n-context="pmon.orderdetails">
+  @if (workflow()) {
     <div class="workflow-container" dataflow-container>
-      @if (dataflowReady) {
+      @if (dataflowReady()) {
         <dataflow
-          [dataflow]="dataflow"
-          [workflow]="workflow"
+          [dataflow]="dataflow()"
+          [workflow]="workflow()"
         ></dataflow>
       }
       <variable-area-document
-        [variableArea]="workflow.inputArea" xc-variable-area-kind="input-area"
-        [documentModel]="document"
+        [variableArea]="workflow().inputArea" xc-variable-area-kind="input-area"
+        [documentModel]="document()"
       ></variable-area-document>
       <type-label-area
-        [typeLabelArea]="workflow.typeLabelArea"
+        [typeLabelArea]="workflow().typeLabelArea"
         [menuItems]="menuItems"
         [menuTemplateRef]="menuTemplate"
-        [documentModel]="document"
+        [documentModel]="document()"
       ></type-label-area>
       <workflow
-        [workflow]="workflow"
-        [documentModel]="document"
+        [workflow]="workflow()"
+        [documentModel]="document()"
         (initialized)="workflowInitialized($event)"
         class="zeta-scrollbar"
       ></workflow>
       <exception-handling-area
-        [exceptionHandlingArea]="workflow.exceptionHandlingArea"
-        [documentModel]="document"
+        [exceptionHandlingArea]="workflow().exceptionHandlingArea"
+        [documentModel]="document()"
       ></exception-handling-area>
       <variable-area-document
-        [variableArea]="workflow.outputArea" xc-variable-area-kind="output-area"
-        [documentModel]="document"
+        [variableArea]="workflow().outputArea" xc-variable-area-kind="output-area"
+        [documentModel]="document()"
       ></variable-area-document>
     </div>
   }
-  @if (!workflow) {
+  @if (!workflow()) {
     <label xc-i18n class="no-audit-available">
       label-no-data
     </label>
   }
   <xfm-mon-audit-details
     xc-i18n-context="audit-details"
-    [fqn]="workflowFqn"
-    [workflowOrderId]="workflow?.orderId"
-    [parentOrderId]="parentOrderId"
+    [fqn]="workflowFqn()"
+    [workflowOrderId]="workflow()?.orderId"
+    [parentOrderId]="parentOrderId()"
     [disabled]="isImportedAudit"
     (openAudit)="openAudit($event)"
     class="details-footer"
     (refreshAudit)="refreshAudit()"
   ></xfm-mon-audit-details>
 </section>
-<xc-panel class="details-right" [class.expanded]="detailsExpanded" xc-i18n-context="pmon.orderdetails">
+<xc-panel class="details-right" [class.expanded]="detailsExpanded()" xc-i18n-context="pmon.orderdetails">
   <header>
     <xc-icon-button
       xc-i18n
-      xc-icon-name="{{detailsExpanded ? 'arrowright' : 'arrowleft'}}" xc-icon-size="small" color="normal"
+    xc-icon-name="{{detailsExpanded() ? 'arrowright' : 'arrowleft'}}" xc-icon-size="small" color="normal"
       xc-tooltip="tooltip-expand-shrink-details"
-      (click)="detailsExpanded = !detailsExpanded"
+    (click)="detailsExpanded.set(!detailsExpanded())"
     ></xc-icon-button>
     <h1 xc-i18n>header-details</h1>
     <div class="items-right">
@@ -65,13 +65,13 @@
   <section class="stretch scroll zeta-scrollbar">
     <xfm-mon-runtime-info
       xc-i18n-context="runtime-info"
-      [runtimeInfo]="runtimeInfo"
+      [runtimeInfo]="runtimeInfo()"
       [iterationDepth]="0"
-      [lazyLoadingLimit]="lazyLoadingLimit"
+      [lazyLoadingLimit]="lazyLoadingLimit()"
     ></xfm-mon-runtime-info>
   </section>
 </xc-panel>
-@if (pending) {
+@if (pending()) {
   <div class="pending">
     <xc-spinner color="primary"></xc-spinner>
   </div>
