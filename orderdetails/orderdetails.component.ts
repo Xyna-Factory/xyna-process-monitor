@@ -1,6 +1,3 @@
-import { Observable, of, Subscription } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,6 +15,10 @@ import { finalize, map } from 'rxjs/operators';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { Observable, of, Subscription } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
+
 import { Component, inject, Injector, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';

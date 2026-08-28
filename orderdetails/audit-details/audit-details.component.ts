@@ -1,7 +1,4 @@
-import { Observer, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 
-import { NgTemplateOutlet } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -19,6 +16,10 @@ import { NgTemplateOutlet } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+import { Observer, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
+import { NgTemplateOutlet } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, output } from '@angular/core';
 import { templateClassType } from '@zeta/base';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';

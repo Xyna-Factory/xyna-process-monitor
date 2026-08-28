@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -16,6 +15,8 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { NgClass } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, Injector, OnInit, viewChild } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormDirective, XcFormLabelComponent, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcTabComponent, XcTooltipDirective } from '@zeta/xc';

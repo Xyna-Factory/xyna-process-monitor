@@ -1,6 +1,3 @@
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,6 +15,10 @@ import { filter } from 'rxjs/operators';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '@zeta/api';

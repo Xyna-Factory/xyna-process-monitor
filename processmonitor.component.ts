@@ -1,6 +1,3 @@
-import { fromEvent, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,6 +15,10 @@ import { filter } from 'rxjs/operators';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
+
+import { fromEvent, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
 import { ChangeDetectorRef, Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ApiService, RuntimeContext } from '@zeta/api';
