@@ -46,7 +46,7 @@
               xc-i18n
               xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
               (click)="openAudit.emit({sameTab: false, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId})"
-            ></xc-icon-button>
+             />
           }
         </div>
       } @else {
@@ -76,7 +76,7 @@
           [disabled]="!runtimeInfo.isKillable"
           [orderIds]="[workflowOrderId]"
           (refresh)="refresh()"
-        ></xfm-mon-kill-order-button>
+         />
       </div>
       @if (XoStepRuntimeInfo.of(runtimeInfo) && runtimeInfo.originalRTC) {
         <div class="item">
@@ -96,12 +96,11 @@
             [xc-tooltip]="(!disabled ? 'tooltip-open' : '') | xcI18n" xc-tooltip-position="top"
             (click)="openAudit.emit({orderId: parentOrderId, sameTab: true})"
           >{{parentOrderId}}</label>
-          <xc-icon-button
-            xc-icon-size="small" xc-icon-name="external" color="black" [disabled]="disabled"
+          <xc-icon-button xc-icon-size="small" xc-icon-name="external" color="black" [disabled]="disabled"
             xc-i18n
             xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
             (click)="openAudit.emit({orderId: parentOrderId, sameTab: false})"
-          ></xc-icon-button>
+           />
         </div>
       } @else {
         <div class="item">
@@ -116,9 +115,9 @@
           <label class="label" xc-i18n>label-duration</label>
           <label class="value">{{runtimeInfo.runningTime.duration}}</label>
         </div>
-        <ng-container *ngTemplateOutlet="noitem"></ng-container>
-        <ng-container *ngTemplateOutlet="noitem"></ng-container>
-        <ng-container *ngTemplateOutlet="noitem"></ng-container>
+        <ng-container *ngTemplateOutlet="noitem" />
+        <ng-container *ngTemplateOutlet="noitem" />
+        <ng-container *ngTemplateOutlet="noitem" />
       </div>
     }
   </div>

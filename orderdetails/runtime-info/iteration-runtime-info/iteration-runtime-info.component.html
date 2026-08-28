@@ -4,8 +4,7 @@
     <div class="iteration-control">
       <xc-button [disabled]="!hasPrev" (click)="start()">&#10072;&lt;</xc-button>
       <xc-button [disabled]="!hasPrev" (click)="prev()">&lt;</xc-button>
-      <xc-form-input
-        #indexInput
+      <xc-form-input #indexInput
         [value]="selectedIndex"
         (drop)="$event.preventDefault()"
         (keyup)="$event.stopPropagation()"
@@ -13,7 +12,7 @@
         (blur)="indexBlur(indexInput.value)"
         class="iteration-index"
         xc-form-field-compact
-      ></xc-form-input>
+       />
       <label class="iteration-last">{{'/ ' + lastIndex}}</label>
       <xc-button [disabled]="!hasNext" (click)="next()">&gt;</xc-button>
       <xc-button [disabled]="!hasNext" (click)="end()">&gt;&#10072;</xc-button>
