@@ -3,7 +3,7 @@
     class="progress-box"
     xc-tooltip="{{'tooltip-resource-progress' | xcI18n:injectedData.used:injectedData.total}}"
     >
-    <div class="progress-bar" [ngStyle]="{ right: 100 - percentage + '%'}"></div>
+    <div class="progress-bar" [style.right]="100 - percentage + '%'"></div>
     <div class="value">{{injectedData.used}} / {{injectedData.total}}</div>
   </div>
 }

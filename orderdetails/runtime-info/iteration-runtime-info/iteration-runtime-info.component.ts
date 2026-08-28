@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { NgClass } from '@angular/common';
+
 import { ChangeDetectorRef, Component, forwardRef, Input, inject } from '@angular/core';
 
 import { IterationInfo } from '@pmod/xo/runtime-info.model';
@@ -33,7 +33,7 @@ import { XcButtonComponent, XcFormInputComponent, XcPanelComponent } from '@zeta
     selector: 'xfm-mon-iteration-runtime-info',
     templateUrl: './iteration-runtime-info.component.html',
     styleUrls: ['./iteration-runtime-info.component.scss'],
-    imports: [XcButtonComponent, XcFormInputComponent, XcPanelComponent, NgClass, forwardRef(() => RuntimeInfoComponent)]
+    imports: [XcButtonComponent, XcFormInputComponent, XcPanelComponent, forwardRef(() => RuntimeInfoComponent)]
 })
 export class IterationRuntimeInfoComponent {
     private readonly i18n = inject(I18nService);
