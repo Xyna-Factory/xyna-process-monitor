@@ -16,7 +16,7 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Injector, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Injector, OnInit, viewChild } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormDirective, XcFormLabelComponent, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcTabComponent, XcTooltipDirective } from '@zeta/xc';
@@ -53,8 +53,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
     LiveReportingDataSourceName = LiveReportingDataSourceName;
 
 
-    @ViewChild('executionResponseTimePlot', { read: LiveReportingPlotComponent, static: false })
-    private readonly _executionResponseTimePlot: LiveReportingPlotComponent;
+    private readonly _executionResponseTimePlot = viewChild('executionResponseTimePlot', { read: LiveReportingPlotComponent });
     private _executionResponseTimePlotFlag = false;
     get executionResponseTimePlotFlag() {
         return this._executionResponseTimePlotFlag;
@@ -67,8 +66,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
         }
     }
 
-    @ViewChild('failedPlot', { read: LiveReportingPlotComponent, static: false })
-    private readonly _failedPlot: LiveReportingPlotComponent;
+    private readonly _failedPlot = viewChild('failedPlot', { read: LiveReportingPlotComponent });
     private _failedPlotFlag = false;
     get failedPlotFlag() {
         return this._failedPlotFlag;
@@ -81,8 +79,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
         }
     }
 
-    @ViewChild('failedRatePlot', { read: LiveReportingPlotComponent, static: false })
-    private readonly _failedRatePlot: LiveReportingPlotComponent;
+    private readonly _failedRatePlot = viewChild('failedRatePlot', { read: LiveReportingPlotComponent });
     private _failedRatePlotFlag = false;
     get failedRatePlotFlag() {
         return this._failedRatePlotFlag;
@@ -95,8 +92,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
         }
     }
 
-    @ViewChild('finishedPlot', { read: LiveReportingPlotComponent, static: false })
-    private readonly _finishedPlot: LiveReportingPlotComponent;
+    private readonly _finishedPlot = viewChild('finishedPlot', { read: LiveReportingPlotComponent });
     private _finishedPlotFlag = false;
     get finishedPlotFlag() {
         return this._finishedPlotFlag;
@@ -109,8 +105,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
         }
     }
 
-    @ViewChild('finishedRatePlot', { read: LiveReportingPlotComponent, static: false })
-    private readonly _finishedRatePlot: LiveReportingPlotComponent;
+    private readonly _finishedRatePlot = viewChild('finishedRatePlot', { read: LiveReportingPlotComponent });
     private _finishedRatePlotFlag = false;
     get finishedRatePlotFlag() {
         return this._finishedRatePlotFlag;
@@ -123,8 +118,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
         }
     }
 
-    @ViewChild('overallResponseTimePlot', { read: LiveReportingPlotComponent, static: false })
-    private readonly _overallResponseTimePlot: LiveReportingPlotComponent;
+    private readonly _overallResponseTimePlot = viewChild('overallResponseTimePlot', { read: LiveReportingPlotComponent });
     private _overallResponseTimePlotFlag = false;
     get overallResponseTimePlotFlag() {
         return this._overallResponseTimePlotFlag;
@@ -137,8 +131,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
         }
     }
 
-    @ViewChild('runningPlot', { read: LiveReportingPlotComponent, static: false })
-    private readonly _runningPlot: LiveReportingPlotComponent;
+    private readonly _runningPlot = viewChild('runningPlot', { read: LiveReportingPlotComponent });
     private _runningPlotFlag = false;
     get runningPlotFlag() {
         return this._runningPlotFlag;
@@ -151,8 +144,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
         }
     }
 
-    @ViewChild('waitingPlot', { read: LiveReportingPlotComponent, static: false })
-    private readonly _waitingPlot: LiveReportingPlotComponent;
+    private readonly _waitingPlot = viewChild('waitingPlot', { read: LiveReportingPlotComponent });
     private _waitingPlotFlag = false;
     get waitingPlotFlag() {
         return this._waitingPlotFlag;
@@ -299,90 +291,98 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
         void Promise.resolve().then(() => {
             switch (toWhichPlot) {
                 case LiveReportingDataSourceName.ExecutionResponseTime: {
-                    if (this._executionResponseTimePlot && this._executionResponseTimePlot.plotDataSource) {
-                        if (this._executionResponseTimePlot.plotDataSource.plotDataInfo.bootstrap) {
-                            this._executionResponseTimePlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
-                            this._executionResponseTimePlot.plotDataSource.plotDataInfo.bootstrap = false;
+                    const _executionResponseTimePlot = this._executionResponseTimePlot();
+                    if (_executionResponseTimePlot && _executionResponseTimePlot.plotDataSource) {
+                        if (_executionResponseTimePlot.plotDataSource.plotDataInfo.bootstrap) {
+                            _executionResponseTimePlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
+                            _executionResponseTimePlot.plotDataSource.plotDataInfo.bootstrap = false;
                         }
-                        this._executionResponseTimePlot.plotDataSource.clear();
-                        this._executionResponseTimePlot.plotDataSource.addPairs(plotDataSource.pairs);
+                        _executionResponseTimePlot.plotDataSource.clear();
+                        _executionResponseTimePlot.plotDataSource.addPairs(plotDataSource.pairs);
                     }
                 } break;
 
                 case LiveReportingDataSourceName.Failed: {
-                    if (this._failedPlot && this._failedPlot.plotDataSource) {
-                        if (this._failedPlot.plotDataSource.plotDataInfo.bootstrap) {
-                            this._failedPlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
-                            this._failedPlot.plotDataSource.plotDataInfo.bootstrap = false;
+                    const _failedPlot = this._failedPlot();
+                    if (_failedPlot && _failedPlot.plotDataSource) {
+                        if (_failedPlot.plotDataSource.plotDataInfo.bootstrap) {
+                            _failedPlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
+                            _failedPlot.plotDataSource.plotDataInfo.bootstrap = false;
                         }
-                        this._failedPlot.plotDataSource.clear();
-                        this._failedPlot.plotDataSource.addPairs(plotDataSource.pairs);
+                        _failedPlot.plotDataSource.clear();
+                        _failedPlot.plotDataSource.addPairs(plotDataSource.pairs);
                     }
                 } break;
 
                 case LiveReportingDataSourceName.FailedRate: {
-                    if (this._failedRatePlot && this._failedRatePlot.plotDataSource) {
-                        if (this._failedRatePlot.plotDataSource.plotDataInfo.bootstrap) {
-                            this._failedRatePlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
-                            this._failedRatePlot.plotDataSource.plotDataInfo.bootstrap = false;
+                    const _failedRatePlot = this._failedRatePlot();
+                    if (_failedRatePlot && _failedRatePlot.plotDataSource) {
+                        if (_failedRatePlot.plotDataSource.plotDataInfo.bootstrap) {
+                            _failedRatePlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
+                            _failedRatePlot.plotDataSource.plotDataInfo.bootstrap = false;
                         }
-                        this._failedRatePlot.plotDataSource.clear();
-                        this._failedRatePlot.plotDataSource.addPairs(plotDataSource.pairs);
+                        _failedRatePlot.plotDataSource.clear();
+                        _failedRatePlot.plotDataSource.addPairs(plotDataSource.pairs);
                     }
                 } break;
 
                 case LiveReportingDataSourceName.Finished: {
-                    if (this._finishedPlot && this._finishedPlot.plotDataSource) {
-                        if (this._finishedPlot.plotDataSource.plotDataInfo.bootstrap) {
-                            this._finishedPlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
-                            this._finishedPlot.plotDataSource.plotDataInfo.bootstrap = false;
+                    const _finishedPlot = this._finishedPlot();
+                    if (_finishedPlot && _finishedPlot.plotDataSource) {
+                        if (_finishedPlot.plotDataSource.plotDataInfo.bootstrap) {
+                            _finishedPlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
+                            _finishedPlot.plotDataSource.plotDataInfo.bootstrap = false;
                         }
-                        this._finishedPlot.plotDataSource.clear();
-                        this._finishedPlot.plotDataSource.addPairs(plotDataSource.pairs);
+                        _finishedPlot.plotDataSource.clear();
+                        _finishedPlot.plotDataSource.addPairs(plotDataSource.pairs);
                     }
                 } break;
 
                 case LiveReportingDataSourceName.FinishedRate: {
-                    if (this._finishedRatePlot && this._finishedRatePlot.plotDataSource) {
-                        if (this._finishedRatePlot.plotDataSource.plotDataInfo.bootstrap) {
-                            this._finishedRatePlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
-                            this._finishedRatePlot.plotDataSource.plotDataInfo.bootstrap = false;
+                    const _finishedRatePlot = this._finishedRatePlot();
+                    if (_finishedRatePlot && _finishedRatePlot.plotDataSource) {
+                        if (_finishedRatePlot.plotDataSource.plotDataInfo.bootstrap) {
+                            _finishedRatePlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
+                            _finishedRatePlot.plotDataSource.plotDataInfo.bootstrap = false;
                         }
-                        this._finishedRatePlot.plotDataSource.clear();
-                        this._finishedRatePlot.plotDataSource.addPairs(plotDataSource.pairs);
+                        _finishedRatePlot.plotDataSource.clear();
+                        _finishedRatePlot.plotDataSource.addPairs(plotDataSource.pairs);
                     }
                 } break;
 
                 case LiveReportingDataSourceName.OverallResponseTime: {
-                    if (this._overallResponseTimePlot && this._overallResponseTimePlot.plotDataSource) {
-                        if (this._overallResponseTimePlot.plotDataSource.plotDataInfo.bootstrap) {
-                            this._overallResponseTimePlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
-                            this._overallResponseTimePlot.plotDataSource.plotDataInfo.bootstrap = false;
+                    const _overallResponseTimePlot = this._overallResponseTimePlot();
+                    if (_overallResponseTimePlot && _overallResponseTimePlot.plotDataSource) {
+                        if (_overallResponseTimePlot.plotDataSource.plotDataInfo.bootstrap) {
+                            _overallResponseTimePlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
+                            _overallResponseTimePlot.plotDataSource.plotDataInfo.bootstrap = false;
                         }
-                        this._overallResponseTimePlot.plotDataSource.clear();
-                        this._overallResponseTimePlot.plotDataSource.addPairs(plotDataSource.pairs);
+                        _overallResponseTimePlot.plotDataSource.clear();
+                        _overallResponseTimePlot.plotDataSource.addPairs(plotDataSource.pairs);
                     }
                 } break;
 
                 case LiveReportingDataSourceName.Running: {
-                    if (this._runningPlot && this._runningPlot.plotDataSource) {
-                        if (this._runningPlot.plotDataSource.plotDataInfo.bootstrap) {
-                            this._runningPlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
-                            this._runningPlot.plotDataSource.plotDataInfo.bootstrap = false;
+                    const _runningPlot = this._runningPlot();
+                    if (_runningPlot && _runningPlot.plotDataSource) {
+                        if (_runningPlot.plotDataSource.plotDataInfo.bootstrap) {
+                            _runningPlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
+                            _runningPlot.plotDataSource.plotDataInfo.bootstrap = false;
                         }
-                        this._runningPlot.plotDataSource.clear();
-                        this._runningPlot.plotDataSource.addPairs(plotDataSource.pairs);
+                        _runningPlot.plotDataSource.clear();
+                        _runningPlot.plotDataSource.addPairs(plotDataSource.pairs);
                     }
                 } break;
 
                 case LiveReportingDataSourceName.Waiting: {
-                    if (this._waitingPlot && this._waitingPlot.plotDataSource) {
-                        if (this._waitingPlot.plotDataSource.plotDataInfo.bootstrap) {
-                            this._waitingPlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
-                            this._waitingPlot.plotDataSource.plotDataInfo.bootstrap = false;
+                    const _waitingPlot = this._waitingPlot();
+                    if (_waitingPlot && _waitingPlot.plotDataSource) {
+                        if (_waitingPlot.plotDataSource.plotDataInfo.bootstrap) {
+                            _waitingPlot.plotDataSource.plotDataInfo = plotDataSource.plotDataInfo;
+                            _waitingPlot.plotDataSource.plotDataInfo.bootstrap = false;
                         }
-                        this._waitingPlot.plotDataSource.clear();
-                        this._waitingPlot.plotDataSource.addPairs(plotDataSource.pairs);
+                        _waitingPlot.plotDataSource.clear();
+                        _waitingPlot.plotDataSource.addPairs(plotDataSource.pairs);
                     }
                 } break;
             }

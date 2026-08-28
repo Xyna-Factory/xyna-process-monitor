@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterContentChecked, Component, Input, ViewChild, inject } from '@angular/core';
+import { AfterContentChecked, Component, Input, inject, viewChild } from '@angular/core';
 
 import { ApiService, Xo, XoArray, XoDescriberCache, XoObject, XoStructureObject } from '@zeta/api';
 import { copyToClipboard, isArray } from '@zeta/base';
@@ -53,14 +53,11 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     private readonly dataSources: XcReadonlyStructureTreeDataSource[];
     private readonly structureCache = new XoDescriberCache<XoStructureObject>();
 
-    @ViewChild('treeIn', { read: XcReadonlyTreeComponent, static: false })
-    treeIn: XcReadonlyTreeComponent;
+    readonly treeIn = viewChild('treeIn', { read: XcReadonlyTreeComponent });
 
-    @ViewChild('treeOut', { read: XcReadonlyTreeComponent, static: false })
-    treeOut: XcReadonlyTreeComponent;
+    readonly treeOut = viewChild('treeOut', { read: XcReadonlyTreeComponent });
 
-    @ViewChild('treeErr', { read: XcReadonlyTreeComponent, static: false })
-    treeErr: XcReadonlyTreeComponent;
+    readonly treeErr = viewChild('treeErr', { read: XcReadonlyTreeComponent });
 
     private _lazyLoadingLimit: number;
 
@@ -100,10 +97,10 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
             return;
         }
         // expand trees, if necessary
-        [this.treeIn, this.treeOut, this.treeErr]
+        [this.treeIn(), this.treeOut(), this.treeErr()]
             .forEach((tree, t) => tree?.dataSource.structureTreeData
                 .filter((_, n) => this.expandTree.has(this.getExpandTreeKey(t, n)))
-                .forEach((node, n) => tree.items
+                .forEach((node, n) => tree.items()
                     .filter(item => item.node === node)
                     .forEach(item => {
                         this.expandTree.delete(this.getExpandTreeKey(t, n));
