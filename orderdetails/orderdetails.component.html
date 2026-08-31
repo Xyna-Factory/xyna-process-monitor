@@ -20,6 +20,7 @@
       <workflow
         [workflow]="workflow"
         [documentModel]="document"
+        [onlyParentRuntimeInfo]="onlyParentRuntimeInfo"
         (initialized)="workflowInitialized($event)"
         class="zeta-scrollbar"
       ></workflow>
@@ -66,6 +67,7 @@
     <xfm-mon-runtime-info
       xc-i18n-context="runtime-info"
       [runtimeInfo]="runtimeInfo"
+      [runtimeInfoOrderId]="runtimeInfoOrderId"
       [iterationDepth]="0"
       [lazyLoadingLimit]="lazyLoadingLimit"
     ></xfm-mon-runtime-info>

@@ -64,6 +64,9 @@ export class XoGetAuditResponse extends XoResponse {
     @XoProperty()
     lazyLoadingLimit: number;
 
+    @XoProperty()
+    onlyParentRuntimeInfo: boolean;
+
 
     protected afterDecode() {
         super.afterDecode();

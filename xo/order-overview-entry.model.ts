@@ -52,11 +52,15 @@ export class XoOrderOverviewEntry extends XoObject {
     @XoTransient()
     parentId: string;
 
+    @XoProperty()
+    @XoTransient()
+    runtimeInfoOrderId: string;
 
-    constructor(_ident?: string, id?: string, parentId?: string) {
+    constructor(_ident?: string, id?: string, parentId?: string, runtimeInfoOrderId?: string) {
         super(_ident);
         this.id = id;
         this.parentId = parentId;
+        this.runtimeInfoOrderId = runtimeInfoOrderId;
     }
 
 

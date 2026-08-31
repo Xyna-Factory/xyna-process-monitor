@@ -24,6 +24,7 @@ import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model
 import { WorkflowDocumentModel } from '@pmod/document/model/workflow-document.model';
 import { SelectionService } from '@pmod/document/selection.service';
 import { WorkflowDetailLevelService } from '@pmod/document/workflow-detail-level.service';
+import { DataflowComponent } from '@pmod/document/workflow/dataflow/dataflow.component';
 import { ExceptionHandlingAreaComponent } from '@pmod/document/workflow/exception/exception-handling-area/exception-handling-area.component';
 import { TypeLabelAreaComponent } from '@pmod/document/workflow/type-label-area/type-label-area.component';
 import { VariableAreaDocumentComponent } from '@pmod/document/workflow/variable-area/variable-area-document.component';
@@ -39,9 +40,12 @@ import { XoXmomItem } from '@pmod/xo/xmom-item.model';
 import { FullQualifiedName, XoWorkspace } from '@zeta/api';
 import { XoXPRCApplication } from '@zeta/api/xo/runtime-context.model';
 import { templateClassType } from '@zeta/base';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcPanelComponent, XcSpinnerComponent, XcTabComponent, XcTooltipDirective } from '@zeta/xc';
+
 import { Observable, of, Subscription } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
+
 import { DocumentService } from '../document.service';
 import { XoOrderOverviewEntry } from '../xo/order-overview-entry.model';
 import { XoRetryIterationContainer } from '../xo/retry-iteration-container.model';
@@ -53,8 +57,6 @@ import { AuditService } from './audit.service';
 import { orderdetailsTranslations_deDE } from './locale/orderdetails-translations.de-DE';
 import { orderdetailsTranslations_enUS } from './locale/orderdetails-translations.en-US';
 import { RuntimeInfoComponent } from './runtime-info/runtime-info.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective, I18nService, LocaleService } from '@zeta/i18n';
-import { DataflowComponent } from '@pmod/document/workflow/dataflow/dataflow.component';
 
 
 @Component({
@@ -84,6 +86,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
     dataflow: XoConnectionArray;
     selection: XoItem;
     parentOrderId: string;
+    runtimeInfoOrderId: string;
     workflowFqn: string;
     detailsExpanded = false;
     dataflowReady = false;
@@ -93,6 +96,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
     runtimeInfo: XoRuntimeInfo;
     lazyLoadingLimit: number;
+    onlyParentRuntimeInfo = false;
     readonly menuItems: XcMenuItem[] = [];
 
     document: DocumentModel<DocumentItem>;
@@ -152,11 +156,16 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
             map(modellingObject => modellingObject.modellingItem.runtimeInfo)
         ).subscribe(runtimeInfo => {
             if ((runtimeInfo instanceof XoWorkflowRuntimeInfo || runtimeInfo instanceof XoServiceRuntimeInfo) && runtimeInfo.orderId !== '0') {
-                this.openAudit({ sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: this.parentOrderId });
+                this.openAudit({
+                    sameTab: true,
+                    orderId: runtimeInfo.orderId,
+                    parentOrderId: this.parentOrderId,
+                    runtimeInfoOrderId: this.workflow.orderId
+                });
             }
         });
 
-        this.loadAudit(this.injectedData.id, this.injectedData.imported);
+        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.injectedData.runtimeInfoOrderId);
     }
 
 
@@ -184,16 +193,17 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
     }
 
 
-    private loadAudit(id: string, imported: boolean) {
+    private loadAudit(id: string, imported: boolean, runtimeInfoOrderId?: string) {
         this.pending = true;
         (imported
             ? this.documentService.importAudit(id)
-            : this.documentService.loadAudit(id)
+            : this.documentService.loadAudit(id, runtimeInfoOrderId)
         ).pipe(
             finalize(() => this.pending = false)
         ).subscribe(response => {
             this.workflow = response.workflow;
             this.dataflow = response.dataflow;
+            this.onlyParentRuntimeInfo = response.onlyParentRuntimeInfo;
 
             // FIXME use one RTC-model-class for Modeller and Monitor !! (PMON-73)
             if (response.rootRtc instanceof XoWorkspace) {
@@ -223,6 +233,11 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 }
             }
             this.parentOrderId = response.parentOrderId;
+            this.runtimeInfoOrderId = runtimeInfoOrderId;
+
+            if (this.workflow) {
+                this.workflow.structureOrderId = this.runtimeInfoOrderId || response.orderId;
+            }
 
             this.workflowFqn = this.workflow ? FullQualifiedName.decode(this.workflow.$fqn)?.name : null;
 
@@ -288,14 +303,14 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
 
     openAudit(event: OpenAuditData) {
-        const openingDocument = new XoOrderOverviewEntry(undefined, event.orderId, event.parentOrderId);
+        const openingDocument = new XoOrderOverviewEntry(undefined, event.orderId, event.parentOrderId, event.runtimeInfoOrderId);
         const replaceDocument = new XoOrderOverviewEntry(undefined, this.workflow.orderId);
         this.documentService.openDocument(openingDocument, event.sameTab ? replaceDocument : undefined);
     }
 
 
     refreshAudit() {
-        this.loadAudit(this.injectedData.id, this.injectedData.imported);
+        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.runtimeInfoOrderId);
     }
 
 

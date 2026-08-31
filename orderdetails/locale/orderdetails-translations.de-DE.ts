@@ -26,6 +26,10 @@ export const orderdetailsTranslations_deDE: I18nTranslation[] = [
         value: 'Keine Auditdaten verfügbar'
     },
     {
+        key: 'pmon.orderdetails.label-no-runtime-info',
+        value: 'Keine Laufzeitinformationen verfügbar'
+    },
+    {
         key: 'pmon.orderdetails.tooltip-expand-shrink-details',
         value: 'Details erweitern / verkleinern'
     },
