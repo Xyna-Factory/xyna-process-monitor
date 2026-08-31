@@ -86,6 +86,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
     dataflow: XoConnectionArray;
     selection: XoItem;
     parentOrderId: string;
+    runtimeInfoOrderId: string;
     workflowFqn: string;
     detailsExpanded = false;
     dataflowReady = false;
@@ -155,11 +156,16 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
             map(modellingObject => modellingObject.modellingItem.runtimeInfo)
         ).subscribe(runtimeInfo => {
             if ((runtimeInfo instanceof XoWorkflowRuntimeInfo || runtimeInfo instanceof XoServiceRuntimeInfo) && runtimeInfo.orderId !== '0') {
-                this.openAudit({ sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: this.workflow.orderId });
+                this.openAudit({
+                    sameTab: true,
+                    orderId: runtimeInfo.orderId,
+                    parentOrderId: this.parentOrderId,
+                    runtimeInfoOrderId: this.workflow.orderId
+                });
             }
         });
 
-        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.injectedData.parentId);
+        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.injectedData.runtimeInfoOrderId);
     }
 
 
@@ -187,11 +193,11 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
     }
 
 
-    private loadAudit(id: string, imported: boolean, parentOrderId?: string) {
+    private loadAudit(id: string, imported: boolean, runtimeInfoOrderId?: string) {
         this.pending = true;
         (imported
             ? this.documentService.importAudit(id)
-            : this.documentService.loadAudit(id, parentOrderId)
+            : this.documentService.loadAudit(id, runtimeInfoOrderId)
         ).pipe(
             finalize(() => this.pending = false)
         ).subscribe(response => {
@@ -227,9 +233,10 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 }
             }
             this.parentOrderId = response.parentOrderId;
+            this.runtimeInfoOrderId = runtimeInfoOrderId;
 
             if (this.workflow) {
-                this.workflow.structureOrderId = this.parentOrderId || response.orderId;
+                this.workflow.structureOrderId = this.runtimeInfoOrderId || response.orderId;
             }
 
             this.workflowFqn = this.workflow ? FullQualifiedName.decode(this.workflow.$fqn)?.name : null;
@@ -296,14 +303,14 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
 
     openAudit(event: OpenAuditData) {
-        const openingDocument = new XoOrderOverviewEntry(undefined, event.orderId, event.parentOrderId);
+        const openingDocument = new XoOrderOverviewEntry(undefined, event.orderId, event.parentOrderId, event.runtimeInfoOrderId);
         const replaceDocument = new XoOrderOverviewEntry(undefined, this.workflow.orderId);
         this.documentService.openDocument(openingDocument, event.sameTab ? replaceDocument : undefined);
     }
 
 
     refreshAudit() {
-        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.parentOrderId);
+        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.runtimeInfoOrderId);
     }
 
 

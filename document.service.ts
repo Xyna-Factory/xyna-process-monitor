@@ -176,8 +176,8 @@ export class DocumentService {
     // ======================================================================================================
 
 
-    loadAudit(orderId: string, parentOrderId?: string): Observable<XoGetAuditResponse> {
-        const options = parentOrderId ? {params: {parent: parentOrderId}} : undefined;
+    loadAudit(orderId: string, runtimeInfoOrderId?: string): Observable<XoGetAuditResponse> {
+        const options = runtimeInfoOrderId ? {params: {parent: runtimeInfoOrderId}} : undefined;
         return this.handleAudit(this.http.get('audits/' + orderId, options), orderId);
     }
 

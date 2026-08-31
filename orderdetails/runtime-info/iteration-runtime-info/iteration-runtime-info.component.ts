@@ -61,7 +61,7 @@ export class IterationRuntimeInfoComponent {
     private _iterationDepth: number;
 
     @Input()
-    parentOrderId: string;
+    runtimeInfoOrderId: string;
 
     limitError: string;
     violatesLimit = false;

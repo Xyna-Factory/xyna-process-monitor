@@ -38,14 +38,14 @@
           <label class="label" xc-i18n>label-order-id</label>
           <label class="value" [class.order-id]="!disabled && runtimeInfo.orderId !== workflowOrderId"
             [xc-tooltip]="!disabled && runtimeInfo.orderId !== workflowOrderId ? ('tooltip-open' | xcI18n) : ''" xc-tooltip-position="top"
-            (click)="openAudit.emit({sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId})"
+            (click)="openAudit.emit({sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId, runtimeInfoOrderId: workflowOrderId})"
           >{{runtimeInfo.orderId}}</label>
           @if (runtimeInfo.orderId !== workflowOrderId) {
             <xc-icon-button [disabled]="disabled"
               xc-icon-size="small" xc-icon-name="external" color="color-black"
               xc-i18n
               xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
-              (click)="openAudit.emit({sameTab: false, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId})"
+              (click)="openAudit.emit({sameTab: false, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId, runtimeInfoOrderId: workflowOrderId})"
             ></xc-icon-button>
           }
         </div>

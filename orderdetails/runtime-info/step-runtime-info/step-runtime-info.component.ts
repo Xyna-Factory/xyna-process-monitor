@@ -62,17 +62,17 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     treeErr: XcReadonlyTreeComponent;
 
     private _lazyLoadingLimit: number;
-    private _parentOrderId: string;
+    private _runtimeInfoOrderId: string;
 
     @Input()
-    set parentOrderId(value: string) {
-        this._parentOrderId = value;
+    set runtimeInfoOrderId(value: string) {
+        this._runtimeInfoOrderId = value;
         this.updateStructureOrderId();
     }
 
 
-    get parentOrderId(): string {
-        return this._parentOrderId;
+    get runtimeInfoOrderId(): string {
+        return this._runtimeInfoOrderId;
     }
 
     limitError: string;
@@ -182,7 +182,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
 
 
     private updateStructureOrderId() {
-        const structureOrderId = this.parentOrderId || this.documentService.selectedDocument?.id;
+        const structureOrderId = this.runtimeInfoOrderId || this.documentService.selectedDocument?.id;
         if (structureOrderId) {
             this.dataSources.forEach(ds => ds.orderId = structureOrderId);
         }
