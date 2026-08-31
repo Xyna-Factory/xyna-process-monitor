@@ -20,12 +20,11 @@ import { AfterContentChecked, Component, inject, Input, ViewChild } from '@angul
 import { ApiService, Xo, XoArray, XoDescriberCache, XoObject, XoStructureObject } from '@zeta/api';
 import { copyToClipboard, isArray } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
-import { XcDialogService, XcReadonlyStructureTreeDataSource, XcReadonlyTreeComponent } from '@zeta/xc';
+import { XcButtonComponent, XcDialogService, XcPanelComponent, XcReadonlyStructureTreeDataSource, XcReadonlyTreeComponent } from '@zeta/xc';
 
 import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
-import { XcModule } from '../../../../../zeta/xc/xc.module';
-import { RTC } from '../../../const';
 import { DocumentService } from '../../../document.service';
+import { PMON_RTC } from '../../../processmonitor.component';
 import { XoStepRuntimeInfo } from '../../../xo/step-runtime-info.model';
 import { AuditService } from '../../audit.service';
 
@@ -34,7 +33,7 @@ import { AuditService } from '../../audit.service';
     selector: 'xfm-mon-step-runtime-info',
     templateUrl: './step-runtime-info.component.html',
     styleUrls: ['./step-runtime-info.component.scss'],
-    imports: [XcModule, XcI18nTranslateDirective]
+    imports: [XcButtonComponent, XcPanelComponent, XcReadonlyTreeComponent, XcI18nTranslateDirective]
 })
 export class StepRuntimeInfoComponent implements AfterContentChecked {
     private readonly i18n = inject(I18nService);
@@ -86,7 +85,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
         const apiService = inject(ApiService);
 
         // create tree data sources
-        const newDataSource = () => new XcReadonlyStructureTreeDataSource(apiService, undefined, RTC, []);
+        const newDataSource = () => new XcReadonlyStructureTreeDataSource(apiService, undefined, PMON_RTC, []);
         this.dataSources = [
             this.dsTreeIn  = newDataSource(),
             this.dsTreeOut = newDataSource(),

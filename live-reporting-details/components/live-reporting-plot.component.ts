@@ -17,11 +17,10 @@
  */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { XcAutocompleteDataWrapper } from '@zeta/xc';
+import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcPlotComponent, XcTooltipDirective } from '@zeta/xc';
 import { XcPlotDataChangeBehavior, XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
 
 import { DataSourceUpdateInterval, LiveReportingDataSourceName } from '../classes/live-reporting-time-helper';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 
 
@@ -29,7 +28,7 @@ import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../ze
     selector: 'live-reporting-plot',
     templateUrl: './live-reporting-plot.component.html',
     styleUrls: ['./live-reporting-plot.component.scss'],
-    imports: [XcModule, XcI18nContextDirective, XcI18nTranslateDirective]
+    imports: [XcFormAutocompleteComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcPlotComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class LiveReportingPlotComponent {
 

@@ -23,7 +23,7 @@ import { XcRemoteTableDataSource, XcSelectionDataSource, XcSelectionModel } from
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
 
-import { RTC } from '../const';
+import { PMON_RTC } from '../processmonitor.component';
 import { XoName } from './xo/name.model';
 import { XoOrder, XoOrderArray } from './xo/order.model';
 import { XoResource } from './xo/resource.model';
@@ -49,7 +49,7 @@ export class ResourceInfo<T extends XoResource> extends Comparable {
 
 
     private refreshResource() {
-        this.api.startOrder(RTC, this.detailsOrderType, new XoName(undefined, this.resource?.name ?? ''), this.resource.decoratorClass as XoObjectClassInterface<T>, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(result => {
+        this.api.startOrder(PMON_RTC, this.detailsOrderType, new XoName(undefined, this.resource?.name ?? ''), this.resource.decoratorClass as XoObjectClassInterface<T>, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(result => {
             this.resource = result.output?.[0] as T;
             this.updatedSubject.next(this);
         });
@@ -114,11 +114,11 @@ export class ResourceDataSource<R extends XoResource, L extends XoArray<R> = XoA
         super.refresh();
 
         this.cleanup();
-        this.api.startOrderAssertFlat<R>(RTC, this.listOrderType, this.listInput, this.listOutput).subscribe(output => {
+        this.api.startOrderAssertFlat<R>(PMON_RTC, this.listOrderType, this.listInput, this.listOutput).subscribe(output => {
             this.data = output.map(resource => {
                 const info = new ResourceInfo(
                     resource,
-                    new XcRemoteTableDataSource<XoOrder>(this.api, this.i18n, RTC, 'xmcp.processmonitor.resources.GetOrders'),
+                    new XcRemoteTableDataSource<XoOrder>(this.api, this.i18n, PMON_RTC, 'xmcp.processmonitor.resources.GetOrders'),
                     this.api,
                     this.detailsOrderType
                 );

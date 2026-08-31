@@ -66,5 +66,37 @@ export const orderoverviewTranslations_deDE: I18nTranslation[] = [
     {
         key: 'pmon.orderoverview.kill-order-button.button-kill',
         value: 'Kill'
-    }
+    },
+    {
+        key: 'Succeeded',
+        value: 'Abgeschlossen'
+    },
+    {
+        key: 'Running',
+        value: 'Laufend'
+    },
+    {
+        key: 'Failed',
+        value: 'Fehlgeschlagen'
+    },
+    {
+        key: 'Accepted',
+        value: 'Akzeptiert'
+    },
+    {
+        key: 'Planning',
+        value: 'In Planung'
+    },
+    {
+        key: 'Scheduling',
+        value: 'Ressourcenplanung'
+    },
+    {
+        key: 'Waiting',
+        value: 'Wartend'
+    },
+    {
+        key: 'Cleanup',
+        value: 'Aufräumen'
+    },
 ];

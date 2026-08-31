@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { XoItem } from '@pmod/xo/item.model';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';

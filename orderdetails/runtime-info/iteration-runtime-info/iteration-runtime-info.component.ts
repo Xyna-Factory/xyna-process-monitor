@@ -21,19 +21,19 @@ import { ChangeDetectorRef, Component, forwardRef, Input, inject } from '@angula
 import { IterationInfo } from '@pmod/xo/runtime-info.model';
 import { I18nService } from '@zeta/i18n';
 
-import { XcModule } from '../../../../../zeta/xc/xc.module';
 import { XoIterationContainer } from '../../../xo/iteration-container.model';
 import { XoIterationEntry } from '../../../xo/iteration-entry.model';
 import { XoStepRuntimeInfo } from '../../../xo/step-runtime-info.model';
 import { AuditService } from '../../audit.service';
 import { RuntimeInfoComponent } from '../runtime-info.component';
+import { XcButtonComponent, XcFormInputComponent, XcPanelComponent } from '@zeta/xc';
 
 
 @Component({
     selector: 'xfm-mon-iteration-runtime-info',
     templateUrl: './iteration-runtime-info.component.html',
     styleUrls: ['./iteration-runtime-info.component.scss'],
-    imports: [XcModule, NgClass, forwardRef(() => RuntimeInfoComponent)]
+    imports: [XcButtonComponent, XcFormInputComponent, XcPanelComponent, NgClass, forwardRef(() => RuntimeInfoComponent)]
 })
 export class IterationRuntimeInfoComponent {
     private readonly i18n = inject(I18nService);

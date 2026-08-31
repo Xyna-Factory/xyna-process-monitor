@@ -25,11 +25,11 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { XcModule } from '../../../../zeta/xc/xc.module';
 import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
 import { ResourceInfo } from '../resource-data-source';
 import { XoOrder } from '../xo/order.model';
 import { XoResource } from '../xo/resource.model';
+import { XcButtonComponent, XcPanelComponent, XcTableComponent, XcTemplateComponent, XcTooltipDirective } from '@zeta/xc';
 
 
 @Component({
@@ -37,7 +37,7 @@ import { XoResource } from '../xo/resource.model';
     templateUrl: './resource-card.component.html',
     styleUrls: ['./resource-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [XcModule, XcI18nTranslateDirective, XcI18nPipe, KillOrderButtonComponent]
+    imports: [XcButtonComponent, XcPanelComponent, XcTableComponent, XcTemplateComponent, XcTooltipDirective, XcI18nTranslateDirective, XcI18nPipe, KillOrderButtonComponent]
 })
 export class ResourceCardComponent implements OnDestroy {
     private readonly elementRef = inject(ElementRef<HTMLElement>);
