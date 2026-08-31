@@ -228,6 +228,10 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
             }
             this.parentOrderId = response.parentOrderId;
 
+            if (this.workflow) {
+                this.workflow.structureOrderId = this.parentOrderId || response.orderId;
+            }
+
             this.workflowFqn = this.workflow ? FullQualifiedName.decode(this.workflow.$fqn)?.name : null;
 
             // provide all RuntimeInfo objects with the AuditService to track current iteration
