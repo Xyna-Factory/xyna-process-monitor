@@ -36,12 +36,12 @@
       @if ((XoServiceRuntimeInfo.of(runtimeInfo) || XoWorkflowRuntimeInfo.of(runtimeInfo)) && runtimeInfo.orderId && runtimeInfo.orderId !== '0') {
         <div class="item">
           <label class="label" xc-i18n>label-order-id</label>
-          <label class="value" [class.order-id]="!disabled && runtimeInfo.orderId !== workflowOrderId"
-            [xc-tooltip]="!disabled && runtimeInfo.orderId !== workflowOrderId ? ('tooltip-open' | xcI18n) : ''" xc-tooltip-position="top"
+          <label class="value" [class.order-id]="!disabled() && runtimeInfo.orderId !== workflowOrderId"
+            [xc-tooltip]="!disabled() && runtimeInfo.orderId !== workflowOrderId ? ('tooltip-open' | xcI18n) : ''" xc-tooltip-position="top"
             (click)="openAudit.emit({sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId})"
           >{{runtimeInfo.orderId}}</label>
           @if (runtimeInfo.orderId !== workflowOrderId) {
-            <xc-icon-button [disabled]="disabled"
+            <xc-icon-button [disabled]="disabled()"
               xc-icon-size="small" xc-icon-name="external" color="black"
               xc-i18n
               xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
@@ -92,11 +92,11 @@
       @if (parentOrderId && parentOrderId !== '0') {
         <div class="item">
           <label class="label" xc-i18n>label-parent-order-id</label>
-          <label class="value" [class.order-id]="!disabled"
-            [xc-tooltip]="(!disabled ? 'tooltip-open' : '') | xcI18n" xc-tooltip-position="top"
+          <label class="value" [class.order-id]="!disabled()"
+            [xc-tooltip]="(!disabled() ? 'tooltip-open' : '') | xcI18n" xc-tooltip-position="top"
             (click)="openAudit.emit({orderId: parentOrderId, sameTab: true})"
           >{{parentOrderId}}</label>
-          <xc-icon-button xc-icon-size="small" xc-icon-name="external" color="black" [disabled]="disabled"
+          <xc-icon-button xc-icon-size="small" xc-icon-name="external" color="black" [disabled]="disabled()"
             xc-i18n
             xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
             (click)="openAudit.emit({orderId: parentOrderId, sameTab: false})"
@@ -125,6 +125,6 @@
 <div class="spacer"></div>
 @if (runtimeInfo) {
   <div class="action">
-    <xc-button (click)="exportAudit()" [disabled]="disabled" xc-i18n>button-export-audit</xc-button>
+    <xc-button (click)="exportAudit()" [disabled]="disabled()" xc-i18n>button-export-audit</xc-button>
   </div>
 }

@@ -19,7 +19,7 @@
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Component, inject, Input, output } from '@angular/core';
+import { Component, inject, Input, output, input } from '@angular/core';
 import { XoError } from '@pmod/xo/error.model';
 import { ApiService } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
@@ -44,14 +44,13 @@ export class KillOrderButtonComponent {
     private _icon = false;
     private _disabled = false;
 
-    @Input()
-    orderIds: string[];
+    readonly orderIds = input<string[]>(undefined);
 
     readonly refresh = output<void>();
 
 
     kill() {
-        this.api.killOrders(this.orderIds).pipe(
+        this.api.killOrders(this.orderIds()).pipe(
             catchError((response, caught) => {
                 const xo = new XoError().decode(response.error);
                 // if (xo.message) {

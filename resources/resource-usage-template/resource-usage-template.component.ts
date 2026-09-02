@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, InjectionToken } from '@angular/core';
+import { Component, InjectionToken } from '@angular/core';
 import { XC_COMPONENT_DATA, XcDynamicComponent, XcIconComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { XcI18nPipe } from '../../../../zeta/i18n';
@@ -31,7 +31,6 @@ export interface ResourceUsageTemplateData {
     selector: 'xfm-mon-resource-usage',
     templateUrl: './resource-usage-template.component.html',
     styleUrls: ['./resource-usage-template.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [XcIconComponent, XcTooltipDirective, XcI18nPipe]
 })
 export class ResourceUsageTemplateComponent extends XcDynamicComponent<ResourceUsageTemplateData> {
