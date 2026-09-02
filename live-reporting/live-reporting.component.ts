@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Injector, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabBarItem, XcTabComponent, XcTableComponent, XcTooltipDirective, XoTableInfo } from '@zeta/xc';
 
@@ -91,18 +91,14 @@ class DateTimeTableInfo extends XoTableInfo {
 export class LiveReportingComponent extends XcTabComponent<string> {
     private readonly apiService = inject(ApiService);
     private readonly dialogService = inject(XcDialogService);
-   private readonly i18nService = inject(I18nService);
+    private readonly i18nService = inject(I18nService);
     private readonly settings = inject(ProcessmonitorSettingsService);
 
 
     dataSource: XcRemoteTableDataSource<XoFrequencyControlledTaskDetails>;
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
-
-
+        super();
 
         this.i18nService.setTranslations(LocaleService.EN_US, liveReportingTranslations_enUS);
         this.i18nService.setTranslations(LocaleService.DE_DE, liveReportingTranslations_deDE);

@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Injector } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective, XDSIconName, XoRemappingTableInfoClass, XoTableInfo } from '@zeta/xc';
@@ -58,9 +58,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
     XDSIconName = XDSIconName;
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
+        super();
 
         this.i18nService.setTranslations(LocaleService.EN_US, miMonitorTranslations_enUS);
         this.i18nService.setTranslations(LocaleService.DE_DE, miMonitorTranslations_deDE);

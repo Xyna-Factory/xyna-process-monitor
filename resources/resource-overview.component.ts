@@ -1,3 +1,5 @@
+import { Subscription } from 'rxjs';
+
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,13 +17,10 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Injector, OnDestroy } from '@angular/core';
-
+import { ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
 import { ApiService, Xo } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcTabComponent } from '@zeta/xc';
-
-import { Subscription } from 'rxjs';
 
 import { resourcesTranslations_deDE } from './locale/resources-translations.de-DE';
 import { resourcesTranslations_enUS } from './locale/resources-translations.en-US';
@@ -42,9 +41,7 @@ export class ResourceOverviewComponent<T extends XoResource> extends XcTabCompon
 
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
+        super();
 
         this.i18n.setTranslations(LocaleService.EN_US, resourcesTranslations_enUS);
         this.i18n.setTranslations(LocaleService.DE_DE, resourcesTranslations_deDE);

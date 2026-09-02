@@ -17,9 +17,9 @@
  */
 import { of } from 'rxjs';
 
-import { Component, inject, Injector } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ApiService } from '@zeta/api';
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { DocumentService } from '../document.service';
@@ -63,9 +63,7 @@ export class OrderoverviewComponent extends XcTabComponent<string> {
 
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
+        super();
 
         this.i18nService.setTranslations(LocaleService.EN_US, orderoverviewTranslations_enUS);
         this.i18nService.setTranslations(LocaleService.DE_DE, orderoverviewTranslations_deDE);

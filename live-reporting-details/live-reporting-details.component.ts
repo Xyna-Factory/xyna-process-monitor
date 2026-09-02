@@ -17,7 +17,7 @@
  */
 
 import { NgClass } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, Injector, OnInit, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, viewChild } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormDirective, XcFormLabelComponent, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcTabComponent, XcTooltipDirective } from '@zeta/xc';
 import { XoGraphDataArray, XoGraphInfo, XoTimeInterval, XoTimeIntervalArray } from '@zeta/xc/xc-graph/xc-remote-graph-data-source';
@@ -187,9 +187,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
     }
 
     constructor() {
-        const injector = inject(Injector, { optional: true });
-
-        super(injector);
+        super();
 
         this.i18nService.setTranslations(LocaleService.EN_US, liveReportingDetailsTranslations_enUS);
         this.i18nService.setTranslations(LocaleService.DE_DE, liveReportingDetailsTranslations_deDE);
