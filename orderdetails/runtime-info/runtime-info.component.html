@@ -1,21 +1,21 @@
-@if (runtimeInfo) {
+@if (runtimeInfo()) {
   <!-- iterations, like for-each or retries -->
-  @if (XoIterationContainer.of(runtimeInfo)) {
-    <xfm-mon-iteration-runtime-info [runtimeInfo]="runtimeInfo"
+  @if (XoIterationContainer.of(runtimeInfo())) {
+    <xfm-mon-iteration-runtime-info [runtimeInfo]="runtimeInfo()"
       [lazyLoadingLimit]="lazyLoadingLimit()"
       [iterationDepth]="iterationDepth() + 1"
      />
   }
   <!-- ordinary steps -->
-  @if (XoStepRuntimeInfo.of(runtimeInfo)) {
+  @if (XoStepRuntimeInfo.of(runtimeInfo())) {
     <xfm-mon-step-runtime-info xc-i18n-context="step-runtime"
-      [runtimeInfo]="runtimeInfo"
+      [runtimeInfo]="runtimeInfo()"
       [lazyLoadingLimit]="lazyLoadingLimit()"
      />
   }
 }
 
-@if (!runtimeInfo) {
+@if (!runtimeInfo()) {
   <label class="no-runtime-info" xc-i18n>
     label-no-runtime
   </label>

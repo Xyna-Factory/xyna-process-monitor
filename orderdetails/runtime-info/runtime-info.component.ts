@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { XoRuntimeInfo } from '@pmod/xo/runtime-info.model';
 import { templateClassType } from '@zeta/base';
 
@@ -37,8 +37,7 @@ export class RuntimeInfoComponent {
     readonly XoStepRuntimeInfo    = templateClassType<XoStepRuntimeInfo>(XoStepRuntimeInfo);
     readonly XoIterationContainer = templateClassType<XoIterationContainer>(XoIterationContainer);
 
-    @Input()
-    runtimeInfo: XoRuntimeInfo;
+    readonly runtimeInfo = input<XoRuntimeInfo>(undefined);
 
     readonly lazyLoadingLimit = input<number>(undefined);
 

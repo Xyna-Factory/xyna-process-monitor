@@ -36,16 +36,16 @@
       @if ((XoServiceRuntimeInfo.of(runtimeInfo) || XoWorkflowRuntimeInfo.of(runtimeInfo)) && runtimeInfo.orderId && runtimeInfo.orderId !== '0') {
         <div class="item">
           <label class="label" xc-i18n>label-order-id</label>
-          <label class="value" [class.order-id]="!disabled() && runtimeInfo.orderId !== workflowOrderId"
-            [xc-tooltip]="!disabled() && runtimeInfo.orderId !== workflowOrderId ? ('tooltip-open' | xcI18n) : ''" xc-tooltip-position="top"
-            (click)="openAudit.emit({sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId})"
+          <label class="value" [class.order-id]="!disabled() && runtimeInfo.orderId !== workflowOrderId()"
+            [xc-tooltip]="!disabled() && runtimeInfo.orderId !== workflowOrderId() ? ('tooltip-open' | xcI18n) : ''" xc-tooltip-position="top"
+            (click)="openAudit.emit({sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId()})"
           >{{runtimeInfo.orderId}}</label>
-          @if (runtimeInfo.orderId !== workflowOrderId) {
+          @if (runtimeInfo.orderId !== workflowOrderId()) {
             <xc-icon-button [disabled]="disabled()"
               xc-icon-size="small" xc-icon-name="external" color="black"
               xc-i18n
               xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
-              (click)="openAudit.emit({sameTab: false, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId})"
+              (click)="openAudit.emit({sameTab: false, orderId: runtimeInfo.orderId, parentOrderId: workflowOrderId()})"
              />
           }
         </div>
@@ -74,7 +74,7 @@
         <xfm-mon-kill-order-button icon
           xc-i18n-context="kill-order-button"
           [disabled]="!runtimeInfo.isKillable"
-          [orderIds]="[workflowOrderId]"
+          [orderIds]="[workflowOrderId()]"
           (refresh)="refresh()"
          />
       </div>
@@ -89,17 +89,17 @@
           <label class="value"></label>
         </div>
       }
-      @if (parentOrderId && parentOrderId !== '0') {
+      @if (parentOrderId() && parentOrderId() !== '0') {
         <div class="item">
           <label class="label" xc-i18n>label-parent-order-id</label>
           <label class="value" [class.order-id]="!disabled()"
             [xc-tooltip]="(!disabled() ? 'tooltip-open' : '') | xcI18n" xc-tooltip-position="top"
-            (click)="openAudit.emit({orderId: parentOrderId, sameTab: true})"
-          >{{parentOrderId}}</label>
+            (click)="openAudit.emit({orderId: parentOrderId(), sameTab: true})"
+          >{{parentOrderId()}}</label>
           <xc-icon-button xc-icon-size="small" xc-icon-name="external" color="black" [disabled]="disabled()"
             xc-i18n
             xc-tooltip="tooltip-open-in-new-tab" xc-tooltip-position="top"
-            (click)="openAudit.emit({orderId: parentOrderId, sameTab: false})"
+            (click)="openAudit.emit({orderId: parentOrderId(), sameTab: false})"
            />
         </div>
       } @else {
