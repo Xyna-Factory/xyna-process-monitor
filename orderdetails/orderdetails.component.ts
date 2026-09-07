@@ -82,6 +82,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
     readonly workflow = signal<XoWorkflow | undefined>(undefined);
     readonly dataflow = signal<XoConnectionArray | undefined>(undefined);
     readonly selection = signal<XoItem | undefined>(undefined);
+    readonly runtimeInfoOrderId = signal<string | undefined>(undefined);
     readonly parentOrderId = signal('');
     readonly workflowFqn = signal('');
     readonly detailsExpanded = signal(false);
@@ -92,6 +93,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
     readonly runtimeInfo = signal<XoRuntimeInfo | undefined>(undefined);
     readonly lazyLoadingLimit = signal<number | undefined>(undefined);
+    readonly onlyParentRuntimeInfo = signal(false);
     readonly menuItems: XcMenuItem[] = [];
 
     readonly document = signal<DocumentModel<DocumentItem> | undefined>(undefined);
@@ -151,7 +153,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
             map(modellingObject => modellingObject.modellingItem.runtimeInfo)
         ).subscribe(runtimeInfo => {
             if ((runtimeInfo instanceof XoWorkflowRuntimeInfo || runtimeInfo instanceof XoServiceRuntimeInfo) && runtimeInfo.orderId !== '0') {
-                this.openAudit({ sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: this.parentOrderId() });
+                this.openAudit({ sameTab: true, orderId: runtimeInfo.orderId, parentOrderId: this.parentOrderId(), runtimeInfoOrderId: this.workflow().orderId });
             }
         });
 
@@ -185,7 +187,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
     }
 
 
-    private loadAudit(id: string, imported: boolean) {
+    private loadAudit(id: string, imported: boolean, runtimeInfoOrderId?: string) {
         this.pending.set(true);
         (imported
             ? this.documentService.importAudit(id)
@@ -197,6 +199,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
         ).subscribe(response => {
             this.workflow.set(response.workflow);
             this.dataflow.set(response.dataflow);
+            this.onlyParentRuntimeInfo.set(response.onlyParentRuntimeInfo);
             const workflow = this.workflow();
 
             // FIXME use one RTC-model-class for Modeller and Monitor !! (PMON-73)
@@ -227,6 +230,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 }
             }
             this.parentOrderId.set(response.parentOrderId);
+            this.runtimeInfoOrderId.set(runtimeInfoOrderId);
 
             this.workflowFqn.set(workflow ? FullQualifiedName.decode(workflow.$fqn)?.name : '');
 
@@ -293,7 +297,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
 
     openAudit(event: OpenAuditData) {
-        const openingDocument = new XoOrderOverviewEntry(undefined, event.orderId, event.parentOrderId);
+        const openingDocument = new XoOrderOverviewEntry(undefined, event.orderId, event.parentOrderId, event.runtimeInfoOrderId);
         const workflow = this.workflow();
         const replaceDocument = new XoOrderOverviewEntry(undefined, workflow.orderId);
         this.documentService.openDocument(openingDocument, event.sameTab ? replaceDocument : undefined);
@@ -301,7 +305,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
 
     refreshAudit() {
-        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.runtimeInfoOrderId);
+        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.runtimeInfoOrderId());
     }
 
 
