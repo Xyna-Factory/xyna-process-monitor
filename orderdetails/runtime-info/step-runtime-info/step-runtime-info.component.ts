@@ -58,6 +58,18 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     readonly treeErr = viewChild('treeErr', { read: XcReadonlyTreeComponent });
 
     private _lazyLoadingLimit: number;
+    private _runtimeInfoOrderId: string;
+
+    @Input()
+    set runtimeInfoOrderId(value: string) {
+        this._runtimeInfoOrderId = value;
+        this.updateStructureOrderId();
+    }
+
+
+    get runtimeInfoOrderId(): string {
+        return this._runtimeInfoOrderId;
+    }
 
     limitError: string;
     violatesInputLimit = false;
@@ -165,6 +177,14 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     }
 
 
+    private updateStructureOrderId() {
+        const structureOrderId = this.runtimeInfoOrderId || this.documentService.selectedDocument?.id;
+        if (structureOrderId) {
+            this.dataSources.forEach(ds => ds.orderId = structureOrderId);
+        }
+    }
+
+
     @Input()
     set runtimeInfo(value: XoStepRuntimeInfo) {
         this._runtimeInfo = value;
@@ -174,8 +194,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
         this.auditService.setRuntimeInfo(this.runtimeInfo);
 
         // update tree data sources
-        this.dsTreeIn.orderId  = this.documentService.selectedDocument.id;
-        this.dsTreeOut.orderId = this.documentService.selectedDocument.id;
+        this.updateStructureOrderId();
 
         this.dsTreeIn.container.clear().append(...this.runtimeInfo.inputObjects.data);
         this.dsTreeOut.container.clear().append(...this.runtimeInfo.outputObjects.data);

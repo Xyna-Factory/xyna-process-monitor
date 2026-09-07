@@ -26,6 +26,10 @@ export const orderdetailsTranslations_enUS: I18nTranslation[] = [
         value: 'No Audit Data available'
     },
     {
+        key: 'pmon.orderdetails.label-no-runtime-info',
+        value: 'No Runtime Information available'
+    },
+    {
         key: 'pmon.orderdetails.tooltip-expand-shrink-details',
         value: 'Expand / Shrink Details'
     },

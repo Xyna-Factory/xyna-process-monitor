@@ -155,7 +155,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
             }
         });
 
-        this.loadAudit(this.injectedData.id, this.injectedData.imported);
+        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.injectedData.runtimeInfoOrderId);
     }
 
 
@@ -189,7 +189,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
         this.pending.set(true);
         (imported
             ? this.documentService.importAudit(id)
-            : this.documentService.loadAudit(id)
+            : this.documentService.loadAudit(id, runtimeInfoOrderId)
         ).pipe(
             finalize(() => {
                 this.pending.set(false);
@@ -301,7 +301,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
 
     refreshAudit() {
-        this.loadAudit(this.injectedData.id, this.injectedData.imported);
+        this.loadAudit(this.injectedData.id, this.injectedData.imported, this.runtimeInfoOrderId);
     }
 
 
