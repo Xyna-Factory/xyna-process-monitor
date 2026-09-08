@@ -16,7 +16,7 @@ import { NgClass } from '@angular/common';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, Injector, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Injector, OnInit, ViewChild } from '@angular/core';
 
 import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormDirective, XcFormLabelComponent, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcTabComponent, XcTooltipDirective } from '@zeta/xc';
@@ -36,6 +36,7 @@ import { PMON_RTC } from '../processmonitor.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mon-live-reporting-details',
     templateUrl: './live-reporting-details.component.html',
     styleUrls: ['./live-reporting-details.component.scss'],

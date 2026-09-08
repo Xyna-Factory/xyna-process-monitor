@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 import { ApiService, RuntimeContext } from '@zeta/api';
@@ -48,6 +48,7 @@ import { ConfigService } from '@zeta/api/config.service';
 export let PMON_RTC = RuntimeContext.guiHttpApplication;
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './processmonitor.component.html',
     styleUrls: ['./processmonitor.component.scss'],
     imports: [XcTabBarComponent]

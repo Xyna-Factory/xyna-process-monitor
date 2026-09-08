@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { XoRuntimeInfo } from '@pmod/xo/runtime-info.model';
 import { templateClassType } from '@zeta/base';
@@ -28,6 +28,7 @@ import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../ze
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mon-runtime-info',
     templateUrl: './runtime-info.component.html',
     styleUrls: ['./runtime-info.component.scss'],
