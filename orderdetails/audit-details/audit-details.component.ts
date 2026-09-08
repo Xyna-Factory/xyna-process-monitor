@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output, inject, input } from '@angular/core';
 
 import { templateClassType } from '@zeta/base';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
@@ -59,8 +59,7 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
     readonly XoServiceRuntimeInfo = templateClassType<XoServiceRuntimeInfo>(XoServiceRuntimeInfo);
     readonly XoWorkflowRuntimeInfo = templateClassType<XoWorkflowRuntimeInfo>(XoWorkflowRuntimeInfo);
 
-    @Input()
-    fqn: string;
+    readonly fqn = input<string>(undefined);
 
     @Input()
     parentOrderId: string;
@@ -68,8 +67,7 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
     @Input()
     workflowOrderId: string;
 
-    @Input()
-    disabled: boolean;
+    readonly disabled = input<boolean>(undefined);
 
     @Output()
     readonly openAudit = new EventEmitter<OpenAuditData>();
@@ -99,7 +97,8 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
 
 
     exportAudit() {
-        this.documents.exportAudit(this.workflowOrderId, (this.fqn ? this.fqn : 'fqn_not_found')).subscribe(<Observer<void>>{
+        const fqn = this.fqn();
+        this.documents.exportAudit(this.workflowOrderId, (fqn ? fqn : 'fqn_not_found')).subscribe(<Observer<void>>{
             error: error => {
                 this.dialogs.error('Export Audit Error: ' + (error.toString ? error.toString() : error));
             }

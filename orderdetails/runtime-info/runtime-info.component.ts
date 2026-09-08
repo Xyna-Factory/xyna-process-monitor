@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, input } from '@angular/core';
 
 import { XoRuntimeInfo } from '@pmod/xo/runtime-info.model';
 import { templateClassType } from '@zeta/base';
@@ -42,12 +42,9 @@ export class RuntimeInfoComponent {
     @Input()
     runtimeInfo: XoRuntimeInfo;
 
-    @Input()
-    runtimeInfoOrderId: string;
+    readonly runtimeInfoOrderId = input<string>(undefined);
 
-    @Input()
-    lazyLoadingLimit: number;
+    readonly lazyLoadingLimit = input<number>(undefined);
 
-    @Input()
-    iterationDepth: number;
+    readonly iterationDepth = input<number>(undefined);
 }

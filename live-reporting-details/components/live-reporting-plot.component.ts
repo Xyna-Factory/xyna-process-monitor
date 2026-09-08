@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, input } from '@angular/core';
 
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcPlotComponent, XcTooltipDirective } from '@zeta/xc';
 import { XcPlotDataChangeBehavior, XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
@@ -36,8 +36,7 @@ export class LiveReportingPlotComponent {
     intervalHandler: number;
     updateInterval: string = DataSourceUpdateInterval.Manual;
 
-    @Input()
-    name: LiveReportingDataSourceName;
+    readonly name = input<LiveReportingDataSourceName>(undefined);
 
     @Output()
     readonly requestDataChange = new EventEmitter<LiveReportingDataSourceName>();
@@ -67,13 +66,13 @@ export class LiveReportingPlotComponent {
         }
 
         if (interval) {
-            this.intervalHandler = window.setInterval(() => this.requestDataChange.emit(this.name), interval);
+            this.intervalHandler = window.setInterval(() => this.requestDataChange.emit(this.name()), interval);
         }
 
     }
 
     refresh() {
-        this.requestDataChange.emit(this.name);
+        this.requestDataChange.emit(this.name());
     }
 
     constructor() {

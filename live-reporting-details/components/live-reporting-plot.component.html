@@ -28,7 +28,7 @@
                 xc-i18n
              />
         </div>
-    <div class="items-center">{{name}}</div>
+    <div class="items-center">{{name()}}</div>
         <div class="items-right">
             <xc-icon [xc-tooltip]="plotControl" xc-icon-name="help" />
             <xc-icon-button xc-tooltip="tooltip-refresh" xc-i18n class="refresh" xc-icon-name="reload" (click)="refresh()" />

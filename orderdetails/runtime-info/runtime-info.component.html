@@ -2,17 +2,17 @@
   <!-- iterations, like for-each or retries -->
   @if (XoIterationContainer.of(runtimeInfo)) {
     <xfm-mon-iteration-runtime-info [runtimeInfo]="runtimeInfo"
-      [runtimeInfoOrderId]="runtimeInfoOrderId"
-      [lazyLoadingLimit]="lazyLoadingLimit"
-      [iterationDepth]="iterationDepth + 1"
+      [runtimeInfoOrderId]="runtimeInfoOrderId()"
+      [lazyLoadingLimit]="lazyLoadingLimit()"
+      [iterationDepth]="iterationDepth() + 1"
      />
   }
   <!-- ordinary steps -->
   @if (XoStepRuntimeInfo.of(runtimeInfo)) {
     <xfm-mon-step-runtime-info xc-i18n-context="step-runtime"
       [runtimeInfo]="runtimeInfo"
-      [runtimeInfoOrderId]="runtimeInfoOrderId"
-      [lazyLoadingLimit]="lazyLoadingLimit"
+      [runtimeInfoOrderId]="runtimeInfoOrderId()"
+      [lazyLoadingLimit]="lazyLoadingLimit()"
      />
   }
 }

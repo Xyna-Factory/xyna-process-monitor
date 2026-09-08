@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, inject, input } from '@angular/core';
 
 import { IterationInfo } from '@pmod/xo/runtime-info.model';
 import { I18nService } from '@zeta/i18n';
@@ -61,8 +61,7 @@ export class IterationRuntimeInfoComponent {
     private _lazyLoadingLimit: number;
     private _iterationDepth: number;
 
-    @Input()
-    runtimeInfoOrderId: string;
+    readonly runtimeInfoOrderId = input<string>(undefined);
 
     limitError: string;
     violatesLimit = false;
