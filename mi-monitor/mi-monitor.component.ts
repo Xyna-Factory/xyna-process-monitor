@@ -15,20 +15,19 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject, Injector } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ApiService } from '@zeta/api';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective, XDSIconName, XoRemappingTableInfoClass, XoTableInfo } from '@zeta/xc';
 
-import { PMON_RTC } from '../processmonitor.component';
 import { ProcessmonitorSettingsService } from '../processmonitor-settings.service';
+import { PMON_RTC } from '../processmonitor.component';
 import { miMonitorTranslations_deDE } from './locale/mi-monitor-translations.de-DE';
 import { miMonitorTranslations_enUS } from './locale/mi-monitor-translations.en-US';
 import { XoManualInteractionId, XoManualInteractionIdArray } from './xo/mi-id.model';
 import { XoManualInteractionResponse } from './xo/mi-interaction-response.model';
 import { XoManualInteractionEntry, XoManualInteractionEntryArray } from './xo/mi-monitor-entry.model';
 import { XoManualInteractionProcessResponseArray } from './xo/mi-process-response.model';
-import { XcI18nContextDirective, XcI18nTranslateDirective, I18nService, LocaleService } from '@zeta/i18n';
 
 
 enum ManualInteractionResponse {
@@ -60,9 +59,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
     XDSIconName = XDSIconName;
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
+        super();
 
         this.i18nService.setTranslations(LocaleService.EN_US, miMonitorTranslations_enUS);
         this.i18nService.setTranslations(LocaleService.DE_DE, miMonitorTranslations_deDE);
