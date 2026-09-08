@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabBarItem, XcTabComponent, XcTableComponent, XcTooltipDirective, XoTableInfo } from '@zeta/xc';
 
@@ -86,6 +86,7 @@ class DateTimeTableInfo extends XoTableInfo {
     selector: 'xfm-mon-live-reporting',
     templateUrl: './live-reporting.component.html',
     styleUrls: ['./live-reporting.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class LiveReportingComponent extends XcTabComponent<string> {

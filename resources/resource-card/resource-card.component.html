@@ -26,7 +26,7 @@
       </aside>
     </header>
     <section>
-      <xc-table [xc-table-datasource]="resourceInfo?.ordersDataSource"
+      <xc-table [xc-table-datasource]="$safeNavigationMigration(resourceInfo?.ordersDataSource)"
         xc-table-allowsort
         xc-table-allowfilter
         xc-table-allowselect

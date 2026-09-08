@@ -19,7 +19,7 @@
 import { Observable, of, Subscription } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { DocumentService as PMODDocumentService } from '@pmod/document/document.service';
@@ -64,6 +64,7 @@ import { RuntimeInfoComponent } from './runtime-info/runtime-info.component';
     templateUrl: './orderdetails.component.html',
     styleUrls: ['./orderdetails.component.scss'],
     providers: [SelectionService, AuditService, WorkflowDetailLevelService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nContextDirective, XcI18nTranslateDirective, VariableAreaDocumentComponent, TypeLabelAreaComponent, WorkflowComponent, ExceptionHandlingAreaComponent, AuditDetailsComponent, XcIconButtonComponent, XcMenuServiceDirective, XcMenuTriggerDirective, XcPanelComponent, XcSpinnerComponent, XcTooltipDirective, RuntimeInfoComponent, DataflowComponent]
 })
 export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewEntry> {

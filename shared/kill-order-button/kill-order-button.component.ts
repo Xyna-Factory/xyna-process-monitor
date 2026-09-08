@@ -19,7 +19,7 @@
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Component, inject, Input, output, input } from '@angular/core';
+import { Component, inject, Input, output, input, ChangeDetectionStrategy } from '@angular/core';
 import { XoError } from '@pmod/xo/error.model';
 import { ApiService } from '@zeta/api';
 import { AuthService } from '@zeta/auth';
@@ -33,6 +33,7 @@ import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
     selector: 'xfm-mon-kill-order-button',
     templateUrl: './kill-order-button.component.html',
     styleUrls: ['./kill-order-button.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcIconButtonComponent, XcIconComponent, XcTooltipDirective, XcI18nTranslateDirective]
 })
 export class KillOrderButtonComponent {
@@ -69,6 +70,8 @@ export class KillOrderButtonComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set disabled(value: boolean) {
         this._disabled = coerceBoolean(value);
@@ -80,6 +83,8 @@ export class KillOrderButtonComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set icon(value: boolean) {
         this._icon = coerceBoolean(value);

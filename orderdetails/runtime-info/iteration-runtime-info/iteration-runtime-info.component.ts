@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 
-import { ChangeDetectorRef, Component, forwardRef, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, inject, Input, ChangeDetectionStrategy, input } from '@angular/core';
 import { IterationInfo } from '@pmod/xo/runtime-info.model';
 import { I18nService } from '@zeta/i18n';
 import { XcButtonComponent, XcFormInputComponent, XcPanelComponent } from '@zeta/xc';
@@ -32,6 +32,7 @@ import { RuntimeInfoComponent } from '../runtime-info.component';
     selector: 'xfm-mon-iteration-runtime-info',
     templateUrl: './iteration-runtime-info.component.html',
     styleUrls: ['./iteration-runtime-info.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcFormInputComponent, XcPanelComponent, forwardRef(() => RuntimeInfoComponent)]
 })
 export class IterationRuntimeInfoComponent {
@@ -59,8 +60,7 @@ export class IterationRuntimeInfoComponent {
     private _lazyLoadingLimit: number;
     private _iterationDepth: number;
 
-    @Input()
-    runtimeInfoOrderId: string;
+    readonly runtimeInfoOrderId = input<string>(undefined);
 
     limitError: string;
     violatesLimit = false;
@@ -96,6 +96,8 @@ export class IterationRuntimeInfoComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set lazyLoadingLimit(value: number) {
         this._lazyLoadingLimit = value;
@@ -108,6 +110,8 @@ export class IterationRuntimeInfoComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set runtimeInfo(value: XoIterationContainer) {
         this._runtimeInfo = value;
@@ -133,6 +137,8 @@ export class IterationRuntimeInfoComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set iterationDepth(value: number) {
         this._iterationDepth = value;

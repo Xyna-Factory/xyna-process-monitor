@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective, XDSIconName, XoRemappingTableInfoClass, XoTableInfo } from '@zeta/xc';
@@ -44,6 +44,7 @@ const WF_PROCESS_MI = 'xmcp.processmonitor.ProcessMI';
     selector: 'xfm-mon-mi-monitor',
     templateUrl: './mi-monitor.component.html',
     styleUrls: ['./mi-monitor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class ManualInteractionMonitorComponent extends XcTabComponent<string> {

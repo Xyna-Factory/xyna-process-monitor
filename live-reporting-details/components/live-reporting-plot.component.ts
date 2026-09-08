@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, output, input } from '@angular/core';
+import { Component, output, input, ChangeDetectionStrategy } from '@angular/core';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcPlotComponent, XcTooltipDirective } from '@zeta/xc';
 import { XcPlotDataChangeBehavior, XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
 
@@ -27,6 +27,7 @@ import { DataSourceUpdateInterval, LiveReportingDataSourceName } from '../classe
     selector: 'live-reporting-plot',
     templateUrl: './live-reporting-plot.component.html',
     styleUrls: ['./live-reporting-plot.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormAutocompleteComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcPlotComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective]
 })
 export class LiveReportingPlotComponent {

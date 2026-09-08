@@ -16,6 +16,7 @@
        />
       <workflow [workflow]="workflow()"
         [documentModel]="document()"
+        [onlyParentRuntimeInfo]="onlyParentRuntimeInfo()"
         (initialized)="workflowInitialized($event)"
         class="zeta-scrollbar"
        />
@@ -34,7 +35,7 @@
   }
   <xfm-mon-audit-details xc-i18n-context="audit-details"
     [fqn]="workflowFqn()"
-    [workflowOrderId]="workflow()?.orderId"
+    [workflowOrderId]="$safeNavigationMigration(workflow()?.orderId)"
     [parentOrderId]="parentOrderId()"
     [disabled]="isImportedAudit"
     (openAudit)="openAudit($event)"
@@ -57,6 +58,7 @@
   <section class="stretch scroll zeta-scrollbar">
     <xfm-mon-runtime-info xc-i18n-context="runtime-info"
       [runtimeInfo]="runtimeInfo()"
+      [runtimeInfoOrderId]="runtimeInfoOrderId()"
       [iterationDepth]="0"
       [lazyLoadingLimit]="lazyLoadingLimit()"
      />

@@ -19,7 +19,7 @@
 import { fromEvent, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { ChangeDetectorRef, Component, computed, inject, signal, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, inject, signal, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { ConfigService } from '@zeta/api/config.service';
@@ -50,6 +50,7 @@ export let PMON_RTC = RuntimeContext.guiHttpApplication;
 @Component({
     templateUrl: './processmonitor.component.html',
     styleUrls: ['./processmonitor.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcTabBarComponent]
 })
 export class ProcessmonitorComponent extends RouteComponent {
@@ -274,6 +275,8 @@ export class ProcessmonitorComponent extends RouteComponent {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor queries cannot be migrated as they are too complex.
     @ViewChild(XcTabBarComponent, {static: false})
     set tabBar(value: XcTabBarComponent) {
         this._tabBar = value;

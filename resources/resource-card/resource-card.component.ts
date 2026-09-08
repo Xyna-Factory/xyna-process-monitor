@@ -19,7 +19,7 @@
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '@zeta/api';
 import { I18nService } from '@zeta/i18n';
@@ -36,6 +36,7 @@ import { XoResource } from '../xo/resource.model';
     selector: 'xfm-mon-resource-card',
     templateUrl: './resource-card.component.html',
     styleUrls: ['./resource-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcPanelComponent, XcTableComponent, XcTemplateComponent, XcTooltipDirective, XcI18nTranslateDirective, XcI18nPipe, KillOrderButtonComponent]
 })
 export class ResourceCardComponent implements OnDestroy {
@@ -51,6 +52,8 @@ export class ResourceCardComponent implements OnDestroy {
 
     private readonly subscriptions: Subscription[] = [];
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set resourceInfo(value: ResourceInfo<XoResource>) {
         this._resourceInfo = value;

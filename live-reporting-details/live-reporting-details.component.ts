@@ -17,7 +17,7 @@
  */
 
 import { NgClass } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, OnInit, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormDirective, XcFormLabelComponent, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcTabComponent, XcTooltipDirective } from '@zeta/xc';
 import { XoGraphDataArray, XoGraphInfo, XoTimeInterval, XoTimeIntervalArray } from '@zeta/xc/xc-graph/xc-remote-graph-data-source';
@@ -39,6 +39,7 @@ import { liveReportingDetailsTranslations_enUS } from './locale/live-reporting-d
     selector: 'xfm-mon-live-reporting-details',
     templateUrl: './live-reporting-details.component.html',
     styleUrls: ['./live-reporting-details.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcCheckboxComponent, XcFormDirective, XcFormLabelComponent, XcIconButtonComponent, XcMasterDetailComponent, XcPanelComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, NgClass, LiveReportingPlotComponent]
 })
 export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFrequencyControlledTaskDetails> implements OnInit {

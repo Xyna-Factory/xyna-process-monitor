@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Xo } from '@zeta/api';
 import { LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
@@ -34,6 +34,7 @@ import { XoCapacity, XoCapacityArray } from '../xo/capacity.model';
     selector: 'xfm-mon-capacities',
     templateUrl: './capacities.component.html',
     styleUrls: ['./capacities.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcCheckboxComponent, XcFormInputComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, ResourceCardComponent]
 })
 export class CapacitiesComponent extends ResourceOverviewComponent<XoCapacity> {

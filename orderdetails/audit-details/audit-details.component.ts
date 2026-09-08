@@ -20,7 +20,7 @@ import { Observer, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { NgTemplateOutlet } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, inject, input, OnDestroy, output } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject, input, OnDestroy, output, ChangeDetectionStrategy } from '@angular/core';
 import { templateClassType } from '@zeta/base';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
@@ -45,6 +45,7 @@ export interface OpenAuditData {
     selector: 'xfm-mon-audit-details',
     templateUrl: './audit-details.component.html',
     styleUrls: ['./audit-details.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective, XcButtonComponent, XcIconButtonComponent, XcTooltipDirective, KillOrderButtonComponent, NgTemplateOutlet]
 })
 export class AuditDetailsComponent implements OnDestroy, AfterViewInit {

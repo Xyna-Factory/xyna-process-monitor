@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Xo, XoPropertyBinding } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormInputComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTooltipDirective } from '@zeta/xc';
 
@@ -31,6 +31,7 @@ import { XoVeto, XoVetoArray } from '../xo/veto.model';
     selector: 'xfm-mon-vetoes',
     templateUrl: './vetoes.component.html',
     styleUrls: ['./vetoes.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcFormAutocompleteComponent, XcFormInputComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, ResourceCardComponent]
 })
 export class VetoesComponent extends ResourceOverviewComponent<XoVeto> {

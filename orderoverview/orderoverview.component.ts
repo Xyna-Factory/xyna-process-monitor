@@ -17,7 +17,7 @@
  */
 import { of } from 'rxjs';
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective } from '@zeta/xc';
@@ -47,6 +47,7 @@ enum OrderStatus {
     selector: 'xfm-mon-orderoverview',
     templateUrl: './orderoverview.component.html',
     styleUrls: ['./orderoverview.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcPanelComponent, XcTableComponent, XcTooltipDirective, XcI18nContextDirective, XcI18nTranslateDirective, KillOrderButtonComponent]
 })
 export class OrderoverviewComponent extends XcTabComponent<string> {

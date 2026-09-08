@@ -32,7 +32,7 @@
 </xc-panel>
 @if (selectedIteration) {
   <xfm-mon-runtime-info [runtimeInfo]="selectedIteration.runtimeInfo"
-    [runtimeInfoOrderId]="runtimeInfoOrderId"
+    [runtimeInfoOrderId]="runtimeInfoOrderId()"
     [lazyLoadingLimit]="lazyLoadingLimit"
     [iterationDepth]="iterationDepth"
    />

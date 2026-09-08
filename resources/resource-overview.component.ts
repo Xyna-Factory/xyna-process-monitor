@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService, Xo } from '@zeta/api';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { XcTabComponent } from '@zeta/xc';
@@ -29,7 +29,8 @@ import { XoFilter } from './xo/filter.model';
 import { XoResource } from './xo/resource.model';
 
 
-@Component({ template: '' })
+@Component({ changeDetection: ChangeDetectionStrategy.Eager,
+ template: '' })
 export class ResourceOverviewComponent<T extends XoResource> extends XcTabComponent<string> implements OnDestroy {
     readonly i18n = inject(I18nService);
     readonly api = inject(ApiService);

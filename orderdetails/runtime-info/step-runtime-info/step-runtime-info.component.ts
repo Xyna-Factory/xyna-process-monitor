@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterContentChecked, Component, inject, Input, viewChild } from '@angular/core';
+import { AfterContentChecked, Component, inject, Input, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService, Xo, XoArray, XoDescriberCache, XoObject, XoStructureObject } from '@zeta/api';
 import { copyToClipboard, isArray } from '@zeta/base';
 import { I18nService } from '@zeta/i18n';
@@ -32,6 +32,7 @@ import { AuditService } from '../../audit.service';
     selector: 'xfm-mon-step-runtime-info',
     templateUrl: './step-runtime-info.component.html',
     styleUrls: ['./step-runtime-info.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [XcButtonComponent, XcPanelComponent, XcReadonlyTreeComponent, XcI18nTranslateDirective]
 })
 export class StepRuntimeInfoComponent implements AfterContentChecked {
@@ -60,6 +61,8 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     private _lazyLoadingLimit: number;
     private _runtimeInfoOrderId: string;
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set runtimeInfoOrderId(value: string) {
         this._runtimeInfoOrderId = value;
@@ -165,6 +168,8 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set lazyLoadingLimit(value: number) {
         this._lazyLoadingLimit = value;
@@ -185,6 +190,8 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     }
 
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input()
     set runtimeInfo(value: XoStepRuntimeInfo) {
         this._runtimeInfo = value;
