@@ -21,7 +21,7 @@ import { XynaRoutes } from '@zeta/nav';
 import { rightGuardCanActivate } from '@zeta/nav/right.guard';
 
 import { RIGHT_PROCESS_MONITOR } from './const';
-import { ProcessmonitorComponent } from './processmonitor.component';
+
 
 
 const root = 'Process-Monitor';
@@ -34,7 +34,7 @@ export const ProcessmonitorRoutes: XynaRoutes = [
     },
     {
         path: root,
-        component: ProcessmonitorComponent,
+        loadComponent: () => import('./processmonitor.component').then(m => m.ProcessmonitorComponent),
         canActivate: [rightGuardCanActivate],
         data: {
             right: RIGHT_PROCESS_MONITOR,
