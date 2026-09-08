@@ -20,7 +20,7 @@
       @if (iterationStatus) {
         <label
           class="iteration-status"
-          [ngClass]="{'error': iterationStatus === 'Failed'}"
+          [class.error]="iterationStatus === 'Failed'"
         >{{'Status: ' + iterationStatus}}</label>
       }
     </div>
