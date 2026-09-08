@@ -2,7 +2,7 @@
     <header>
         <h1 xc-i18n>header-live-reports</h1>
         <div class="items-right">
-            <xc-icon-button (click)="refresh()" xc-i18n xc-tooltip="tooltip-refresh" class="refresh" xc-icon-name="reload"></xc-icon-button>
+            <xc-icon-button (click)="refresh()" xc-i18n xc-tooltip="tooltip-refresh" class="refresh" xc-icon-name="reload" />
         </div>
     </header>
     <section class="stretch scroll">
@@ -16,8 +16,7 @@
             xc-table-allowselect
             xc-table-lazyupdate
             class="orders-table"
-        >
-        </xc-table>
+         />
     </section>
     <footer class="items-right">
         <xc-button [disabled]="table.dataSource.selectionModel.isEmpty()" (click)="showDetails()">
