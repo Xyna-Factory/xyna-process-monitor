@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output, inject, input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnDestroy, Output, inject, input } from '@angular/core';
 
 import { templateClassType } from '@zeta/base';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
@@ -61,11 +61,9 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
 
     readonly fqn = input<string>(undefined);
 
-    @Input()
-    parentOrderId: string;
+    readonly parentOrderId = input<string>(undefined);
 
-    @Input()
-    workflowOrderId: string;
+    readonly workflowOrderId = input<string>(undefined);
 
     readonly disabled = input<boolean>(undefined);
 
@@ -87,7 +85,7 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
 
     ngAfterViewInit() {
         this.subscriptions.push(this.auditService.runtimeInfoChange.pipe(
-            filter(() => this.documents.selectedDocument && this.documents.selectedDocument.id === this.workflowOrderId)
+            filter(() => this.documents.selectedDocument && this.documents.selectedDocument.id === this.workflowOrderId())
         ).subscribe(info => {
             this.runtimeInfo = info;
             // @fixme: Ugly ugly ugly! Fix smelling code
@@ -98,7 +96,7 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
 
     exportAudit() {
         const fqn = this.fqn();
-        this.documents.exportAudit(this.workflowOrderId, (fqn ? fqn : 'fqn_not_found')).subscribe(<Observer<void>>{
+        this.documents.exportAudit(this.workflowOrderId(), (fqn ? fqn : 'fqn_not_found')).subscribe(<Observer<void>>{
             error: error => {
                 this.dialogs.error('Export Audit Error: ' + (error.toString ? error.toString() : error));
             }
