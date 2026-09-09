@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject, input, output } from '@angular/core';
 
 import { XoError } from '@pmod/xo/error.model';
 import { ApiService } from '@zeta/api';
@@ -46,8 +46,7 @@ export class KillOrderButtonComponent {
 
     readonly orderIds = input<string[]>(undefined);
 
-    @Output()
-    readonly refresh = new EventEmitter<void>();
+    readonly refresh = output<void>();
 
 
     kill() {
