@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabBarItem, XcTabComponent, XcTableComponent, XcTooltipDirective, XoTableInfo } from '@zeta/xc';
 
@@ -133,7 +133,7 @@ export class LiveReportingComponent extends XcTabComponent<string> {
                 const task = res.output[0] as XoFrequencyControlledTaskDetails;
 
                 const item: XcTabBarItem<XoFrequencyControlledTaskDetails> = {
-                    name: String(this.i18nService.translate('Task') + ' ' + task.taskId.id),
+                    name: computed(() => this.i18nService.translateSignal('Task')() + ' ' + task.taskId.id),
                     component: LiveReportingDetailsComponent,
                     closable: true,
                     data: task

@@ -1,6 +1,3 @@
-import { Observable, of, Subscription } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
-
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -18,7 +15,10 @@ import { finalize, map } from 'rxjs/operators';
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Observable, of, Subscription } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
+
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { DocumentService as PMODDocumentService } from '@pmod/document/document.service';
@@ -110,7 +110,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
         this.menuItems.push(
             <XcMenuItem>{
-                name: 'Open in Process Modeller', translate: true,
+                name: signal('Open in Process Modeller'), translate: true,
                 visible: () => true,
                 click: () => {
                     this.pmodDocumentService.loadWorkflow(this.workflow.toRtc(), this.workflow.toFqn());
@@ -118,7 +118,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 }
             },
             <XcMenuItem>{
-                name: 'Test Workflow...', translate: true,
+                name: signal('Test Workflow...'), translate: true,
                 visible: () => true,
                 click: () => {
                     const fqn = this.workflow.toFqn();
@@ -134,7 +134,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 }
             },
             <XcMenuItem>{
-                name: 'Show/Hide Paths inside Workflow', translate: true,
+                name: signal('Show/Hide Paths inside Workflow'), translate: true,
                 visible: () => true,
                 click: () => this.detailLevelService.setShowFQN(!this.detailLevelService.showFQN)
             }
