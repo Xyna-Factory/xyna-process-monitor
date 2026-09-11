@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject, input, output } from '@angular/core';
 
 import { XoError } from '@pmod/xo/error.model';
 import { ApiService } from '@zeta/api';
@@ -29,6 +29,7 @@ import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mon-kill-order-button',
     templateUrl: './kill-order-button.component.html',
     styleUrls: ['./kill-order-button.component.scss'],
@@ -43,15 +44,13 @@ export class KillOrderButtonComponent {
     private _icon = false;
     private _disabled = false;
 
-    @Input()
-    orderIds: string[];
+    readonly orderIds = input<string[]>(undefined);
 
-    @Output()
-    readonly refresh = new EventEmitter<void>();
+    readonly refresh = output<void>();
 
 
     kill() {
-        this.api.killOrders(this.orderIds).pipe(
+        this.api.killOrders(this.orderIds()).pipe(
             catchError((response, caught) => {
                 const xo = new XoError().decode(response.error);
                 // if (xo.message) {

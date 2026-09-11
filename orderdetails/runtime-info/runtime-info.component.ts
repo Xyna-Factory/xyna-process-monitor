@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { XoRuntimeInfo } from '@pmod/xo/runtime-info.model';
 import { templateClassType } from '@zeta/base';
@@ -28,6 +28,7 @@ import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../ze
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mon-runtime-info',
     templateUrl: './runtime-info.component.html',
     styleUrls: ['./runtime-info.component.scss'],
@@ -38,15 +39,11 @@ export class RuntimeInfoComponent {
     readonly XoStepRuntimeInfo    = templateClassType<XoStepRuntimeInfo>(XoStepRuntimeInfo);
     readonly XoIterationContainer = templateClassType<XoIterationContainer>(XoIterationContainer);
 
-    @Input()
-    runtimeInfo: XoRuntimeInfo;
+    readonly runtimeInfo = input<XoRuntimeInfo>(undefined);
 
-    @Input()
-    runtimeInfoOrderId: string;
+    readonly runtimeInfoOrderId = input<string>(undefined);
 
-    @Input()
-    lazyLoadingLimit: number;
+    readonly lazyLoadingLimit = input<number>(undefined);
 
-    @Input()
-    iterationDepth: number;
+    readonly iterationDepth = input<number>(undefined);
 }

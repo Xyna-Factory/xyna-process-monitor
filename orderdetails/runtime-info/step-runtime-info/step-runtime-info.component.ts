@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterContentChecked, Component, inject, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, AfterContentChecked, Component, inject, Input, viewChild } from '@angular/core';
 
 import { ApiService, Xo, XoArray, XoDescriberCache, XoObject, XoStructureObject } from '@zeta/api';
 import { copyToClipboard, isArray } from '@zeta/base';
@@ -30,6 +30,7 @@ import { AuditService } from '../../audit.service';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mon-step-runtime-info',
     templateUrl: './step-runtime-info.component.html',
     styleUrls: ['./step-runtime-info.component.scss'],
@@ -52,14 +53,11 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     private readonly dataSources: XcReadonlyStructureTreeDataSource[];
     private readonly structureCache = new XoDescriberCache<XoStructureObject>();
 
-    @ViewChild('treeIn', { read: XcReadonlyTreeComponent, static: false })
-    treeIn: XcReadonlyTreeComponent;
+    readonly treeIn = viewChild('treeIn', { read: XcReadonlyTreeComponent });
 
-    @ViewChild('treeOut', { read: XcReadonlyTreeComponent, static: false })
-    treeOut: XcReadonlyTreeComponent;
+    readonly treeOut = viewChild('treeOut', { read: XcReadonlyTreeComponent });
 
-    @ViewChild('treeErr', { read: XcReadonlyTreeComponent, static: false })
-    treeErr: XcReadonlyTreeComponent;
+    readonly treeErr = viewChild('treeErr', { read: XcReadonlyTreeComponent });
 
     private _lazyLoadingLimit: number;
     private _runtimeInfoOrderId: string;
@@ -111,10 +109,10 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
             return;
         }
         // expand trees, if necessary
-        [this.treeIn, this.treeOut, this.treeErr]
+        [this.treeIn(), this.treeOut(), this.treeErr()]
             .forEach((tree, t) => tree?.dataSource.structureTreeData
                 .filter((_, n) => this.expandTree.has(this.getExpandTreeKey(t, n)))
-                .forEach((node, n) => tree.items
+                .forEach((node, n) => tree.items()
                     .filter(item => item.node === node)
                     .forEach(item => {
                         this.expandTree.delete(this.getExpandTreeKey(t, n));
@@ -157,7 +155,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
         this.violatesErrorLimit = false;
 
         if (this.lazyLoadingLimit >= 1 && this.runtimeInfo) {
-            this.limitError = this.i18n.translate(
+            this.limitError = this.i18n.translateInstant(
                 'order-overview.order-details.limiterror',
                 {key: '$0', value: '' + this.lazyLoadingLimit}
             );
@@ -233,7 +231,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
 
     toClipboard(dataSource: XcReadonlyStructureTreeDataSource) {
         copyToClipboard(dataSource.toString()).subscribe({
-            error: () => this.dialogs.error(this.i18n.translate('error.copyToClipboard'))
+            error: () => this.dialogs.error(this.i18n.translateInstant('error.copyToClipboard'))
         });
     }
 }

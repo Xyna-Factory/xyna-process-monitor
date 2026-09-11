@@ -15,17 +15,17 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { fromEvent, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, inject, signal, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ApiService, RuntimeContext } from '@zeta/api';
+import { ConfigService } from '@zeta/api/config.service';
 import { AuthService } from '@zeta/auth';
 import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
-
-import { fromEvent, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 
 import { RIGHT_PROCESS_MONITOR_LIVE_REPORTING, RIGHT_PROCESS_MONITOR_MI_MONITOR, RIGHT_PROCESS_MONITOR_ORDER_MONITOR, RIGHT_PROCESS_MONITOR_RESOURCE_MONITOR } from './const';
 import { DocumentService } from './document.service';
@@ -42,12 +42,12 @@ import { OrderoverviewComponent } from './orderoverview/orderoverview.component'
 import { CapacitiesComponent } from './resources/capacities/capacities.component';
 import { VetoesComponent } from './resources/vetoes/vetoes.component';
 import { XoOrderOverviewEntry } from './xo/order-overview-entry.model';
-import { ConfigService } from '@zeta/api/config.service';
 
 
 export let PMON_RTC = RuntimeContext.guiHttpApplication;
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     templateUrl: './processmonitor.component.html',
     styleUrls: ['./processmonitor.component.scss'],
     imports: [XcTabBarComponent]
@@ -66,11 +66,11 @@ export class ProcessmonitorComponent extends RouteComponent {
     private _tabBar: XcTabBarComponent;
     private queryParamSubscription: Subscription;
 
-    private readonly orderOverview: XcTabBarItem = {name: 'pmon.tab-header-order-overview', component: OrderoverviewComponent};
-    private readonly miMonitor:     XcTabBarItem = {name: 'pmon.tab-header-mi-monitor',     component: ManualInteractionMonitorComponent};
-    private readonly capacities:    XcTabBarItem = {name: 'pmon.tab-header-capacities',     component: CapacitiesComponent};
-    private readonly vetoes:        XcTabBarItem = {name: 'pmon.tab-header-vetoes',         component: VetoesComponent};
-    private readonly liveReporting: XcTabBarItem = {name: 'pmon.tab-header-live-reporting', component: LiveReportingComponent};
+    private readonly orderOverview: XcTabBarItem = {name: signal('pmon.tab-header-order-overview'), component: OrderoverviewComponent};
+    private readonly miMonitor:     XcTabBarItem = {name: signal('pmon.tab-header-mi-monitor'),     component: ManualInteractionMonitorComponent};
+    private readonly capacities:    XcTabBarItem = {name: signal('pmon.tab-header-capacities'),     component: CapacitiesComponent};
+    private readonly vetoes:        XcTabBarItem = {name: signal('pmon.tab-header-vetoes'),         component: VetoesComponent};
+    private readonly liveReporting: XcTabBarItem = {name: signal('pmon.tab-header-live-reporting'), component: LiveReportingComponent};
     readonly tabBarItems: XcTabBarItem[] = [];
 
     // return to this tab, when no more order documents are opened
@@ -115,7 +115,7 @@ export class ProcessmonitorComponent extends RouteComponent {
         }
 
         // translate tab item names
-        this.tabBarItems.forEach(item => item.name = this.i18n.translate(item.name));
+        this.tabBarItems.forEach(item => item.name = this.i18n.translateSignal(item.name()));
 
         // sync documents with tabs
         this.documentService.documentListChange.pipe(filter(() => !!this.tabBar)).subscribe(documents => {
@@ -136,7 +136,7 @@ export class ProcessmonitorComponent extends RouteComponent {
                     });
                     this.tabBar.open(
                         <XcTabBarItem<XoOrderOverviewEntry>>{
-                            name: document.id,
+                            name: signal(document.id),
                             icon: 'tb-workflow',
                             iconStyle: 'modeller',
                             component: OrderdetailsComponent,
@@ -207,7 +207,7 @@ export class ProcessmonitorComponent extends RouteComponent {
                             const task = result.output[0] as XoFrequencyControlledTaskDetails;
                             // open task in a new tab
                             this.tabBar.open(<XcTabBarItem<XoFrequencyControlledTaskDetails>>{
-                                name: this.i18n.translate('pmon.task') + ' ' + task.taskId.id,
+                                name: computed(() => this.i18n.translateSignal('pmon.task')() + ' ' + task.taskId.id),
                                 component: LiveReportingDetailsComponent,
                                 closable: true,
                                 data: task
