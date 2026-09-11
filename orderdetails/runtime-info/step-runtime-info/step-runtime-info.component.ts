@@ -155,7 +155,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
         this.violatesErrorLimit = false;
 
         if (this.lazyLoadingLimit >= 1 && this.runtimeInfo) {
-            this.limitError = this.i18n.translate(
+            this.limitError = this.i18n.translateInstant(
                 'order-overview.order-details.limiterror',
                 {key: '$0', value: '' + this.lazyLoadingLimit}
             );
@@ -231,7 +231,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
 
     toClipboard(dataSource: XcReadonlyStructureTreeDataSource) {
         copyToClipboard(dataSource.toString()).subscribe({
-            error: () => this.dialogs.error(this.i18n.translate('error.copyToClipboard'))
+            error: () => this.dialogs.error(this.i18n.translateInstant('error.copyToClipboard'))
         });
     }
 }

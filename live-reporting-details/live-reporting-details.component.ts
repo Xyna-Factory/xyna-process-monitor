@@ -193,7 +193,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
         this.i18nService.setTranslations(LocaleService.DE_DE, liveReportingDetailsTranslations_deDE);
 
         this.task = this.injectedData.data as XoFrequencyControlledTaskDetails;
-        this._progressString = this.i18nService.translate('${started} of ${total} started'); // let's replace params by the components to save unnecessesary calculations
+        this._progressString = this.i18nService.translateInstant('${started} of ${total} started'); // let's replace params by the components to save unnecessesary calculations
     }
 
     ngOnInit() {

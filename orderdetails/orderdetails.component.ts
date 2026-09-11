@@ -269,8 +269,8 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
                 const missingImports: string = description.slice(description.indexOf(':') + 1, description.length).replace(/,/g, ',\n');
                 const missingImportsLength: string = missingImports.split('\n').length.toString();
-                const header = this.i18n.translate('orderdetails-hints-dialog-header');
-                const message = this.i18n.translate('orderdetails-hints-dialog-message', { key: '%value%', value: missingImportsLength });
+                const header = this.i18n.translateInstant('orderdetails-hints-dialog-header');
+                const message = this.i18n.translateInstant('orderdetails-hints-dialog-message', { key: '%value%', value: missingImportsLength });
                 this.dialogService.info(header, message, null, missingImports);
             }
 

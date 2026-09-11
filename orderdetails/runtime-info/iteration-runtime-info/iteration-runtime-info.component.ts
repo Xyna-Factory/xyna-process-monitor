@@ -89,7 +89,7 @@ export class IterationRuntimeInfoComponent {
         if (this.lazyLoadingLimit >= 1 && this.runtimeInfo && this.iterationDepth) {
             const limit = Math.max(1, Math.trunc(Math.pow(this.lazyLoadingLimit, 1 / this.iterationDepth)));
             this.violatesLimit = this.iterations.length >= limit;
-            this.limitError = this.i18n.translate(
+            this.limitError = this.i18n.translateInstant(
                 'order-overview.order-details.limiterror',
                 {key: '$0', value: '' + limit}
             );
