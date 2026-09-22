@@ -16,12 +16,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { RouterModule } from '@angular/router';
-
 import { XynaRoutes } from '@zeta/nav';
 import { rightGuardCanActivate } from '@zeta/nav/right.guard';
 
 import { RIGHT_PROCESS_MONITOR } from './const';
-
 
 
 const root = 'Process-Monitor';
