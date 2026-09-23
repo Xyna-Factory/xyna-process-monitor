@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcPlotComponent, XcTooltipDirective } from '@zeta/xc';
 import { XcPlotDataChangeBehavior, XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
@@ -25,6 +25,7 @@ import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../ze
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'live-reporting-plot',
     templateUrl: './live-reporting-plot.component.html',
     styleUrls: ['./live-reporting-plot.component.scss'],
@@ -35,11 +36,9 @@ export class LiveReportingPlotComponent {
     intervalHandler: number;
     updateInterval: string = DataSourceUpdateInterval.Manual;
 
-    @Input()
-    name: LiveReportingDataSourceName;
+    readonly name = input<LiveReportingDataSourceName>(undefined);
 
-    @Output()
-    readonly requestDataChange = new EventEmitter<LiveReportingDataSourceName>();
+    readonly requestDataChange = output<LiveReportingDataSourceName>();
 
     dataSourceUpdateIntervalDataWrapper = new XcAutocompleteDataWrapper(
         () => this.updateInterval,
@@ -66,13 +65,13 @@ export class LiveReportingPlotComponent {
         }
 
         if (interval) {
-            this.intervalHandler = window.setInterval(() => this.requestDataChange.emit(this.name), interval);
+            this.intervalHandler = window.setInterval(() => this.requestDataChange.emit(this.name()), interval);
         }
 
     }
 
     refresh() {
-        this.requestDataChange.emit(this.name);
+        this.requestDataChange.emit(this.name());
     }
 
     constructor() {

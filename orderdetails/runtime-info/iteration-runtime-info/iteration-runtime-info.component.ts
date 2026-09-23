@@ -15,8 +15,8 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { NgClass } from '@angular/common';
-import { ChangeDetectorRef, Component, forwardRef, Input, inject } from '@angular/core';
+
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, inject, input } from '@angular/core';
 
 import { IterationInfo } from '@pmod/xo/runtime-info.model';
 import { I18nService } from '@zeta/i18n';
@@ -30,10 +30,11 @@ import { XcButtonComponent, XcFormInputComponent, XcPanelComponent } from '@zeta
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mon-iteration-runtime-info',
     templateUrl: './iteration-runtime-info.component.html',
     styleUrls: ['./iteration-runtime-info.component.scss'],
-    imports: [XcButtonComponent, XcFormInputComponent, XcPanelComponent, NgClass, forwardRef(() => RuntimeInfoComponent)]
+    imports: [XcButtonComponent, XcFormInputComponent, XcPanelComponent, forwardRef(() => RuntimeInfoComponent)]
 })
 export class IterationRuntimeInfoComponent {
     private readonly i18n = inject(I18nService);
@@ -60,8 +61,7 @@ export class IterationRuntimeInfoComponent {
     private _lazyLoadingLimit: number;
     private _iterationDepth: number;
 
-    @Input()
-    runtimeInfoOrderId: string;
+    readonly runtimeInfoOrderId = input<string>(undefined);
 
     limitError: string;
     violatesLimit = false;
@@ -89,7 +89,7 @@ export class IterationRuntimeInfoComponent {
         if (this.lazyLoadingLimit >= 1 && this.runtimeInfo && this.iterationDepth) {
             const limit = Math.max(1, Math.trunc(Math.pow(this.lazyLoadingLimit, 1 / this.iterationDepth)));
             this.violatesLimit = this.iterations.length >= limit;
-            this.limitError = this.i18n.translate(
+            this.limitError = this.i18n.translateInstant(
                 'order-overview.order-details.limiterror',
                 {key: '$0', value: '' + limit}
             );

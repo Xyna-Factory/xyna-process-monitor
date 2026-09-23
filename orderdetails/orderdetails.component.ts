@@ -15,9 +15,11 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Injector } from '@angular/core';
-import { Router } from '@angular/router';
+import { Observable, of, Subscription } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { WorkflowTesterData, WorkflowTesterDialogComponent } from '@fman/workflow-tester/workflow-tester-dialog.component';
 import { DocumentService as PMODDocumentService } from '@pmod/document/document.service';
 import { DocumentItem, DocumentModel } from '@pmod/document/model/document.model';
@@ -43,9 +45,6 @@ import { templateClassType } from '@zeta/base';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcDialogService, XcIconButtonComponent, XcMenuItem, XcMenuServiceDirective, XcMenuTriggerDirective, XcPanelComponent, XcSpinnerComponent, XcTabComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { Observable, of, Subscription } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
-
 import { DocumentService } from '../document.service';
 import { XoOrderOverviewEntry } from '../xo/order-overview-entry.model';
 import { XoRetryIterationContainer } from '../xo/retry-iteration-container.model';
@@ -60,6 +59,7 @@ import { RuntimeInfoComponent } from './runtime-info/runtime-info.component';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mon-orderdetails',
     templateUrl: './orderdetails.component.html',
     styleUrls: ['./orderdetails.component.scss'],
@@ -103,16 +103,14 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
 
     constructor() {
-        const injector = inject(Injector, { optional: true });
-
-        super(injector);
+        super();
 
         this.i18n.setTranslations(LocaleService.EN_US, orderdetailsTranslations_enUS);
         this.i18n.setTranslations(LocaleService.DE_DE, orderdetailsTranslations_deDE);
 
         this.menuItems.push(
             <XcMenuItem>{
-                name: 'Open in Process Modeller', translate: true,
+                name: signal('Open in Process Modeller'), translate: true,
                 visible: () => true,
                 click: () => {
                     this.pmodDocumentService.loadWorkflow(this.workflow.toRtc(), this.workflow.toFqn());
@@ -120,7 +118,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 }
             },
             <XcMenuItem>{
-                name: 'Test Workflow...', translate: true,
+                name: signal('Test Workflow...'), translate: true,
                 visible: () => true,
                 click: () => {
                     const fqn = this.workflow.toFqn();
@@ -136,7 +134,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 }
             },
             <XcMenuItem>{
-                name: 'Show/Hide Paths inside Workflow', translate: true,
+                name: signal('Show/Hide Paths inside Workflow'), translate: true,
                 visible: () => true,
                 click: () => this.detailLevelService.setShowFQN(!this.detailLevelService.showFQN)
             }
@@ -271,8 +269,8 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
 
                 const missingImports: string = description.slice(description.indexOf(':') + 1, description.length).replace(/,/g, ',\n');
                 const missingImportsLength: string = missingImports.split('\n').length.toString();
-                const header = this.i18n.translate('orderdetails-hints-dialog-header');
-                const message = this.i18n.translate('orderdetails-hints-dialog-message', { key: '%value%', value: missingImportsLength });
+                const header = this.i18n.translateInstant('orderdetails-hints-dialog-header');
+                const message = this.i18n.translateInstant('orderdetails-hints-dialog-message', { key: '%value%', value: missingImportsLength });
                 this.dialogService.info(header, message, null, missingImports);
             }
 

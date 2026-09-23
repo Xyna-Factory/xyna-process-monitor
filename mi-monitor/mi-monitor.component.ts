@@ -15,20 +15,19 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Injector } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ApiService } from '@zeta/api';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective, XDSIconName, XoRemappingTableInfoClass, XoTableInfo } from '@zeta/xc';
 
-import { PMON_RTC } from '../processmonitor.component';
 import { ProcessmonitorSettingsService } from '../processmonitor-settings.service';
+import { PMON_RTC } from '../processmonitor.component';
 import { miMonitorTranslations_deDE } from './locale/mi-monitor-translations.de-DE';
 import { miMonitorTranslations_enUS } from './locale/mi-monitor-translations.en-US';
 import { XoManualInteractionId, XoManualInteractionIdArray } from './xo/mi-id.model';
 import { XoManualInteractionResponse } from './xo/mi-interaction-response.model';
 import { XoManualInteractionEntry, XoManualInteractionEntryArray } from './xo/mi-monitor-entry.model';
 import { XoManualInteractionProcessResponseArray } from './xo/mi-process-response.model';
-import { XcI18nContextDirective, XcI18nTranslateDirective, I18nService, LocaleService } from '@zeta/i18n';
 
 
 enum ManualInteractionResponse {
@@ -42,6 +41,7 @@ const WF_PROCESS_MI = 'xmcp.processmonitor.ProcessMI';
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mon-mi-monitor',
     templateUrl: './mi-monitor.component.html',
     styleUrls: ['./mi-monitor.component.scss'],
@@ -59,9 +59,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
     XDSIconName = XDSIconName;
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
+        super();
 
         this.i18nService.setTranslations(LocaleService.EN_US, miMonitorTranslations_enUS);
         this.i18nService.setTranslations(LocaleService.DE_DE, miMonitorTranslations_deDE);
@@ -83,19 +81,19 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
                 iconName: XDSIconName.ARROWRIGHT,
                 onShow: entry => entry.allowContinue,
                 onAction: entry => this.continue([entry]),
-                tooltip: this.i18nService.translate('Continue')
+                tooltip: this.i18nService.translateSignal('Continue')
             },
             {
                 iconName: XDSIconName.RELOAD,
                 onShow: entry => entry.allowRetry,
                 onAction: entry => this.retry([entry]),
-                tooltip: this.i18nService.translate('Retry')
+                tooltip: this.i18nService.translateSignal('Retry')
             },
             {
                 iconName: XDSIconName.CLOSE,
                 onShow: entry => entry.allowAbort,
                 onAction: entry => this.cancel([entry]),
-                tooltip: this.i18nService.translate('Cancel')
+                tooltip: this.i18nService.translateSignal('Cancel')
             }
         ];
     }

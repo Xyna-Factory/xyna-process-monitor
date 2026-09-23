@@ -7,7 +7,7 @@
     <header>
       <h1 class="items-left" xc-i18n>header-live-reporting-task</h1>
       <div class="items-right">
-        <xc-icon-button xc-tooltip="icon-refresh" xc-i18n class="refresh" xc-icon-name="reload" (click)="refresh()"></xc-icon-button>
+        <xc-icon-button xc-tooltip="icon-refresh" xc-i18n class="refresh" xc-icon-name="reload" (click)="refresh()" />
       </div>
     </header>
     <section class="stretch scroll">
@@ -16,42 +16,42 @@
 
         @if (executionResponseTimePlotFlag) {
           <live-reporting-plot #executionResponseTimePlot [name]="LiveReportingDataSourceName.ExecutionResponseTime"
-          (requestDataChange)="requestData($event)"></live-reporting-plot>
+          (requestDataChange)="requestData($event)" />
         }
 
         @if (failedPlotFlag) {
           <live-reporting-plot #failedPlot [name]="LiveReportingDataSourceName.Failed"
-          (requestDataChange)="requestData($event)"></live-reporting-plot>
+          (requestDataChange)="requestData($event)" />
         }
 
         @if (failedRatePlotFlag) {
           <live-reporting-plot #failedRatePlot [name]="LiveReportingDataSourceName.FailedRate"
-          (requestDataChange)="requestData($event)"></live-reporting-plot>
+          (requestDataChange)="requestData($event)" />
         }
 
         @if (finishedPlotFlag) {
           <live-reporting-plot #finishedPlot [name]="LiveReportingDataSourceName.Finished"
-          (requestDataChange)="requestData($event)"></live-reporting-plot>
+          (requestDataChange)="requestData($event)" />
         }
 
         @if (finishedRatePlotFlag) {
           <live-reporting-plot #finishedRatePlot [name]="LiveReportingDataSourceName.FinishedRate"
-          (requestDataChange)="requestData($event)"></live-reporting-plot>
+          (requestDataChange)="requestData($event)" />
         }
 
         @if (overallResponseTimePlotFlag) {
           <live-reporting-plot #overallResponseTimePlot [name]="LiveReportingDataSourceName.OverallResponseTime"
-          (requestDataChange)="requestData($event)"></live-reporting-plot>
+          (requestDataChange)="requestData($event)" />
         }
 
         @if (runningPlotFlag) {
           <live-reporting-plot #runningPlot [name]="LiveReportingDataSourceName.Running"
-          (requestDataChange)="requestData($event)"></live-reporting-plot>
+          (requestDataChange)="requestData($event)" />
         }
 
         @if (waitingPlotFlag) {
           <live-reporting-plot #waitingPlot [name]="LiveReportingDataSourceName.Waiting"
-          (requestDataChange)="requestData($event)"></live-reporting-plot>
+          (requestDataChange)="requestData($event)" />
         }
 
       </div>
@@ -83,15 +83,14 @@
         <xc-panel class="data-source-box">
           <header><h3 xc-i18n>header-data-sources</h3></header>
           <section>
-            <xc-checkbox [(checked)]="executionResponseTimePlotFlag" [label]="LiveReportingDataSourceName.ExecutionResponseTime"></xc-checkbox>
-            <xc-checkbox [(checked)]="failedPlotFlag" [label]="LiveReportingDataSourceName.Failed"></xc-checkbox>
-            <xc-checkbox [(checked)]="failedRatePlotFlag" [label]="LiveReportingDataSourceName.FailedRate"></xc-checkbox>
-            <xc-checkbox [(checked)]="finishedPlotFlag" [label]="LiveReportingDataSourceName.Finished"></xc-checkbox>
-            <xc-checkbox [(checked)]="finishedRatePlotFlag" [label]="LiveReportingDataSourceName.FinishedRate"></xc-checkbox>
-            <xc-checkbox [(checked)]="overallResponseTimePlotFlag" [label]="LiveReportingDataSourceName.OverallResponseTime">
-            </xc-checkbox>
-            <xc-checkbox [(checked)]="runningPlotFlag" [label]="LiveReportingDataSourceName.Running"></xc-checkbox>
-            <xc-checkbox [(checked)]="waitingPlotFlag" [label]="LiveReportingDataSourceName.Waiting"></xc-checkbox>
+            <xc-checkbox [(checked)]="executionResponseTimePlotFlag" [label]="LiveReportingDataSourceName.ExecutionResponseTime" />
+            <xc-checkbox [(checked)]="failedPlotFlag" [label]="LiveReportingDataSourceName.Failed" />
+            <xc-checkbox [(checked)]="failedRatePlotFlag" [label]="LiveReportingDataSourceName.FailedRate" />
+            <xc-checkbox [(checked)]="finishedPlotFlag" [label]="LiveReportingDataSourceName.Finished" />
+            <xc-checkbox [(checked)]="finishedRatePlotFlag" [label]="LiveReportingDataSourceName.FinishedRate" />
+            <xc-checkbox [(checked)]="overallResponseTimePlotFlag" [label]="LiveReportingDataSourceName.OverallResponseTime" />
+            <xc-checkbox [(checked)]="runningPlotFlag" [label]="LiveReportingDataSourceName.Running" />
+            <xc-checkbox [(checked)]="waitingPlotFlag" [label]="LiveReportingDataSourceName.Waiting" />
           </section>
           <footer>
             <xc-button (click)="setAllDataSources(true)" [disabled]="allDataSourcesSelected" xc-i18n>button-select-all</xc-button>

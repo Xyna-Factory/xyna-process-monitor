@@ -17,9 +17,9 @@
  */
 import { of } from 'rxjs';
 
-import { Component, inject, Injector } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ApiService } from '@zeta/api';
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { XcButtonComponent, XcCheckboxComponent, XcIconButtonComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabComponent, XcTableComponent, XcTooltipDirective } from '@zeta/xc';
 
 import { DocumentService } from '../document.service';
@@ -44,6 +44,7 @@ enum OrderStatus {
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mon-orderoverview',
     templateUrl: './orderoverview.component.html',
     styleUrls: ['./orderoverview.component.scss'],
@@ -63,9 +64,7 @@ export class OrderoverviewComponent extends XcTabComponent<string> {
 
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
+        super();
 
         this.i18nService.setTranslations(LocaleService.EN_US, orderoverviewTranslations_enUS);
         this.i18nService.setTranslations(LocaleService.DE_DE, orderoverviewTranslations_deDE);
@@ -74,7 +73,7 @@ export class OrderoverviewComponent extends XcTabComponent<string> {
         this.dataSource = new XcRemoteTableDataSource(this.apiService, this.i18nService, PMON_RTC, orderType);
         this.dataSource.output = XoOrderOverviewEntryArray;
 
-        const states = Object.values(OrderStatus).map(value => ({ name: this.i18nService.translate(value), value }));
+        const states = Object.values(OrderStatus).map(value => ({ name: this.i18nService.translateSignal(value), value }));
         this.dataSource.filterEnums.set(XoOrderOverviewEntry.getAccessorMap().status, of(states));
         this.dataSource.filterEnumsAsMultiselect.add(XoOrderOverviewEntry.getAccessorMap().status);
 

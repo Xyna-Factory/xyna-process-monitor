@@ -48,7 +48,7 @@ export class VetoesComponent extends ResourceOverviewComponent<XoVeto> {
         this.sorting = XcAutocompleteDataWrapper.fromXoEnumeratedPropertyBinding(
             XoPropertyBinding(this.sortCriterion, s => s.field),
             false,
-            { options: options => options.forEach(item => item.name = this.i18n.translate(`pmon.vetoes.${item.value}`)) }
+            { options: options => options.forEach(item => item.name = this.i18n.translateSignal(`pmon.vetoes.${item.value}`)) }
         );
         this.sorting.update();
     }

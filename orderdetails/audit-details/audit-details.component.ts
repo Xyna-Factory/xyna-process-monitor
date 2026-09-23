@@ -15,22 +15,21 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output, inject } from '@angular/core';
-
-import { templateClassType } from '@zeta/base';
-import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
-
 import { Observer, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { NgTemplateOutlet } from '@angular/common';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, input, OnDestroy, output } from '@angular/core';
+import { templateClassType } from '@zeta/base';
+import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
+
+import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { DocumentService } from '../../document.service';
+import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
 import { XoServiceRuntimeInfo } from '../../xo/service-runtime-info.model';
 import { XoStepRuntimeInfo } from '../../xo/step-runtime-info.model';
 import { XoWorkflowRuntimeInfo } from '../../xo/workflow-runtime-info.model';
 import { AuditService } from '../audit.service';
-import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
-import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
-import { NgTemplateOutlet } from '@angular/common';
 
 
 export interface OpenAuditData {
@@ -59,23 +58,17 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
     readonly XoServiceRuntimeInfo = templateClassType<XoServiceRuntimeInfo>(XoServiceRuntimeInfo);
     readonly XoWorkflowRuntimeInfo = templateClassType<XoWorkflowRuntimeInfo>(XoWorkflowRuntimeInfo);
 
-    @Input()
-    fqn: string;
+    readonly fqn = input<string>(undefined);
 
-    @Input()
-    parentOrderId: string;
+    readonly parentOrderId = input<string>(undefined);
 
-    @Input()
-    workflowOrderId: string;
+    readonly workflowOrderId = input<string>(undefined);
 
-    @Input()
-    disabled: boolean;
+    readonly disabled = input<boolean>(undefined);
 
-    @Output()
-    readonly openAudit = new EventEmitter<OpenAuditData>();
+    readonly openAudit = output<OpenAuditData>();
 
-    @Output()
-    private readonly refreshAudit = new EventEmitter<void>();
+    readonly refreshAudit = output<void>();
 
     runtimeInfo: XoStepRuntimeInfo;
 
@@ -89,7 +82,7 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
 
     ngAfterViewInit() {
         this.subscriptions.push(this.auditService.runtimeInfoChange.pipe(
-            filter(() => this.documents.selectedDocument && this.documents.selectedDocument.id === this.workflowOrderId)
+            filter(() => this.documents.selectedDocument && this.documents.selectedDocument.id === this.workflowOrderId())
         ).subscribe(info => {
             this.runtimeInfo = info;
             // @fixme: Ugly ugly ugly! Fix smelling code
@@ -99,7 +92,8 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
 
 
     exportAudit() {
-        this.documents.exportAudit(this.workflowOrderId, (this.fqn ? this.fqn : 'fqn_not_found')).subscribe(<Observer<void>>{
+        const fqn = this.fqn();
+        this.documents.exportAudit(this.workflowOrderId(), (fqn ? fqn : 'fqn_not_found')).subscribe(<Observer<void>>{
             error: error => {
                 this.dialogs.error('Export Audit Error: ' + (error.toString ? error.toString() : error));
             }

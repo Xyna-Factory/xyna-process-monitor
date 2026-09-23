@@ -3,23 +3,21 @@
     <h1 xc-i18n>header-label</h1>
     <div class="items-right config-bar">
       <div class="filter">
-        <xc-icon xc-icon-name="search"></xc-icon>
-        <xc-form-input [(value)]="filter.filter" xc-form-field-compact xc-form-field-suffix="clear" xc-i18n placeholder="filter-placeholder" (keydown.enter)="refresh()"></xc-form-input>
+        <xc-icon xc-icon-name="search" />
+        <xc-form-input [(value)]="filter.filter" xc-form-field-compact xc-form-field-suffix="clear" xc-i18n placeholder="filter-placeholder" (keydown.enter)="refresh()" />
       </div>
-      <xc-checkbox
-        label="show-unused"
+      <xc-checkbox label="show-unused"
         [(checked)]="showUnused"
         xc-tooltip="tooltip-show-unused"
         xc-i18n
-      ></xc-checkbox>
-      <xc-icon-button
-        xc-tooltip="tooltip-refresh"
+       />
+      <xc-icon-button xc-tooltip="tooltip-refresh"
         xc-icon-name="reload"
         (click)="refresh()"
         [busy]="getDataSource().refreshing"
         [disabled]="getDataSource().refreshing"
         xc-i18n
-      ></xc-icon-button>
+       />
     </div>
   </header>
   <section class="stretch scroll">

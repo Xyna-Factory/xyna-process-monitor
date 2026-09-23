@@ -15,21 +15,20 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Component, inject, Injector } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabBarItem, XcTabComponent, XcTableComponent, XcTooltipDirective, XoTableInfo } from '@zeta/xc';
 
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
 import { LiveReportingDetailsComponent } from '../live-reporting-details/live-reporting-details.component';
 import { ProcessmonitorSettingsService } from '../processmonitor-settings.service';
+import { PMON_RTC } from '../processmonitor.component';
 import { DateTimeConverter } from '../xo/util/date-time-converter';
 import { WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS, WF_GET_LIVE_REPORTING_ENTRIES } from './live-reporting.consts';
 import { liveReportingTranslations_deDE } from './locale/live-reporting-translations.de-DE';
 import { liveReportingTranslations_enUS } from './locale/live-reporting-translations.en-US';
 import { XoFrequencyControlledTaskDetails, XoFrequencyControlledTaskDetailsArray } from './xo/xo-frequency-controlled-task-details.model';
 import { XoTaskId } from './xo/xo-task-id.model';
-import { PMON_RTC } from '../processmonitor.component';
 
 
 class DateTimeTableInfo extends XoTableInfo {
@@ -84,6 +83,7 @@ class DateTimeTableInfo extends XoTableInfo {
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.Eager,
     selector: 'xfm-mon-live-reporting',
     templateUrl: './live-reporting.component.html',
     styleUrls: ['./live-reporting.component.scss'],
@@ -99,10 +99,7 @@ export class LiveReportingComponent extends XcTabComponent<string> {
     dataSource: XcRemoteTableDataSource<XoFrequencyControlledTaskDetails>;
 
     constructor() {
-        const injector = inject(Injector);
-
-        super(injector);
-
+        super();
 
 
         this.i18nService.setTranslations(LocaleService.EN_US, liveReportingTranslations_enUS);
@@ -136,7 +133,7 @@ export class LiveReportingComponent extends XcTabComponent<string> {
                 const task = res.output[0] as XoFrequencyControlledTaskDetails;
 
                 const item: XcTabBarItem<XoFrequencyControlledTaskDetails> = {
-                    name: String(this.i18nService.translate('Task') + ' ' + task.taskId.id),
+                    name: computed(() => this.i18nService.translateSignal('Task')() + ' ' + task.taskId.id),
                     component: LiveReportingDetailsComponent,
                     closable: true,
                     data: task
