@@ -62,6 +62,7 @@ export class ResourceOverviewComponent<T extends XoResource> extends XcTabCompon
 
 
     getDataSource(): ResourceDataSource<T> {
+        // @ts-expect-error(TODO:)
         return null;
     }
 

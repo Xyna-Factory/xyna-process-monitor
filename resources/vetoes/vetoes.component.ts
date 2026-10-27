@@ -20,7 +20,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Xo, XoPropertyBinding } from '@zeta/api';
 import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcFormInputComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { ResourceCardComponent } from '../resource-card/resource-card.component';
 import { ResourceDataSource } from '../resource-data-source';
 import { ResourceOverviewComponent } from '../resource-overview.component';
@@ -37,7 +37,9 @@ import { XoVeto, XoVetoArray } from '../xo/veto.model';
 })
 export class VetoesComponent extends ResourceOverviewComponent<XoVeto> {
 
+    // @ts-expect-error(TODO:)
     dataSource: ResourceDataSource<XoVeto>;
+    // @ts-expect-error(TODO:)
     private sortCriterion: XoSortCriterion;
     sorting: XcAutocompleteDataWrapper;
 
@@ -46,6 +48,7 @@ export class VetoesComponent extends ResourceOverviewComponent<XoVeto> {
         super();
 
         this.sorting = XcAutocompleteDataWrapper.fromXoEnumeratedPropertyBinding(
+            // @ts-expect-error(TODO:)
             XoPropertyBinding(this.sortCriterion, s => s.field),
             false,
             { options: options => options.forEach(item => item.name = this.i18n.translateSignal(`pmon.vetoes.${item.value}`)) }
@@ -56,6 +59,7 @@ export class VetoesComponent extends ResourceOverviewComponent<XoVeto> {
 
     getDataSource(): ResourceDataSource<XoVeto> {
         if (!this.dataSource) {
+            // @ts-expect-error(TODO:)
             this.dataSource = new ResourceDataSource<XoVeto>(this.api, this.i18n, 'xmcp.processmonitor.resources.GetVetoes', undefined, XoVetoArray, 'xmcp.processmonitor.resources.GetVeto');
         }
         return this.dataSource;

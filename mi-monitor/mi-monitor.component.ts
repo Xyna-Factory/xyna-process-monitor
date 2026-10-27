@@ -127,6 +127,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
                     }
 
                     if (result && !result.errorMessage) {
+                        // @ts-expect-error(TODO:)
                         const output = result.output[0] as XoManualInteractionProcessResponseArray;
 
                         let success = true;
@@ -169,6 +170,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
                     }
 
                     if (result && !result.errorMessage) {
+                        // @ts-expect-error(TODO:)
                         const output = result.output[0] as XoManualInteractionProcessResponseArray;
 
                         let success = true;
@@ -212,6 +214,7 @@ export class ManualInteractionMonitorComponent extends XcTabComponent<string> {
                     }
 
                     if (result && !result.errorMessage) {
+                        // @ts-expect-error(TODO:)
                         const output = result.output[0] as XoManualInteractionProcessResponseArray;
 
                         let success = true;

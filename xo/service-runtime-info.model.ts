@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -33,7 +35,7 @@ export class XoServiceRuntimeInfo extends XoCatchableRuntimeInfo {
 
         // FIXME remove this as soon as backend consequently returns strings for Order ID
         if (isNumber(this.orderId)) {
-            this.orderId = boxedNumberToString(<number><unknown> this.orderId);
+            this.orderId = boxedNumberToString(this.orderId);
         }
     }
 

@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -103,7 +105,7 @@ class DateTimeConverterSingleton {
         milliseconds %= MS_MINUTE;
         const seconds = Math.floor(milliseconds / MS_SECOND);
         milliseconds %= MS_SECOND;
-        return <Duration>{ days: days, hours: hours, minutes: minutes, seconds: seconds, milliseconds: milliseconds };
+        return { days: days, hours: hours, minutes: minutes, seconds: seconds, milliseconds: milliseconds };
     }
 
 

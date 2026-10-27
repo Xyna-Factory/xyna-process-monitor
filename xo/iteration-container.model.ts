@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -47,7 +49,7 @@ export class XoIterationContainer extends XoRuntimeInfo {
 
         // provide iterations with necessary info
         this.iterations.data.forEach(iteration =>
-            iteration.runtimeInfo.iterationInfo = <IterationInfo>{
+            iteration.runtimeInfo.iterationInfo = {
                 iterationContainerKey: this.iterationContainerKey,
                 iterationIndex:        iteration.index
             }

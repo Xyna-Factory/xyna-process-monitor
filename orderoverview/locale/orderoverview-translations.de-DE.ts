@@ -98,5 +98,5 @@ export const orderoverviewTranslations_deDE: I18nTranslation[] = [
     {
         key: 'Cleanup',
         value: 'Aufräumen'
-    },
+    }
 ];

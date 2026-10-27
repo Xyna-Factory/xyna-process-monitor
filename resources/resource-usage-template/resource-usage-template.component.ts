@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, InjectionToken } from '@angular/cor
 
 import { XC_COMPONENT_DATA, XcDynamicComponent, XcIconComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { XcI18nPipe } from '../../../../zeta/i18n';
+import { XcI18nPipe } from '@zeta/i18n';
 
 
 export interface ResourceUsageTemplateData {
@@ -38,6 +38,7 @@ export interface ResourceUsageTemplateData {
 export class ResourceUsageTemplateComponent extends XcDynamicComponent<ResourceUsageTemplateData> {
 
     get percentage(): number {
+        // @ts-expect-error(TODO:)
         return 100 * this.injectedData.used / this.injectedData.total;
     }
 

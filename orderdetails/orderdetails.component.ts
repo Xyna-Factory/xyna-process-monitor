@@ -80,13 +80,20 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
     readonly XoServiceRuntimeInfo = templateClassType<XoServiceRuntimeInfo>(XoServiceRuntimeInfo);
     readonly XoXmomItem = templateClassType<XoXmomItem>(XoXmomItem);
 
+    // @ts-expect-error(TODO:)
     pending: boolean;
 
+    // @ts-expect-error(TODO:)
     workflow: XoWorkflow;
+    // @ts-expect-error(TODO:)
     dataflow: XoConnectionArray;
+    // @ts-expect-error(TODO:)
     selection: XoItem;
+    // @ts-expect-error(TODO:)
     parentOrderId: string;
+    // @ts-expect-error(TODO:)
     runtimeInfoOrderId: string;
+    // @ts-expect-error(TODO:)
     workflowFqn: string;
     detailsExpanded = false;
     dataflowReady = false;
@@ -94,11 +101,14 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
     private readonly selectionChangeSubscription: Subscription;
     private readonly doubleClickObjectSubscription: Subscription;
 
+    // @ts-expect-error(TODO:)
     runtimeInfo: XoRuntimeInfo;
+    // @ts-expect-error(TODO:)
     lazyLoadingLimit: number;
     onlyParentRuntimeInfo = false;
     readonly menuItems: XcMenuItem[] = [];
 
+    // @ts-expect-error(TODO:)
     document: DocumentModel<DocumentItem>;
 
 
@@ -109,7 +119,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
         this.i18n.setTranslations(LocaleService.DE_DE, orderdetailsTranslations_deDE);
 
         this.menuItems.push(
-            <XcMenuItem>{
+            {
                 name: signal('Open in Process Modeller'), translate: true,
                 visible: () => true,
                 click: () => {
@@ -117,15 +127,16 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                     void this.router.navigate(['xfm/Process-Modeller/']);
                 }
             },
-            <XcMenuItem>{
+            {
                 name: signal('Test Workflow...'), translate: true,
                 visible: () => true,
                 click: () => {
                     const fqn = this.workflow.toFqn();
                     const rtc = (this.workflow.$rtc ?? this.workflow.evaluatedRtc).runtimeContext();
                     this.dialogService.custom(
+                        // @ts-expect-error(TODO:)
                         WorkflowTesterDialogComponent,
-                        <WorkflowTesterData>{
+                        {
                             runtimeContext: rtc,
                             orderType: fqn.encode(),
                             input: this.workflow.runtimeInfo?.getInput()
@@ -133,7 +144,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                     ).afterDismiss().subscribe();
                 }
             },
-            <XcMenuItem>{
+            {
                 name: signal('Show/Hide Paths inside Workflow'), translate: true,
                 visible: () => true,
                 click: () => this.detailLevelService.setShowFQN(!this.detailLevelService.showFQN)
@@ -185,6 +196,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
             // audit service won't be notified from step runtime info compoment if runtime info is undefined
             // that's why, we do notify it from here instead
             if (!this.runtimeInfo) {
+                // @ts-expect-error(TODO:)
                 this.auditService.setRuntimeInfo(undefined);
             }
         }
@@ -231,12 +243,14 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 }
             }
             this.parentOrderId = response.parentOrderId;
+            // @ts-expect-error(TODO:)
             this.runtimeInfoOrderId = runtimeInfoOrderId;
 
             if (this.workflow) {
                 this.workflow.structureOrderId = this.runtimeInfoOrderId || response.orderId;
             }
 
+            // @ts-expect-error(TODO:)
             this.workflowFqn = this.workflow ? FullQualifiedName.decode(this.workflow.$fqn)?.name : null;
 
             // provide all RuntimeInfo objects with the AuditService to track current iteration
@@ -253,7 +267,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                     userLock: '',
                     rtcLock: false,
                     readonly: this.document.item.readonly
-                })
+                });
             }
 
             // if there are errors in the response, show them
@@ -271,6 +285,7 @@ export class OrderdetailsComponent extends XcTabComponent<void, XoOrderOverviewE
                 const missingImportsLength: string = missingImports.split('\n').length.toString();
                 const header = this.i18n.translateInstant('orderdetails-hints-dialog-header');
                 const message = this.i18n.translateInstant('orderdetails-hints-dialog-message', { key: '%value%', value: missingImportsLength });
+                // @ts-expect-error(TODO:)
                 this.dialogService.info(header, message, null, missingImports);
             }
 

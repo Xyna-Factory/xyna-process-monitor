@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { ApiService } from '@zeta/api';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcRemoteTableDataSource, XcTabBarItem, XcTabComponent, XcTableComponent, XcTooltipDirective, XoTableInfo } from '@zeta/xc';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { LiveReportingDetailsComponent } from '../live-reporting-details/live-reporting-details.component';
 import { ProcessmonitorSettingsService } from '../processmonitor-settings.service';
 import { PMON_RTC } from '../processmonitor.component';
@@ -62,21 +62,29 @@ class DateTimeTableInfo extends XoTableInfo {
             const startTimeColumn = this.columns.data.find(column => column.path === XoFrequencyControlledTaskDetails.getAccessorMap().startTime);
             const stopTimeColumn = this.columns.data.find(column => column.path === XoFrequencyControlledTaskDetails.getAccessorMap().stopTime);
 
+            // @ts-expect-error(TODO:)
             if (startTimeColumn.filter) {
+                // @ts-expect-error(TODO:)
                 startTimeColumn.filter = DateTimeConverter.decodeDateTimeFilter(startTimeColumn.filter);
             }
+            // @ts-expect-error(TODO:)
             if (stopTimeColumn.filter) {
+                // @ts-expect-error(TODO:)
                 stopTimeColumn.filter = DateTimeConverter.decodeDateTimeFilter(stopTimeColumn.filter);
             }
 
+            // @ts-expect-error(TODO:)
             startTimeColumn.path = XoFrequencyControlledTaskDetails.getAccessorMap().startTimeString;
+            // @ts-expect-error(TODO:)
             stopTimeColumn.path = XoFrequencyControlledTaskDetails.getAccessorMap().stopTimeString;
 
             const date = new Date();
             const time = date.getTime();
             const dateString0 = DateTimeConverter.timestampToDateTime(time - 54321);
             const dateString1 = DateTimeConverter.timestampToDateTime(time);
+            // @ts-expect-error(TODO:)
             startTimeColumn.filterTooltip = `e. g. >${dateString0}<${dateString1}`;
+            // @ts-expect-error(TODO:)
             stopTimeColumn.filterTooltip = `e. g. >${dateString0}<${dateString1}`;
         }
     }
@@ -92,7 +100,7 @@ class DateTimeTableInfo extends XoTableInfo {
 export class LiveReportingComponent extends XcTabComponent<string> {
     private readonly apiService = inject(ApiService);
     private readonly dialogService = inject(XcDialogService);
-   private readonly i18nService = inject(I18nService);
+    private readonly i18nService = inject(I18nService);
     private readonly settings = inject(ProcessmonitorSettingsService);
 
 
@@ -130,6 +138,7 @@ export class LiveReportingComponent extends XcTabComponent<string> {
             XoFrequencyControlledTaskDetails
         ).subscribe(res => {
             if (res && !res.errorMessage) {
+                // @ts-expect-error(TODO:)
                 const task = res.output[0] as XoFrequencyControlledTaskDetails;
 
                 const item: XcTabBarItem<XoFrequencyControlledTaskDetails> = {
@@ -140,6 +149,7 @@ export class LiveReportingComponent extends XcTabComponent<string> {
                 };
                 this.openPeer(item).subscribe();
             } else {
+                // @ts-expect-error(TODO:)
                 this.dialogService.error(res.errorMessage);
             }
         });

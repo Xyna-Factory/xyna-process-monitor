@@ -25,7 +25,7 @@ import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcIconCompon
 
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcI18nTranslateDirective } from '@zeta/i18n';
 
 
 @Component({
@@ -44,6 +44,7 @@ export class KillOrderButtonComponent {
     private _icon = false;
     private _disabled = false;
 
+    // @ts-expect-error(TODO:)
     readonly orderIds = input<string[]>(undefined);
 
     readonly refresh = output<void>();
@@ -71,6 +72,7 @@ export class KillOrderButtonComponent {
 
     @Input()
     set disabled(value: boolean) {
+        // @ts-expect-error(TODO:)
         this._disabled = coerceBoolean(value);
     }
 
@@ -82,6 +84,7 @@ export class KillOrderButtonComponent {
 
     @Input()
     set icon(value: boolean) {
+        // @ts-expect-error(TODO:)
         this._icon = coerceBoolean(value);
     }
 
