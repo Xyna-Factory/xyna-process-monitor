@@ -22,3 +22,4 @@ export const RIGHT_PROCESS_MONITOR_ORDER_MONITOR = 'xmcp.xfm.processmonitor.orde
 export const RIGHT_PROCESS_MONITOR_MI_MONITOR = 'xmcp.xfm.processmonitor.mimonitor';
 export const RIGHT_PROCESS_MONITOR_LIVE_REPORTING = 'xmcp.xfm.processmonitor.livereporting';
 export const RIGHT_PROCESS_MONITOR_RESOURCE_MONITOR = 'xmcp.xfm.processmonitor.resourcemonitor';
+export const RIGHT_PROCESS_MONITOR_INTENT_MONITOR = 'xmcp.xfm.processmonitor.intentmonitor';

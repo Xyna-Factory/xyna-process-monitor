@@ -1,0 +1,216 @@
+/*
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Copyright 2023 Xyna GmbH, Germany
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ */
+@use '../const' as *;
+
+:host {
+    display: flex;
+    flex: 1 1 auto;
+    overflow: hidden;
+
+    section {
+        padding: 0;
+    }
+
+
+    ::ng-deep f-flow {
+
+        --primary-color: #fabb00;
+
+        --node-failed-color: #ff0000;
+        --node-succeeded-color: #00ff00;
+        --node-scheduling-color: #ffffff;
+        --node-running-color: #ffffff;
+
+        --node-selection-color: var(--primary-color);
+        --node-text-color: #ffffff;
+        --node-font-size: 12px;
+
+        --multi-selection-alpha: 20%;
+        --multi-selection-color: color-mix(in srgb, var(--primary-color) var(--multi-selection-alpha), transparent);
+
+        --connection-color: #ffffff;
+        --connection-alpha: 75%;
+        --connection-text-color: #ffffff;
+        --connection-text-size: 10px;
+        --connection-selected-color: var(--primary-color);
+
+        --connection-gradient-start: #005377;
+        --connection-gradient-end: #00dbff;
+
+        background-color: $color-gray-0;
+
+        .hidden {
+            visibility: hidden;
+        }
+
+        .f-background {
+            circle {
+                fill: $color-gray-1;
+            }
+        }
+
+        .f-selection-area {
+            background-color: var(--multi-selection-color);
+        }
+
+        .f-node {
+            background: repeating-linear-gradient(
+                -45deg,
+                var(--node-background-color),
+                var(--node-background-color) 10px,
+                color-mix(in srgb, var(--node-background-color) 95%, var(--node-scheduling-color)) 10px,
+                color-mix(in srgb, var(--node-background-color) 95%, var(--node-scheduling-color)) 20px
+            );
+            border: 1px solid var(--node-border-color);
+            border-radius: 4px;
+            user-select: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+
+            &[order-status="Cancelled"] {
+                border-color: color-mix(in srgb, var(--node-failed-color) 60%, #ffffff);
+            }
+
+            &[order-status="Failed"] {
+                border-color: color-mix(in srgb, var(--node-failed-color) 60%, #ffffff);
+                background: color-mix(in srgb, var(--node-failed-color) 20%, var(--node-background-color));
+            }
+
+            &[order-status="Succeeded"] {
+                border-color: color-mix(in srgb, var(--node-succeeded-color) 20%, var(--node-border-color));
+                background: color-mix(in srgb, var(--node-succeeded-color) 10%, var(--node-background-color));
+            }
+
+            &[order-status="Scheduling"] {
+                border-color: color-mix(in srgb, var(--node-scheduling-color) 5%, var(--node-border-color));
+                background: color-mix(in srgb, var(--node-scheduling-color) 5%, var(--node-background-color));
+            }
+
+            &[order-status="Running"] {
+                border-color: color-mix(in srgb, var(--node-running-color) 40%, var(--node-border-color));
+                background: color-mix(in srgb, var(--node-running-color) 30%, var(--node-background-color));
+            }
+
+            &.f-selected {
+                border-color: var(--node-selection-color) !important;
+            }
+            .label {
+                font-size: var(--node-font-size);
+                color: var(--node-text-color);
+
+                &.clickable:hover {
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+            }
+            .state {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                border: 1px solid black;
+                background-color: var(--node-state-color);
+            }
+        }
+
+        .f-connection {
+
+            --connection-dimmed-color: color-mix(in srgb, var(--connection-color) var(--connection-alpha), black);
+
+            [fconnectioncontent] {
+                font-size: var(--connection-text-size);
+                background: $color-gray-0;
+                padding: 2px 8px;
+                white-space: pre;
+            }
+
+            .f-connection-drag-handle {
+                fill: none;
+                stroke: none;
+            }
+
+            .f-marker {
+                fill: var(--connection-dimmed-color);
+            }
+
+            &[fendcolor] {
+                .f-marker {
+                    fill: var(--connection-gradient-end);
+                }
+            }
+
+            .f-connection-text {
+                fill: var(--connection-text-color);
+                font-size: var(--connection-text-size);
+            }
+
+            .f-connection-path {
+                stroke-width: 2;
+                animation: flow 3s linear infinite;
+            }
+
+            &.dashed {
+                .f-connection-path {
+                    stroke-dasharray: 10;
+                    stroke-dashoffset: 100;
+                    animation: none;
+                }
+
+                &.animated {
+                    .f-connection-path {
+                        animation: flow 3s linear infinite;
+                        @keyframes flow {
+                            100% {
+                                stroke-dashoffset: 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &:not([fstartcolor], [fendcolor]) {
+                .f-connection-path {
+                    stroke: var(--connection-dimmed-color);
+                }
+            }
+            &:not(.f-connection-selection-disabled):hover {
+                .f-connection-path {
+                    stroke: var(--connection-color);
+                }
+
+                .f-marker {
+                    fill: var(--connection-color);
+                }
+            }
+
+            &.f-selected {
+                &[fstartcolor], &[fendcolor], &:not([fstartcolor], [fendcolor]) {
+                    .f-connection-path {
+                        stroke: var(--connection-selected-color);
+                    }
+
+                    .f-marker {
+                        fill: var(--connection-selected-color);
+                    }
+                }
+            }
+        }
+    }
+}

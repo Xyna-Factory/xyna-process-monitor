@@ -27,7 +27,7 @@ import { I18nService, LocaleService } from '@zeta/i18n';
 import { RouteComponent } from '@zeta/nav';
 import { XcDialogService, XcTabBarComponent, XcTabBarItem } from '@zeta/xc';
 
-import { RIGHT_PROCESS_MONITOR_LIVE_REPORTING, RIGHT_PROCESS_MONITOR_MI_MONITOR, RIGHT_PROCESS_MONITOR_ORDER_MONITOR, RIGHT_PROCESS_MONITOR_RESOURCE_MONITOR } from './const';
+import { RIGHT_PROCESS_MONITOR_INTENT_MONITOR, RIGHT_PROCESS_MONITOR_LIVE_REPORTING, RIGHT_PROCESS_MONITOR_MI_MONITOR, RIGHT_PROCESS_MONITOR_ORDER_MONITOR, RIGHT_PROCESS_MONITOR_RESOURCE_MONITOR } from './const';
 import { DocumentService } from './document.service';
 import { LiveReportingDetailsComponent } from './live-reporting-details/live-reporting-details.component';
 import { LiveReportingComponent } from './live-reporting/live-reporting.component';
@@ -42,6 +42,7 @@ import { OrderoverviewComponent } from './orderoverview/orderoverview.component'
 import { CapacitiesComponent } from './resources/capacities/capacities.component';
 import { VetoesComponent } from './resources/vetoes/vetoes.component';
 import { XoOrderOverviewEntry } from './xo/order-overview-entry.model';
+import { IntentOverviewComponent } from './intent-overview/intent-overview.component';
 
 
 export let PMON_RTC = RuntimeContext.guiHttpApplication;
@@ -68,11 +69,12 @@ export class ProcessmonitorComponent extends RouteComponent {
     // @ts-expect-error(TODO:)
     private queryParamSubscription: Subscription;
 
-    private readonly orderOverview: XcTabBarItem = {name: signal('pmon.tab-header-order-overview'), component: OrderoverviewComponent};
-    private readonly miMonitor:     XcTabBarItem = {name: signal('pmon.tab-header-mi-monitor'),     component: ManualInteractionMonitorComponent};
-    private readonly capacities:    XcTabBarItem = {name: signal('pmon.tab-header-capacities'),     component: CapacitiesComponent};
-    private readonly vetoes:        XcTabBarItem = {name: signal('pmon.tab-header-vetoes'),         component: VetoesComponent};
-    private readonly liveReporting: XcTabBarItem = {name: signal('pmon.tab-header-live-reporting'), component: LiveReportingComponent};
+    private readonly orderOverview:  XcTabBarItem = {name: signal('pmon.tab-header-order-overview'),  component: OrderoverviewComponent};
+    private readonly miMonitor:      XcTabBarItem = {name: signal('pmon.tab-header-mi-monitor'),      component: ManualInteractionMonitorComponent};
+    private readonly capacities:     XcTabBarItem = {name: signal('pmon.tab-header-capacities'),      component: CapacitiesComponent};
+    private readonly vetoes:         XcTabBarItem = {name: signal('pmon.tab-header-vetoes'),          component: VetoesComponent};
+    private readonly liveReporting:  XcTabBarItem = {name: signal('pmon.tab-header-live-reporting'),  component: LiveReportingComponent};
+    private readonly intentOverview: XcTabBarItem = {name: signal('pmon.tab-header-intent-overview'), component: IntentOverviewComponent};
     readonly tabBarItems: XcTabBarItem[] = [];
 
     // return to this tab, when no more order documents are opened
@@ -116,6 +118,9 @@ export class ProcessmonitorComponent extends RouteComponent {
         }
         if (this.authService.hasRight(RIGHT_PROCESS_MONITOR_LIVE_REPORTING)) {
             this.tabBarItems.push(this.liveReporting);
+        }
+        if (this.authService.hasRight(RIGHT_PROCESS_MONITOR_INTENT_MONITOR)) {
+            this.tabBarItems.push(this.intentOverview);
         }
 
         // translate tab item names
@@ -161,9 +166,11 @@ export class ProcessmonitorComponent extends RouteComponent {
                 item => this.tabBar.close(
                     item,
                     undefined,
-                    documents.length === 0 && this.tabBar.selection === item
-                        ? this.orderReturnTab
-                        : this.orderParentTab
+                    this.orderParentTab ?? (
+                        documents.length === 0 && this.tabBar.selection === item
+                            ? this.orderReturnTab
+                            : undefined
+                    )
                 ).subscribe()
             );
         });
@@ -267,7 +274,7 @@ export class ProcessmonitorComponent extends RouteComponent {
     tabChanged(item: XcTabBarItem) {
         this.updateRoute();
         // remember order tab to switch back to
-        if (item === this.orderOverview || item === this.miMonitor || item === this.capacities || item === this.vetoes) {
+        if (item === this.orderOverview || item === this.miMonitor || item === this.capacities || item === this.vetoes || item === this.intentOverview) {
             this.orderReturnTab = item;
         }
         // remember order parent tab

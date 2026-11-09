@@ -1,0 +1,84 @@
+<xc-panel xc-i18n-context="pmon.intent-details">
+    <header>
+        <h1 xc-i18n>header-intent</h1>
+        @if (intentDetails) {
+            <span>{{ intentDetails.id }}</span>
+        }
+        <div class="items-right">
+            <xc-form-autocomplete
+                xc-form-field-compact
+                xc-form-autocomplete-asdropdown
+                [(xc-form-autocomplete-option)]="graphTypeDataWrapper.value"
+                [xc-form-autocomplete-options]="graphTypeDataWrapper.values"
+            ></xc-form-autocomplete>
+            <xc-icon-button class="refresh" xc-icon-name="reload" (click)="refresh()"></xc-icon-button>
+        </div>
+    </header>
+    <section class="stretch-zero">
+        <f-flow
+            fDraggable
+            (fFullRendered)="onFullRendered()"
+            (fSelectionChange)="onSelectionChange($event)"
+        >
+            <f-selection-area></f-selection-area>
+            <f-background>
+                <f-circle-pattern></f-circle-pattern>
+            </f-background>
+            <f-canvas fZoom [class.hidden]="!graphVisible()">
+                @for (node of nodes; track node.id) {
+                    <div
+                        fNode fDragHandle fNodeInput fNodeOutput
+                        [fNodeId]="node.id"
+                        [fNodePosition]="node.position"
+                        [fInputId]="getTargetNodeId(node.id)"
+                        [fOutputId]="getSourceNodeId(node.id)"
+                        [fInputConnectableSide]="getInputConnectableSide(node.id)"
+                        [fOutputConnectableSide]="getOutputConnectableSide(node.id)"
+                        [style.--node-background-color]="node.backgroundColor"
+                        [style.--node-border-color]="node.borderColor"
+                        [style.min-width.px]="getNodeWidth()"
+                        [style.min-height.px]="getNodeHeight()"
+                        [attr.order-status]="node.orderStatus"
+                    >
+                        <span [xc-tooltip]="node.stateLabel" xc-tooltip-position="top" class="state" [style.--node-state-color]="node.stateColor"></span>
+                        <span class="label" [class.clickable]="!!node.tooltip" [xc-tooltip]="node.tooltip" xc-tooltip-position="top" (mousedown)="nodeLabelMouseDown(node, $event)" (click)="nodeLabelClick(node)">{{ node.label }}</span>
+                    </div>
+                }
+                @for (edge of edges; track edge.id) {
+                    <f-connection
+                        [fTargetId]="getTargetNodeId(edge.target)"
+                        [fSourceId]="getSourceNodeId(edge.source)"
+                        [fBehavior]="getConnectionBehavior(edge)"
+                        [fType]="getConnectionType(edge)"
+                        [fOffset]="24"
+                        [fRadius]="8"
+                        fReassignDisabled
+                        [style.--connection-color]="edge.color"
+                    >
+                        @if (edge.label) {
+                            <div fConnectionContent [position]="0.5">
+                                {{ edge.label }}
+                            </div>
+                        }
+                        @if (edge.markerTarget) {
+                            <svg viewBox="0 0 1 1" fMarker [type]="eMarkerType.END" [height]="6" [width]="6" [refX]="5" [refY]="3">
+                                <path d="M0,0L1,.5L0,1z"/>
+                            </svg>
+                            <svg viewBox="0 0 1 1" fMarker [type]="eMarkerType.SELECTED_END" [height]="6" [width]="6" [refX]="5" [refY]="3">
+                                <path d="M0,0L1,.5L0,1z"/>
+                            </svg>
+                        }
+                        @if (edge.markerSource) {
+                            <svg viewBox="0 0 1 1" fMarker [type]="eMarkerType.START" [height]="6" [width]="6" [refX]="1" [refY]="3">
+                                <path d="M1,0L1,1L0,.5z"/>
+                            </svg>
+                            <svg viewBox="0 0 1 1" fMarker [type]="eMarkerType.SELECTED_START" [height]="6" [width]="6" [refX]="1" [refY]="3">
+                                <path d="M1,0L1,1L0,.5z"/>
+                            </svg>
+                        }
+                    </f-connection>
+                }
+            </f-canvas>
+        </f-flow>
+    </section>
+</xc-panel>
