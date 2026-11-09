@@ -19,12 +19,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inje
 import { Router } from '@angular/router';
 
 import { ApiService } from '@zeta/api';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nPipe, XcI18nTranslateDirective  } from '@zeta/i18n';
 
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
 import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
 import { ResourceInfo } from '../resource-data-source';
 import { XoOrder } from '../xo/order.model';
@@ -47,6 +46,7 @@ export class ResourceCardComponent implements OnDestroy {
     private readonly cdr = inject(ChangeDetectorRef);
 
 
+    // @ts-expect-error(TODO:)
     private _resourceInfo: ResourceInfo<XoResource>;
     selectedOrders: XoOrder[] = [];
 
@@ -65,6 +65,7 @@ export class ResourceCardComponent implements OnDestroy {
                 this.openAudit(model.activated.id);
 
                 // remote activation indicator from table because it doesn't indicate anything in this context
+                // @ts-expect-error(TODO:)
                 this.resourceInfo.ordersDataSource.selectionModel.activate(undefined);
             }),
             this.resourceInfo.collapsedChange.subscribe(collapsed => {

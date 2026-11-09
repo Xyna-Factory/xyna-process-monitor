@@ -22,7 +22,7 @@ import { XcButtonComponent, XcCheckboxComponent, XcDialogService, XcFormDirectiv
 import { XoGraphDataArray, XoGraphInfo, XoTimeInterval, XoTimeIntervalArray } from '@zeta/xc/xc-graph/xc-remote-graph-data-source';
 import { XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
 
-import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '../../../zeta/i18n';
+import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 import { WF_CANCEL_TASK, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS, WF_GET_GRAPH_DATA } from '../live-reporting/live-reporting.consts';
 import { XoFrequencyControlledTaskDetails } from '../live-reporting/xo/xo-frequency-controlled-task-details.model';
 import { XoGraphDatasource } from '../live-reporting/xo/xo-graph-data-source.model';
@@ -219,34 +219,42 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
 
             switch (which) {
                 case LiveReportingDataSourceName.ExecutionResponseTime: {
+                    // @ts-expect-error(TODO:)
                     dsType = this.task.datasources.data.find(ds => LiveReportingDataSourceServerType.ExecutionResponseTime === ds.type);
                 } break;
 
                 case LiveReportingDataSourceName.Failed: {
+                    // @ts-expect-error(TODO:)
                     dsType = this.task.datasources.data.find(ds => LiveReportingDataSourceServerType.Failed === ds.type);
                 } break;
 
                 case LiveReportingDataSourceName.FailedRate: {
+                    // @ts-expect-error(TODO:)
                     dsType = this.task.datasources.data.find(ds => LiveReportingDataSourceServerType.FailedRate === ds.type);
                 } break;
 
                 case LiveReportingDataSourceName.Finished: {
+                    // @ts-expect-error(TODO:)
                     dsType = this.task.datasources.data.find(ds => LiveReportingDataSourceServerType.Finished === ds.type);
                 } break;
 
                 case LiveReportingDataSourceName.FinishedRate: {
+                    // @ts-expect-error(TODO:)
                     dsType = this.task.datasources.data.find(ds => LiveReportingDataSourceServerType.FinishedRate === ds.type);
                 } break;
 
                 case LiveReportingDataSourceName.OverallResponseTime: {
+                    // @ts-expect-error(TODO:)
                     dsType = this.task.datasources.data.find(ds => LiveReportingDataSourceServerType.OverallResponseTime === ds.type);
                 } break;
 
                 case LiveReportingDataSourceName.Running: {
+                    // @ts-expect-error(TODO:)
                     dsType = this.task.datasources.data.find(ds => LiveReportingDataSourceServerType.Running === ds.type);
                 } break;
 
                 case LiveReportingDataSourceName.Waiting: {
+                    // @ts-expect-error(TODO:)
                     dsType = this.task.datasources.data.find(ds => LiveReportingDataSourceServerType.Waiting === ds.type);
                 } break;
             }
@@ -269,13 +277,16 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
 
                 this.apiService.startOrder(PMON_RTC, WF_GET_GRAPH_DATA, [info, dsType, this.task.taskId], [XoGraphInfo, XoGraphDataArray]).subscribe(res => {
                     if (res && !res.errorMessage) {
+                        // @ts-expect-error(TODO:)
                         const graphInfo = res.output[0] as XoGraphInfo;
+                        // @ts-expect-error(TODO:)
                         const dataArray = res.output[1] as XoGraphDataArray;
 
                         const dataSource = GraphInfoDataToPlotDataSourceConverter.convert(graphInfo, dataArray);
 
                         this.presentData(which, dataSource);
                     } else {
+                        // @ts-expect-error(TODO:)
                         this.dialogService.error(res.errorMessage);
                     }
                 });
@@ -394,6 +405,7 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
                 if (res && !res.errorMessage) {
                     this.dismiss();
                 } else {
+                    // @ts-expect-error(TODO:)
                     this.dialogService.error(res.errorMessage);
                 }
             },
@@ -409,9 +421,11 @@ export class LiveReportingDetailsComponent extends XcTabComponent<void, XoFreque
         // TODO
         this.apiService.startOrder(PMON_RTC, WF_GET_FREQUENCY_CONTROLLED_TASK_DETAILS, this.task.taskId, XoFrequencyControlledTaskDetails).subscribe(res => {
             if (res && !res.errorMessage) {
+                // @ts-expect-error(TODO:)
                 const task = res.output[0] as XoFrequencyControlledTaskDetails;
                 this.task = task;
             } else {
+                // @ts-expect-error(TODO:)
                 this.dialogService.error(res.errorMessage);
             }
         });

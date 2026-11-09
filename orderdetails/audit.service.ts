@@ -30,9 +30,11 @@ import { XoStepRuntimeInfo } from '../xo/step-runtime-info.model';
 export class AuditService implements IterationInfoController {
 
     /** currently selected Step Runtime Info */
+    // @ts-expect-error(TODO:)
     private readonly _runtimeInfoSubject = new BehaviorSubject<XoStepRuntimeInfo>(null);
 
     /** currently selected iteration */
+    // @ts-expect-error(TODO:)
     private readonly _iterationInfoSubject = new BehaviorSubject<IterationInfo>(null);
 
 

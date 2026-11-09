@@ -49,7 +49,7 @@ export class ResourceInfo<T extends XoResource> extends Comparable {
 
 
     private refreshResource() {
-        this.api.startOrder(PMON_RTC, this.detailsOrderType, new XoName(undefined, this.resource?.name ?? ''), this.resource.decoratorClass as XoObjectClassInterface<T>, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(result => {
+        this.api.startOrder(PMON_RTC, this.detailsOrderType, new XoName(undefined, this.resource?.name ?? ''), this.resource.decoratorClass, StartOrderOptionsBuilder.defaultOptionsWithErrorMessage).subscribe(result => {
             this.resource = result.output?.[0] as T;
             this.updatedSubject.next(this);
         });
@@ -96,6 +96,7 @@ export class ResourceInfo<T extends XoResource> extends Comparable {
 
 export class ResourceDataSource<R extends XoResource, L extends XoArray<R> = XoArray<R>> extends XcSelectionDataSource<ResourceInfo<R>> {
 
+    // @ts-expect-error(TODO:)
     private expandedResourceInfo: ResourceInfo<R>;
     private readonly infoSubscriptions: Subscription[] = [];
 
@@ -128,6 +129,7 @@ export class ResourceDataSource<R extends XoResource, L extends XoArray<R> = XoA
                 this.infoSubscriptions.push(info.collapsedChange.subscribe(collapsed => {
                     if (collapsed) {
                         if (this.expandedResourceInfo === info) {
+                            // @ts-expect-error(TODO:)
                             this.expandedResourceInfo = null;
                         }
                     } else {

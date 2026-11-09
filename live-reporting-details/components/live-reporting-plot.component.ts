@@ -21,7 +21,7 @@ import { XcAutocompleteDataWrapper, XcFormAutocompleteComponent, XcIconButtonCom
 import { XcPlotDataChangeBehavior, XcPlotDataSource } from '@zeta/xc/xc-plot/xc-plot-data-source';
 
 import { DataSourceUpdateInterval, LiveReportingDataSourceName } from '../classes/live-reporting-time-helper';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 
 
 @Component({
@@ -33,9 +33,11 @@ import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../ze
 })
 export class LiveReportingPlotComponent {
 
+    // @ts-expect-error(TODO:)
     intervalHandler: number;
     updateInterval: string = DataSourceUpdateInterval.Manual;
 
+    // @ts-expect-error(TODO:)
     readonly name = input<LiveReportingDataSourceName>(undefined);
 
     readonly requestDataChange = output<LiveReportingDataSourceName>();

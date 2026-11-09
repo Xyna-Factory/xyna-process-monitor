@@ -63,7 +63,9 @@ export class ProcessmonitorComponent extends RouteComponent {
     private readonly cdr = inject(ChangeDetectorRef);
 
 
+    // @ts-expect-error(TODO:)
     private _tabBar: XcTabBarComponent;
+    // @ts-expect-error(TODO:)
     private queryParamSubscription: Subscription;
 
     private readonly orderOverview: XcTabBarItem = {name: signal('pmon.tab-header-order-overview'), component: OrderoverviewComponent};
@@ -74,24 +76,26 @@ export class ProcessmonitorComponent extends RouteComponent {
     readonly tabBarItems: XcTabBarItem[] = [];
 
     // return to this tab, when no more order documents are opened
+    // @ts-expect-error(TODO:)
     private orderReturnTab: XcTabBarItem;
 
     // return to this tab, when closing an order document tab (will be reset upon changing out of the sub tab)
+    // @ts-expect-error(TODO:)
     private orderParentTab: XcTabBarItem;
 
 
     constructor() {
         super();
         const configService = inject(ConfigService);
-        if (configService.config['modeller']?.runtimeContext) {
-            if (configService.config['modeller'].runtimeContext.application) {
+        if (configService.config.modeller?.runtimeContext) {
+            if (configService.config.modeller.runtimeContext.application) {
                 PMON_RTC = RuntimeContext.fromApplicationVersion(
-                    configService.config['modeller'].runtimeContext.application,
-                    configService.config['modeller'].runtimeContext.version
+                    configService.config.modeller.runtimeContext.application,
+                    configService.config.modeller.runtimeContext.version
                 );
-            } else if (configService.config['modeller'].runtimeContext.workspace) {
+            } else if (configService.config.modeller.runtimeContext.workspace) {
                 PMON_RTC = RuntimeContext.fromWorkspace(
-                    configService.config['modeller'].runtimeContext.workspace
+                    configService.config.modeller.runtimeContext.workspace
                 );
             }
         }
@@ -115,6 +119,7 @@ export class ProcessmonitorComponent extends RouteComponent {
         }
 
         // translate tab item names
+        // @ts-expect-error(TODO:)
         this.tabBarItems.forEach(item => item.name = this.i18n.translateSignal(item.name()));
 
         // sync documents with tabs
@@ -165,6 +170,7 @@ export class ProcessmonitorComponent extends RouteComponent {
 
         // sync document selection with tab selection
         this.documentService.selectionChange.pipe(filter(() => !!this.tabBar)).subscribe(document =>
+            // @ts-expect-error(TODO:)
             this.tabBar.selection = this.tabBar.items.find(item => item.data === document)
         );
 
@@ -204,6 +210,7 @@ export class ProcessmonitorComponent extends RouteComponent {
                         XoFrequencyControlledTaskDetails
                     ).subscribe(result => {
                         if (!result.errorMessage) {
+                            // @ts-expect-error(TODO:)
                             const task = result.output[0] as XoFrequencyControlledTaskDetails;
                             // open task in a new tab
                             this.tabBar.open(<XcTabBarItem<XoFrequencyControlledTaskDetails>>{
@@ -265,9 +272,12 @@ export class ProcessmonitorComponent extends RouteComponent {
         }
         // remember order parent tab
         if (item?.data instanceof XoOrderOverviewEntry && item.data.parentId) {
+            // @ts-expect-error(TODO:)
             this.orderParentTab = this.tabBarItems.find(value => value.data?.id === item.data.parentId);
+            // @ts-expect-error(TODO:)
             item.data.parentId = undefined;
         } else {
+            // @ts-expect-error(TODO:)
             this.orderParentTab = undefined;
         }
         // select document of tab

@@ -24,7 +24,7 @@ import { XoIterationContainer } from '../../xo/iteration-container.model';
 import { XoStepRuntimeInfo } from '../../xo/step-runtime-info.model';
 import { IterationRuntimeInfoComponent } from './iteration-runtime-info/iteration-runtime-info.component';
 import { StepRuntimeInfoComponent } from './step-runtime-info/step-runtime-info.component';
-import { XcI18nContextDirective, XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
 
 
 @Component({
@@ -39,11 +39,15 @@ export class RuntimeInfoComponent {
     readonly XoStepRuntimeInfo    = templateClassType<XoStepRuntimeInfo>(XoStepRuntimeInfo);
     readonly XoIterationContainer = templateClassType<XoIterationContainer>(XoIterationContainer);
 
+    // @ts-expect-error(TODO:)
     readonly runtimeInfo = input<XoRuntimeInfo>(undefined);
 
+    // @ts-expect-error(TODO:)
     readonly runtimeInfoOrderId = input<string>(undefined);
 
+    // @ts-expect-error(TODO:)
     readonly lazyLoadingLimit = input<number>(undefined);
 
+    // @ts-expect-error(TODO:)
     readonly iterationDepth = input<number>(undefined);
 }

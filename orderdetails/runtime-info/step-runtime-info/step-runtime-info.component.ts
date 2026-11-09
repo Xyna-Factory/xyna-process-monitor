@@ -19,10 +19,9 @@ import { ChangeDetectionStrategy, AfterContentChecked, Component, inject, Input,
 
 import { ApiService, Xo, XoArray, XoDescriberCache, XoObject, XoStructureObject } from '@zeta/api';
 import { copyToClipboard, isArray } from '@zeta/base';
-import { I18nService } from '@zeta/i18n';
+import { I18nService, XcI18nTranslateDirective  } from '@zeta/i18n';
 import { XcButtonComponent, XcDialogService, XcPanelComponent, XcReadonlyStructureTreeDataSource, XcReadonlyTreeComponent } from '@zeta/xc';
 
-import { XcI18nTranslateDirective } from '../../../../../zeta/i18n';
 import { DocumentService } from '../../../document.service';
 import { PMON_RTC } from '../../../processmonitor.component';
 import { XoStepRuntimeInfo } from '../../../xo/step-runtime-info.model';
@@ -43,6 +42,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
     private readonly dialogs = inject(XcDialogService);
 
 
+    // @ts-expect-error(TODO:)
     private _runtimeInfo: XoStepRuntimeInfo;
 
     readonly dsTreeIn: XcReadonlyStructureTreeDataSource;
@@ -59,7 +59,9 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
 
     readonly treeErr = viewChild('treeErr', { read: XcReadonlyTreeComponent });
 
+    // @ts-expect-error(TODO:)
     private _lazyLoadingLimit: number;
+    // @ts-expect-error(TODO:)
     private _runtimeInfoOrderId: string;
 
     @Input()
@@ -73,6 +75,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
         return this._runtimeInfoOrderId;
     }
 
+    // @ts-expect-error(TODO:)
     limitError: string;
     violatesInputLimit = false;
     violatesOutputLimit = false;
@@ -83,6 +86,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
         const apiService = inject(ApiService);
 
         // create tree data sources
+        // @ts-expect-error(TODO:)
         const newDataSource = () => new XcReadonlyStructureTreeDataSource(apiService, undefined, PMON_RTC, []);
         this.dataSources = [
             this.dsTreeIn  = newDataSource(),
@@ -149,6 +153,7 @@ export class StepRuntimeInfoComponent implements AfterContentChecked {
 
 
     private checkLazyLoadingLimit() {
+        // @ts-expect-error(TODO:)
         this.limitError = undefined;
         this.violatesInputLimit = false;
         this.violatesOutputLimit = false;

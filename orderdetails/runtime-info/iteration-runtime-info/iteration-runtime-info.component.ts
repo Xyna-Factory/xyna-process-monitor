@@ -44,25 +44,35 @@ export class IterationRuntimeInfoComponent {
 
     private readonly allowedKeys = new Set(['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight']);
 
+    // @ts-expect-error(TODO:)
     private _runtimeInfo: XoIterationContainer;
 
     // selected iteration (can be undefined, if selected index does not match index in any iteration)
+    // @ts-expect-error(TODO:)
     private _selectedIteration: XoIterationEntry;
 
     // selected iteration index, displayed in input box
+    // @ts-expect-error(TODO:)
     private _selectedIndex: number;
 
+    // @ts-expect-error(TODO:)
     private _firstIndex: number;
+    // @ts-expect-error(TODO:)
     private _lastIndex: number;
 
     // array index of selected iteration
+    // @ts-expect-error(TODO:)
     private _arrayIdx: number;
 
+    // @ts-expect-error(TODO:)
     private _lazyLoadingLimit: number;
+    // @ts-expect-error(TODO:)
     private _iterationDepth: number;
 
+    // @ts-expect-error(TODO:)
     readonly runtimeInfoOrderId = input<string>(undefined);
 
+    // @ts-expect-error(TODO:)
     limitError: string;
     violatesLimit = false;
 
@@ -78,11 +88,13 @@ export class IterationRuntimeInfoComponent {
             this._selectedIndex = this.selectedIteration.index;
         }
         // update array index accordingly
+        // @ts-expect-error(TODO:)
         this._arrayIdx = this.selectIteration ? arrayIdx : -1;
     }
 
 
     private checkLazyLoadingLimit() {
+        // @ts-expect-error(TODO:)
         this.limitError = undefined;
         this.violatesLimit = false;
 
@@ -151,7 +163,7 @@ export class IterationRuntimeInfoComponent {
 
         if (this.selectedIteration) {
             this.auditService.setIterationInfo(
-                <IterationInfo>{
+                {
                     iterationContainerKey: this.runtimeInfo.iterationContainerKey,
                     iterationIndex:        this.selectedIteration.index
                 }

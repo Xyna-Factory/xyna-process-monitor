@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -69,7 +71,7 @@ export class XoOrderOverviewEntry extends XoObject {
 
         // FIXME remove this as soon as backend consequently returns strings for Order ID
         if (isNumber(this.id)) {
-            this.id = boxedNumberToString(<number><unknown> this.id);
+            this.id = boxedNumberToString(this.id);
         }
     }
 

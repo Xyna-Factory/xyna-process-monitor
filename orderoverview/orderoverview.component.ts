@@ -40,7 +40,7 @@ enum OrderStatus {
     Planning = 'Planning',
     Scheduling = 'Scheduling',
     Waiting = 'Waiting',
-    Cleanup = 'Cleanup',
+    Cleanup = 'Cleanup'
 }
 
 @Component({

@@ -64,6 +64,7 @@ export class DocumentService {
 
 
     private readonly _documentListSubject = new BehaviorSubject<XoOrderOverviewEntry[]>([]);
+    // @ts-expect-error(TODO:)
     private readonly _selectionSubject = new BehaviorSubject<XoOrderOverviewEntry>(null);
 
     constructor() {
@@ -164,6 +165,7 @@ export class DocumentService {
             this.documents.splice(index, 1);
 
             const newSelectedIndex = index < this.documents.length ? index : this.documents.length - 1;
+            // @ts-expect-error(TODO:)
             this.selectedDocument = (newSelectedIndex >= 0) ? this.documents[newSelectedIndex] : null;
 
             this._documentListSubject.next(this.documents);
@@ -216,6 +218,7 @@ export class DocumentService {
                     }
 
                     if (!item.runtimeInfo) {
+                        // @ts-expect-error(TODO:)
                         item.setRuntimeInfo(runtimeInfoMap.get(item.id));
                     }
 

@@ -23,7 +23,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, i
 import { templateClassType } from '@zeta/base';
 import { XcButtonComponent, XcDialogService, XcIconButtonComponent, XcTooltipDirective } from '@zeta/xc';
 
-import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '../../../../zeta/i18n';
+import { XcI18nContextDirective, XcI18nPipe, XcI18nTranslateDirective } from '@zeta/i18n';
 import { DocumentService } from '../../document.service';
 import { KillOrderButtonComponent } from '../../shared/kill-order-button/kill-order-button.component';
 import { XoServiceRuntimeInfo } from '../../xo/service-runtime-info.model';
@@ -58,18 +58,23 @@ export class AuditDetailsComponent implements OnDestroy, AfterViewInit {
     readonly XoServiceRuntimeInfo = templateClassType<XoServiceRuntimeInfo>(XoServiceRuntimeInfo);
     readonly XoWorkflowRuntimeInfo = templateClassType<XoWorkflowRuntimeInfo>(XoWorkflowRuntimeInfo);
 
+    // @ts-expect-error(TODO:)
     readonly fqn = input<string>(undefined);
 
+    // @ts-expect-error(TODO:)
     readonly parentOrderId = input<string>(undefined);
 
+    // @ts-expect-error(TODO:)
     readonly workflowOrderId = input<string>(undefined);
 
+    // @ts-expect-error(TODO:)
     readonly disabled = input<boolean>(undefined);
 
     readonly openAudit = output<OpenAuditData>();
 
     readonly refreshAudit = output<void>();
 
+    // @ts-expect-error(TODO:)
     runtimeInfo: XoStepRuntimeInfo;
 
     private readonly subscriptions: Subscription[] = [];

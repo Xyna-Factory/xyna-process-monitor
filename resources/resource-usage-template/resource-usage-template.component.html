@@ -1,4 +1,4 @@
-@if (injectedData.used !== undefined && injectedData.total !== undefined) {
+@if (injectedData !== undefined && injectedData.used !== undefined && injectedData.total !== undefined) {
   <div
     class="progress-box"
     xc-tooltip="{{'tooltip-resource-progress' | xcI18n:injectedData.used:injectedData.total}}"
@@ -7,7 +7,7 @@
     <div class="value">{{injectedData.used}} / {{injectedData.total}}</div>
   </div>
 }
-@if (injectedData.waiting > 0) {
+@if (injectedData !== undefined && injectedData.waiting !== undefined && injectedData.waiting > 0) {
   <div class="waiting">
     <xc-icon xc-icon-name="tb-wait" xc-icon-style="modeller" xc-tooltip="{{'tooltip-waiting-orders' | xcI18n}}">{{injectedData.waiting}}</xc-icon>
   </div>

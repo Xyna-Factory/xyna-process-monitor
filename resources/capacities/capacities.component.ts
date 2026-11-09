@@ -42,8 +42,10 @@ export class CapacitiesComponent extends ResourceOverviewComponent<XoCapacity> {
     private readonly router = inject(Router);
 
 
+    // @ts-expect-error(TODO:)
     dataSource: ResourceDataSource<XoCapacity>;
 
+    // @ts-expect-error(TODO:)
     _showUnused: boolean;
     get showUnused(): boolean {
         return this._showUnused !== undefined ? this._showUnused : true;
@@ -61,6 +63,7 @@ export class CapacitiesComponent extends ResourceOverviewComponent<XoCapacity> {
         this.i18n.setTranslations(LocaleService.EN_US, resourcesTranslations_enUS);
         this.i18n.setTranslations(LocaleService.DE_DE, resourcesTranslations_deDE);
 
+        // @ts-expect-error(TODO:)
         this.subscriptions.push(this.dataSource.dataChange.subscribe(() =>
             this.cdr.markForCheck()
         ));
@@ -69,6 +72,7 @@ export class CapacitiesComponent extends ResourceOverviewComponent<XoCapacity> {
 
     getDataSource(): ResourceDataSource<XoCapacity> {
         if (!this.dataSource) {
+            // @ts-expect-error(TODO:)
             this.dataSource = new ResourceDataSource<XoCapacity>(this.api, this.i18n, 'xmcp.processmonitor.resources.GetCapacities', undefined, XoCapacityArray, 'xmcp.processmonitor.resources.GetCapacity');
         }
         return this.dataSource;
