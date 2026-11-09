@@ -46,5 +46,5 @@ export function getIntentRuntimeContext(apiService: ApiService): Observable<Runt
     ).pipe(
         map(property => RuntimeContext.fromWorkspace(property.value))
     );
-    return application.pipe(switchMap(rtc => rtc.av.application ? of(rtc) : workspace));
+    return application.pipe(switchMap(rtc => rtc.av?.application ? of(rtc) : workspace));
 }

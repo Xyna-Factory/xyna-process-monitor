@@ -19,9 +19,9 @@ import { afterNextRender, ChangeDetectorRef, Component, inject, Injector, OnDest
 
 import { ApiService, RuntimeContext } from '@zeta/api';
 import { I18nService, LocaleService, XcI18nContextDirective, XcI18nTranslateDirective } from '@zeta/i18n';
-import { XcAutocompleteDataWrapper, XcButtonComponent, XcDialogService, XcFormAutocompleteComponent, XcIconButtonComponent, XcIconComponent, XcPanelComponent, XcTabComponent, XcTooltipDirective } from '@zeta/xc';
+import { XcAutocompleteDataWrapper, XcDialogService, XcFormAutocompleteComponent, XcIconButtonComponent, XcPanelComponent, XcTabComponent, XcTooltipDirective } from '@zeta/xc';
 
-import ELK from 'elkjs/lib/elk.bundled.js';
+import ElkConstructor from 'elkjs';
 
 import { EFConnectableSide, EFConnectionBehavior, EFConnectionType, EFMarkerType, FCanvasComponent, FFlowComponent, FFlowModule, FSelectionChangeEvent } from '@foblex/flow';
 import { DocumentService } from '../document.service';
@@ -87,7 +87,7 @@ export class IntentDetailsComponent extends XcTabComponent<void, XoIntentEntry> 
     private readonly injector = inject(Injector);
     private readonly cdr = inject(ChangeDetectorRef);
 
-    private readonly elk = new ELK();
+    private readonly elk = new ElkConstructor();
     readonly eMarkerType = EFMarkerType;
     readonly graphVisible = signal(true);
 
@@ -100,9 +100,9 @@ export class IntentDetailsComponent extends XcTabComponent<void, XoIntentEntry> 
     @ViewChild(FCanvasComponent, { static: true })
     fCanvas!: FCanvasComponent;
 
-    intentDetails: XoIntentDetails;
+    intentDetails: XoIntentDetails | undefined;
 
-    graph: XoGraph;
+    graph: XoGraph | undefined;
     nodes: Node[] = [];
     edges: Edge[] = [];
     selfLoopNodeIds = new Set<string>();
@@ -123,7 +123,7 @@ export class IntentDetailsComponent extends XcTabComponent<void, XoIntentEntry> 
         ]
     );
 
-    private timeout: ReturnType<typeof setTimeout>;
+    private timeout: ReturnType<typeof setTimeout> | undefined;
     private active = true;
 
 
@@ -162,46 +162,48 @@ export class IntentDetailsComponent extends XcTabComponent<void, XoIntentEntry> 
     }
 
     update(resetView: boolean): void {
-        let graph: XoGraph;
-        switch (this.graphType) {
-            case GraphType.EXECUTION:
-                graph = this.intentDetails.executionGraph;
-                break;
-            case GraphType.INTENT:
-                graph = this.intentDetails.intentGraph;
-                break;
-            default:
-                console.error('Unknown graph type:', this.graphType);
-                return;
+        if (this.intentDetails) {
+            let graph: XoGraph;
+            switch (this.graphType) {
+                case GraphType.EXECUTION:
+                    graph = this.intentDetails.executionGraph;
+                    break;
+                case GraphType.INTENT:
+                    graph = this.intentDetails.intentGraph;
+                    break;
+                default:
+                    console.error('Unknown graph type:', this.graphType);
+                    return;
+            }
+            const nodes = graph.nodes.data.map(node => ({
+                id: node.id,
+                label: node.label,
+                orderId: node.orderId,
+                orderStatus: node.orderStatus,
+                tooltip: node.orderStatus ? `${node.orderId} (${node.orderStatus})` : '',
+                backgroundColor: node.style.backgroundColor,
+                borderColor: node.style.borderColor,
+                stateColor: node.style.stateColor,
+                stateLabel: node.state,
+                position: {
+                    x: 0,
+                    y: 0
+                },
+                selected: false
+            }));
+            const edges = graph.edges.data.map(edge => ({
+                id: edge.from + '-' + edge.to,
+                label: edge.label,
+                source: edge.from,
+                target: edge.to,
+                undirected: edge.undirected,
+                markerSource: edge.style.startMarker === 'Arrow',
+                markerTarget: edge.style.endMarker === 'Arrow',
+                color: edge.style.lineColor
+            }));
+            this.maxLabelLength = this.getMaxLabelLength(nodes);
+            this.layout(graph, nodes, edges, resetView);
         }
-        const nodes = graph.nodes.data.map(node => ({
-            id: node.id,
-            label: node.label,
-            orderId: node.orderId,
-            orderStatus: node.orderStatus,
-            tooltip: node.orderStatus ? `${node.orderId} (${node.orderStatus})` : '',
-            backgroundColor: node.style.backgroundColor,
-            borderColor: node.style.borderColor,
-            stateColor: node.style.stateColor,
-            stateLabel: node.state,
-            position: {
-                x: 0,
-                y: 0
-            },
-            selected: false
-        }));
-        const edges = graph.edges.data.map(edge => ({
-            id: edge.from + '-' + edge.to,
-            label: edge.label,
-            source: edge.from,
-            target: edge.to,
-            undirected: edge.undirected,
-            markerSource: edge.style.startMarker === 'Arrow',
-            markerTarget: edge.style.endMarker === 'Arrow',
-            color: edge.style.lineColor
-        }));
-        this.maxLabelLength = this.getMaxLabelLength(nodes);
-        this.layout(graph, nodes, edges, resetView);
     }
 
     refresh() {
@@ -217,17 +219,17 @@ export class IntentDetailsComponent extends XcTabComponent<void, XoIntentEntry> 
         ).subscribe(result => {
             if (result && !result.errorMessage) {
                 const initialUpdate = !this.intentDetails;
-                this.intentDetails = result.output[0] as XoIntentDetails;
+                this.intentDetails = result.output?.[0] as XoIntentDetails;
                 this.update(initialUpdate);
 
                 // a request still in flight while the tab got deactivated must not re-schedule
                 if (this.active && this.intentDetails.finished !== 'Finished') {
-                    console.debug('auto-refresh');
+                    console.log('auto-refresh');
                     clearTimeout(this.timeout);
                     this.timeout = setTimeout(() => this.refresh(), REFRESH_INTERVAL);
                 }
             } else {
-                this.dialogService.error(result.errorMessage);
+                this.dialogService.error(result.errorMessage ?? 'Unknown error');
             }
         });
     }
@@ -312,12 +314,12 @@ export class IntentDetailsComponent extends XcTabComponent<void, XoIntentEntry> 
 
         this.elk.layout(elkGraph).then(layout => {
             this.applyLayout(graph, nodes.map(node => {
-                const graphNode = layout.children.find(n => n.id === node.id);
+                const graphNode = layout.children?.find(n => n.id === node.id);
                 return {
                     ...node,
                     position: {
-                        x: graphNode.x,
-                        y: graphNode.y
+                        x: graphNode?.x ?? 0,
+                        y: graphNode?.y ?? 0
                     }
                 };
             }), edges, resetView);
@@ -331,7 +333,7 @@ export class IntentDetailsComponent extends XcTabComponent<void, XoIntentEntry> 
      * with properties (sizes, connectable sides) of the new one.
      */
     private applyLayout(graph: XoGraph, nodes: Node[], edges: Edge[], resetView: boolean): void {
-        if (!this.graph || this.graph.id != graph.id) {
+        if (!this.graph || this.graph.id !== graph.id) {
             this.graphVisible.set(false);
             this.fFlow.reset();
         } else if (resetView) {
@@ -350,7 +352,7 @@ export class IntentDetailsComponent extends XcTabComponent<void, XoIntentEntry> 
     }
 
     private updateConnectableSides(): void {
-        switch (this.graph.layout) {
+        switch (this.graph?.layout) {
             case 'BT':
                 this.outputSide = EFConnectableSide.TOP;
                 this.inputSide = EFConnectableSide.BOTTOM;
@@ -402,7 +404,7 @@ export class IntentDetailsComponent extends XcTabComponent<void, XoIntentEntry> 
     }
 
     nodeLabelClick(node: Node) {
-        if (node.orderId) {
+        if (node.orderId && this.intentDetails) {
             this.documentService.openDocument(
                 new XoOrderOverviewEntry(undefined, node.orderId, this.intentDetails.id)
             );

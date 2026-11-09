@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 /*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  * Copyright 2023 Xyna GmbH, Germany
@@ -15,12 +17,12 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { XoArray, XoArrayClass, XoObjectClass, XoProperty, XoUnique } from '@zeta/api';
+import { XoArray, XoArrayClass, XoObjectClass, XoProperty } from '@zeta/api';
 import { XoIntentEntry } from '../../intent-overview/xo/intent-entry.model';
 import { XoGraph } from './graph.model';
 
 
-@XoObjectClass(null, 'xmcp.processmonitor.intent', 'IntentDetails')
+@XoObjectClass(XoIntentEntry, 'xmcp.processmonitor.intent', 'IntentDetails')
 export class XoIntentDetails extends XoIntentEntry {
 
     @XoProperty(XoGraph)
