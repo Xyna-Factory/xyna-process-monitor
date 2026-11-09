@@ -20,7 +20,7 @@ import { I18nTranslation } from '@zeta/i18n';
 
 export const pmonTranslations_enUS: I18nTranslation[] = [
     // ProcessmonitorComponent
-    // typescripz
+    // typescript
     {
         key: 'pmon.tab-header-order-overview',
         value: 'Order Overview'
@@ -40,6 +40,14 @@ export const pmonTranslations_enUS: I18nTranslation[] = [
     {
         key: 'pmon.tab-header-vetoes',
         value: 'Veto Monitor'
+    },
+    {
+        key: 'pmon.tab-header-intent-overview',
+        value: 'Intent Overview'
+    },
+    {
+        key: 'pmon.intent',
+        value: 'Intent'
     },
     {
         key: 'pmon.task',
