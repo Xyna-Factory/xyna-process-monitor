@@ -15,7 +15,7 @@
  * limitations under the License.
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 
 import { IterationInfo, IterationInfoController } from '@pmod/xo/runtime-info.model';
 
@@ -24,9 +24,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { XoStepRuntimeInfo } from '../xo/step-runtime-info.model';
 
 
-@Injectable({
-    providedIn: 'root'
-})
+@Service()
 export class AuditService implements IterationInfoController {
 
     /** currently selected Step Runtime Info */

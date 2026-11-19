@@ -16,7 +16,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  */
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { inject, Service } from '@angular/core';
 
 import { XoItem } from '@pmod/xo/item.model';
 import { XoModellingItem } from '@pmod/xo/modelling-item.model';
@@ -55,9 +55,7 @@ import { XoThrowRuntimeInfo } from './xo/throw-runtime-info.model';
 import { XoWorkflowRuntimeInfo } from './xo/workflow-runtime-info.model';
 
 
-@Injectable({
-    providedIn: 'root'
-})
+@Service()
 export class DocumentService {
     private readonly http = inject(HttpClient);
     private readonly dialogs = inject(XcDialogService);
