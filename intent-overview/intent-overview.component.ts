@@ -64,7 +64,7 @@ export class IntentOverviewComponent extends XcTabComponent<string> {
 
     private openIntent(intentEntry: XoIntentEntry) {
         const item: XcTabBarItem<XoIntentEntry> = {
-            name: signal(this.i18nService.getTranslation('intent').value + ' ' + intentEntry.id),
+            name: signal(this.i18nService.getTranslation('pmon.intent-overview.intent').value + ' ' + intentEntry.id),
             component: IntentDetailsComponent,
             closable: true,
             icon: XDSIconName.INFO,

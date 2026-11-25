@@ -26,5 +26,9 @@ export const intentOverviewTranslations_enUS: I18nTranslation[] = [
     {
         key: 'pmon.intent-overview.show-details',
         value: 'Show Details'
+    },
+    {
+        key: 'pmon.intent-overview.intent',
+        value: 'Intent'
     }
 ];

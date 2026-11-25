@@ -1,8 +1,16 @@
 <xc-panel xc-i18n-context="pmon.intent-details">
     <header>
-        <h1 xc-i18n>header-intent</h1>
         @if (intentDetails) {
-            <span>{{ intentDetails.id }}</span>
+            <h1>
+                <span xc-i18n>header-intent</span>
+                <span>: {{ intentDetails.id }}</span>
+            </h1>
+            @if (intentDetails.status) {
+                <div>
+                    <span xc-i18n>header-status</span>
+                    <span>: {{ intentDetails.status }}</span>
+                </div>
+            }
         }
         <div class="items-right">
             <xc-form-autocomplete
