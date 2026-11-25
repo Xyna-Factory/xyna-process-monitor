@@ -24,6 +24,10 @@ export const intentDetailsTranslations_deDE: I18nTranslation[] = [
         value: 'Intent'
     },
     {
+        key: 'pmon.intent-details.header-status',
+        value: 'Status'
+    },
+    {
         key: 'pmon.intent-details.tooltip-refresh',
         value: 'Aktualisieren'
     }

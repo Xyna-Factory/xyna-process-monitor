@@ -86,6 +86,7 @@
 
             &[order-status="Cancelled"] {
                 border-color: color-mix(in srgb, var(--node-failed-color) 60%, #ffffff);
+                background: color-mix(in srgb, var(--node-scheduling-color) 5%, var(--node-background-color));
             }
 
             &[order-status="Failed"] {

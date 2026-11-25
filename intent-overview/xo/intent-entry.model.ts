@@ -54,6 +54,10 @@ export class XoIntentEntry extends XoObject {
     @XoTransient()
     lastUpdateString: string;
 
+    @XoProperty()
+    @XoTransient()
+    status: string;
+
 
     protected afterDecode() {
         super.afterDecode();
@@ -64,6 +68,15 @@ export class XoIntentEntry extends XoObject {
         this.startTimeString = this.startTime > 0 ? DateTimeConverter.timestampToDateTime(this.startTime) : '';
         this.lastUpdateString = this.lastUpdate > 0 ? DateTimeConverter.timestampToDateTime(this.lastUpdate) : '';
         DateTimeConverter.localTime = localFlagBackup;
+
+        // set status
+        this.status = '';
+        if (this.finished) {
+            this.status = this.finished;
+        }
+        if (this.failed) {
+            this.status = this.failed;
+        }
     }
 }
 

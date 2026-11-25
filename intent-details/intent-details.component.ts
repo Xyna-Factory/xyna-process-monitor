@@ -223,7 +223,7 @@ export class IntentDetailsComponent extends XcTabComponent<void, XoIntentEntry> 
                 this.update(initialUpdate);
 
                 // a request still in flight while the tab got deactivated must not re-schedule
-                if (this.active && this.intentDetails.finished !== 'Finished') {
+                if (this.active && (this.intentDetails.finished === '' || this.intentDetails.finished === 'false')) {
                     console.log('auto-refresh');
                     clearTimeout(this.timeout);
                     this.timeout = setTimeout(() => this.refresh(), REFRESH_INTERVAL);
